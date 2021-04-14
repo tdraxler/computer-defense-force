@@ -1,0 +1,4 @@
+# Add things here if you don't want git to track them!
+
+node_modules
+.DS_Store
