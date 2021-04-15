@@ -1,0 +1,2 @@
+Scripts built/transpiled using webpack end up in this directory.
+Don't add anything manually here, please!

@@ -1,0 +1,9 @@
+* {
+    font-family: sans-serif; 
+   }
+   
+   #game {
+     height: 480px;
+     width: 800px;
+     border: 2px solid grey;
+   }
