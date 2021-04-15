@@ -35,7 +35,7 @@ Now when you make any changes in the front end or back end codes, webpack will r
 
 ## How to add things to this
 
-`app.js` is the main entry point for the React part of this app.
+`game.js` is the main entry point for the Phaser part of this app.
 `server.js` contains the server/Express code.
 The scripts in `public/scripts` are generated after you run `npm run build`, but there's no need to edit it in any way. It's simply the transpiled (ES6 -> ES5) JavaScript code from the `src` directory bundled up into a few files.
 
