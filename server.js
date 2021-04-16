@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 
 // Try to use port number from the command line arguments
 const PORT = process.argv[2] || 3000;
@@ -9,7 +9,7 @@ app.use(express.static('public'));
 
 // Main route
 app.get('/', (req, res) => {
-  res.render("index");
+  res.render('index');
 });
 
 app.listen(PORT, () => {
