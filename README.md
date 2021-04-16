@@ -39,6 +39,11 @@ Now when you make any changes in the front end or back end codes, webpack will r
 `server.js` contains the server/Express code.
 The scripts in `public/scripts` are generated after you run `npm run build`, but there's no need to edit it in any way. It's simply the transpiled (ES6 -> ES5) JavaScript code from the `src` directory bundled up into a few files.
 
+## Git commands
+`git pull origin master`
+
 ## Credits
 I followed the tutorial here and changed the run/build scripts (and a few other minor things) to fit my needs better:
 https://levelup.gitconnected.com/how-to-setup-environment-using-react-webpack-express-babel-d5f1b572b678
+
+
