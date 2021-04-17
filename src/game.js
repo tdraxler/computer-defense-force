@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { Player } from './components/player';
+import { Virus } from './components/virus';
 
 console.log('Game script loaded successfully!');
 
@@ -28,6 +29,9 @@ let config = {
 function preload()
 {
   // TODO
+  this.load.spritesheet('virus', 'images/virus_v1.png',{
+    frameWidth: 50, frameHeight: 50
+})
 }
 
 function create()
@@ -48,3 +52,6 @@ let game = new Phaser.Game(config);
 
 let player = new Player();
 player.testFunc();
+//copied from above Kirsten C
+let virus = new Virus();
+virus.testFunc();
