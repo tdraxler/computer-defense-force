@@ -30,7 +30,7 @@ let config = {
 function preload()
 {
   // TODO
-  this.load.spritesheet('testRec', 'src/images/testRec.png', {
+  this.load.spritesheet('testRec', '/public/images/testRec.png', {
     frameHeight: 20, frameWidth: 20
   });
 }
@@ -40,12 +40,9 @@ function preload()
 function create()
 {
   // TODO
-
   // add to middle of area
-  this.rec = this.add.sprite(100, 100, 'testRec');
-  this.rec.anchor.set(0.5, 0.5);
-
-  this.keys = config.input.keyboard.createCursorKeys();
+  this.rec = this.add.sprite(200, 105, 'testRec');
+  //this.keys = config.input.keyboard.createCursorKeys();
 
 }
 
@@ -53,22 +50,8 @@ function createVirus(){
 
 }
 
-function update()
-{
+function update() {
   // TODO
-  // adding sprite move functionality from https://phaser.io/examples/v2/sprites/move-a-sprite
-  if (config.keys.left.isDown) {
-    this.rec.x -= 4;
-  }
-  if (config.keys.right.isDown) {
-    this.rec.x += 4;
-  }
-  if (config.keys.up.isDown) {
-    this.rec.y -= 4;
-  }
-  if (config.keys.down.isDown) {
-    this.rec.y += 4;
-  }
 }
 
 
