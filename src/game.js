@@ -32,17 +32,20 @@ let config = {
 //var testRec;
 function preload()
 {
-  // TODO
+  this.load.setBaseURL('/');
+  // Load tile maps
+  this.load.image('tiles', 'sprites/level1.png');
+  this.load.tilemapTiledJSON('maps/level1');
 }
 
 // adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
 // https://shawnhymel.com/1220/getting-started-with-phaser-part-3-sprites-and-movement/
 function create()
 {
-  // TODO
-
-
-
+  // Set up the map
+  const tilemap = this.make.tilemap({ key: 'maps/level1' });
+  const tileset = tilemap.addTilesetImage('level1_tiles', 'tiles');
+  tilemap.createLayer('base', tileset);
 }
 
 function update() {
