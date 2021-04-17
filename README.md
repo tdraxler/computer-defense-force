@@ -40,6 +40,12 @@ Now when you make any changes in the front end or back end codes, webpack will r
 The scripts in `public/scripts` are generated after you run `npm run build`, but there's no need to edit it in any way. It's simply the transpiled (ES6 -> ES5) JavaScript code from the `src` directory bundled up into a few files.
 
 ## Git commands
+
+To create a new branch:
+`git checkout -b <newbranchname> -t origin/master`
+(creates a new branch called newbranchname and sets it up to track the master branch)
+
+On that branch, if you want to pull the latest changes from the main/master branch:
 `git pull origin master`
 
 ## Credits
