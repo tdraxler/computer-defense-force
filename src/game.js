@@ -34,7 +34,7 @@ function preload()
 {
   this.load.setBaseURL('/');
   // Load tile maps
-  this.load.image('tiles', 'sprites/level1.png');
+  this.load.image('tiles', 'images/level1.png');
   this.load.tilemapTiledJSON('maps/level1');
 }
 
