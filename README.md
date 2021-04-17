@@ -42,7 +42,8 @@ The scripts in `public/scripts` are generated after you run `npm run build`, but
 ## Git commands
 
 To create a new branch:
-`git checkout -b <newbranchname> -t origin master`
+`git checkout -b <newbranchname> -t origin/master`
+(creates a new branch called newbranchname and sets it up to track the master branch)
 
 On that branch, if you want to pull the latest changes from the main/master branch:
 `git pull origin master`
