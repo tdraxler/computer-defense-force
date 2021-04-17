@@ -8,6 +8,7 @@ let config = {
   type: Phaser.AUTO,
   width: 400,
   height: 300,
+  backgroundColor: '#ffffff',
   scale: {
     mode: Phaser.Scale.FIT
   },
@@ -29,19 +30,43 @@ let config = {
 function preload()
 {
   // TODO
-  this.load.spritesheet('virus', 'images/virus_v1.png',{
-    frameWidth: 50, frameHeight: 50
-})
+  this.load.image('rec', 'src/images/testRec.png');
 }
 
+// adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
+// https://shawnhymel.com/1220/getting-started-with-phaser-part-3-sprites-and-movement/
 function create()
 {
   // TODO
+
+  // add to middle of area
+  this.rec = this.add.sprite(150, 75, 'rec');
+  this.rec.anchor.set(0.5, 0.5);
+
+  this.keys = config.input.keyboard.createCursorKeys();
+
+}
+
+function createVirus(){
+
 }
 
 function update()
 {
   // TODO
+  // adding sprite move functionality from https://phaser.io/examples/v2/sprites/move-a-sprite
+  if (this.keys.left.isDown) {
+    this.rec.x -= 4;
+  }
+  if (this.keys.right.isDown) {
+    this.rec.x += 4;
+  }
+  if (this.keys.up.isDown) {
+    this.rec.y -= 4;
+  }
+  if (this.keys.down.isDown) {
+    this.rec.y += 4;
+  }
 }
 
 
@@ -49,9 +74,9 @@ function update()
 
 // eslint-disable-next-line
 let game = new Phaser.Game(config);
-
+/*
 let player = new Player();
 player.testFunc();
 //copied from above Kirsten C
 let virus = new Virus();
-virus.testFunc();
+virus.testFunc();*/
