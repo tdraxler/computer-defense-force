@@ -42,7 +42,9 @@ function create()
   // TODO
   // add to middle of area
   testRec = this.add.sprite(200, 105, 'testRec');
-  //this.keys = config.input.keyboard.createCursorKeys();
+  this.cursors = this.input.keyboard.createCursorKeys();
+  this.rect = testRec;
+
 
 }
 
@@ -52,7 +54,15 @@ function createVirus(){
 
 function update() {
   // TODO
-  testRec.rotation += 0.01;
+  //testRec.rotation += 0.01;
+  //testRec.body.velocity.x=50;
+  if(this.cursors.left.isDown){
+    this.rect.setVelocityX(-20);
+  } else if(this.cursors.right.isDown){
+    this.rect.setVelocityX(20);
+  } else{
+    this.rect.setVelocityX(0);
+  }
 }
 
 
