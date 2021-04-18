@@ -30,7 +30,7 @@ let config = {
 function preload()
 {
   // TODO
-  this.load.spritesheet('testRec', '/public/images/testRec.png', {
+  this.load.spritesheet('testRec', './images/testRec.png', {
     frameHeight: 20, frameWidth: 20
   });
 }
