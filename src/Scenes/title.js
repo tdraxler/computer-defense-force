@@ -1,7 +1,40 @@
 import Phaser from 'phaser';
+import { CST } from '../CST';
 
-export class TitleScene extends Phaser.Scene{
+//loading bar is direct adaptation of https://www.youtube.com/watch?v=OS7neDUUhPE
+export class TitleScene extends Phaser.Scene {
   constructor() {
-    super();
+    super({
+      key:CST.SCENES.START
+    });
+  }
+  init(){
+
+  }
+  preload(){
+    this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
+    this.load.image('imgTitle', './images/TitlePage-Background.png');
+    this.load.image('startButton', './images/start.png')
+
+    let loadBar = this.add.graphics({
+      fillStyle: {
+        color: 0x89DDFF
+      }
+    })
+    //create a loading bar
+    //simulate larger load for testing purposes
+    for (let i = 0; i < 200; i++){
+      this.load.spritesheet('testRec' + i, './images/testRec.png', {frameHeight: 20, frameWidth: 20});
+    }
+    this.load.on('progress', (percent)=>{
+      loadBar.fillRect(0, 250, this.game.renderer.width * percent , 15)
+      console.log(percent);
+    })
+
+  }
+  //must include create
+  create(){
+
+    this.scene.start(CST.SCENES.MENU, "This is the TITLE SCENE");
   }
 }

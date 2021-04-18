@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import {TitleScene} from './Scenes/title';
+import {Menu} from './Scenes/menu';
 import { Player } from './components/player';
 import { Virus } from './components/virus';
 
@@ -20,19 +22,19 @@ let config = {
       gravity: { y: 100 }
     }
   },
-  scene: {
+  scene: [
+    TitleScene, Menu
+  ]/*{
     preload: preload,
     create: create,
     update: update
-  }
+  }*/
 };
 var testRec;
 function preload()
 {
   // TODO
-  this.load.spritesheet('testRec', './images/testRec.png', {
-    frameHeight: 20, frameWidth: 20
-  });
+  //this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
 }
 
 // adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
@@ -41,14 +43,10 @@ function create()
 {
   // TODO
   // add to middle of area
-  testRec = this.add.sprite(200, 105, 'testRec');
-  this.cursors = this.input.keyboard.createCursorKeys();
-  this.rect = testRec;
+  //testRec = this.add.sprite(200, 105, 'testRec');
+  /*this.cursors = this.input.keyboard.createCursorKeys();
+  this.rect = testRec;*/
 
-
-}
-
-function createVirus(){
 
 }
 
@@ -56,13 +54,13 @@ function update() {
   // TODO
   //testRec.rotation += 0.01;
   //testRec.body.velocity.x=50;
-  if(this.cursors.left.isDown){
+  /*if(this.cursors.left.isDown){
     this.rect.setVelocityX(-20);
   } else if(this.cursors.right.isDown){
     this.rect.setVelocityX(20);
   } else{
     this.rect.setVelocityX(0);
-  }
+  }*/
 }
 
 
