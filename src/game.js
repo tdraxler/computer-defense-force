@@ -26,7 +26,7 @@ let config = {
     update: update
   }
 };
-
+var testRec;
 function preload()
 {
   // TODO
@@ -41,7 +41,7 @@ function create()
 {
   // TODO
   // add to middle of area
-  this.rec = this.add.sprite(200, 105, 'testRec');
+  testRec = this.add.sprite(200, 105, 'testRec');
   //this.keys = config.input.keyboard.createCursorKeys();
 
 }
@@ -52,6 +52,7 @@ function createVirus(){
 
 function update() {
   // TODO
+  testRec.rotation += 0.01;
 }
 
 
