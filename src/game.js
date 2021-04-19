@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import {Level} from './scenes/level';
 import {Menu} from './scenes/menu';
 import {TitleScene} from './scenes/title';
-// import { Player } from './components/player';
 
 console.log('Game script loaded successfully!');
 
