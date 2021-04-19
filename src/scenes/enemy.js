@@ -10,6 +10,8 @@ export class FirstEnemy extends Phaser.Scene {
     super({
       key: CONST.SCENES.ENEMY
     });
+    this.points = [0, 0, 0, 400, 400, 300, 0, 300];
+    this.path;
   }
 
   preload() {
@@ -24,6 +26,9 @@ export class FirstEnemy extends Phaser.Scene {
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
     //this.virus = this.add.image(this.game.config.height / 2, this.game.config.width, 'enemy1');
+    let curve = new Phaser.Curves.CubicBezier(this.points);
+    this.path.add(curve);
+    
     this.virus2.createVirus();
     this.walk();
     //this.walk();
