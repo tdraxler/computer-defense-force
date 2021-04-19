@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { CONST } from '../constants';
 import { Virus } from '../components/virus';
 
 let enemy;
@@ -6,10 +7,10 @@ let bgm;
 
 export class FirstEnemy extends Phaser.Scene {
   constructor() {
-    super({ key: 'FirstEnemy' });
+    super({
+      key: CONST.SCENES.ENEMY
+    });
   }
-
-  init() {}
 
   preload() {
     // Testing setting background sound, 
