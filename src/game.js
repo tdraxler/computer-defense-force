@@ -1,9 +1,7 @@
 import Phaser from 'phaser';
 import {TitleScene} from './scenes/title';
 import {Menu} from './scenes/menu';
-import { Player } from './components/player';
-import { Virus } from './components/virus';
-import { FirstEnemy } from './scenes/enemy';
+import {FirstEnemy} from './scenes/enemy';
 
 console.log('Game script loaded successfully!');
 
@@ -24,7 +22,7 @@ let config = {
     }
   },
   scene: [
-    /*TitleScene, Menu*/FirstEnemy
+    TitleScene, Menu, FirstEnemy
   ]/*{
     preload: preload,
     create: create,
