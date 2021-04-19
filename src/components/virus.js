@@ -4,11 +4,13 @@ const VIRUS_KEY = 'virus'
 export class Virus extends Phaser.GameObjects.Image {
   // TODO - Make this useful
 
-  constructor(scene, width, height) {
-    super(scene, width, height, 'virus');
+  constructor(scene, xPos, yPos) {
+    super(scene, xPos, yPos, 'virus');
 
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
+    this.xPos = xPos;
+    this.yPos = yPos;
     this.scene.load.image('enemy2', 'images/Sprite-0002.png');
     //this.config = config;
     //this.config.scene.load.image('enemy2', 'images/Sprite-0002.png', { frameWidth: 200, frameHeight: 50 });
@@ -16,21 +18,21 @@ export class Virus extends Phaser.GameObjects.Image {
 
   createVirus(){
     //this.scene.virus = this.physics.add.sprite(,,VIRUS_KEY)
-    this.scene.add.image(200, this.scene.height / 2, 'enemy2');
+    this.virus2 = this.scene.add.image(this.xPos, this.yPos, 'enemy2');
   }
 
   // from here on out adapted from udemy course examples with very minor changes:
   // https://www.udemy.com/course/making-html5-games-with-phaser-3/
   update() {
-    this.scene.virus.x += 2;
-    if (this.scene.virus.x > this.scene.width) {
-      this.scene.virus.x = 0;
+    this.scene.virus2.x += 2;
+    if (this.scene.virus2.x > this.scene.width) {
+      this.scene.virus2.x = 0;
     }
   }
 
   walk() {
     this.scene.tweens.add({
-      targets: this.scene.virus,
+      targets: this.scene.virus2,
       duration: 8000,
       x: this.scene.width,
       y: 0,
