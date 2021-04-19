@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import Phaser from 'phaser';
 import { CST } from '../CST';
 
@@ -34,7 +35,7 @@ export class TitleScene extends Phaser.Scene {
   }
   //must include create
   create(){
-
+    //set origin to middle of screen instead of upper left
     this.scene.start(CST.SCENES.MENU, "This is the TITLE SCENE");
   }
 }
