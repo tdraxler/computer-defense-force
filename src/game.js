@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import {TitleScene} from './scenes/title';
 import {Menu} from './scenes/menu';
 import { Player } from './components/player';
+import { Virus } from './components/virus';
+import { FirstEnemy } from './scenes/enemy';
 
 console.log('Game script loaded successfully!');
 
@@ -22,7 +24,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu
+    /*TitleScene, Menu*/FirstEnemy
   ]/*{
     preload: preload,
     create: create,
@@ -30,34 +32,26 @@ let config = {
   }*/
 };
 //var testRec;
+let vir;
 function preload()
 {
   // TODO
-  // Testing setting background sound, 
-  // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
-  this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
+  
 }
 
 // adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
 // https://shawnhymel.com/1220/getting-started-with-phaser-part-3-sprites-and-movement/
-
 let bgm;
 function create()
 {
   // TODO
-  bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
-  bgm.play();
+
 }
 
 function update() {
   // TODO
-
 }
 
-
-// Begin
-
-// eslint-disable-next-line
 let game = new Phaser.Game(config);
 /*
 let player = new Player();
