@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { CST } from '../CST';
+import { CONST } from '../constants';
 //import {start} from '../';
 
 let testRec;
@@ -7,7 +7,7 @@ let testRec;
 export class Menu extends Phaser.Scene {
   constructor() {
     super({
-      key:CST.SCENES.MENU
+      key:CONST.SCENES.MENU
     });
   }
   //data from others scenes gets passed in here
@@ -26,18 +26,16 @@ export class Menu extends Phaser.Scene {
     startButton.setInteractive();
     startButton.on('pointerover',()=>{
       startButton.alpha=.7;
-      console.log('STOP TOUCHING ME!!');
     })
     startButton.on('pointerout', ()=>{
       startButton.alpha=1;
-      console.log('Thank You!!');
     })
     startButton.on('pointerup', ()=>{
-      console.log('STOP CLICKING ME!!');
       startButton.alpha=1;
     })
 
   }
+  //the rotation of the rectangle
   update(){
     testRec.rotation += 0.007;
   }

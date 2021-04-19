@@ -1,8 +1,7 @@
 import Phaser from 'phaser';
-import {TitleScene} from './Scenes/title';
-import {Menu} from './Scenes/menu';
+import {TitleScene} from './scenes/title';
+import {Menu} from './scenes/menu';
 import { Player } from './components/player';
-import { Virus } from './components/virus';
 
 console.log('Game script loaded successfully!');
 
@@ -34,7 +33,6 @@ let config = {
 function preload()
 {
   // TODO
-  //this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
 }
 
 // adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
@@ -42,25 +40,14 @@ function preload()
 function create()
 {
   // TODO
-  // add to middle of area
-  //testRec = this.add.sprite(200, 105, 'testRec');
-  /*this.cursors = this.input.keyboard.createCursorKeys();
-  this.rect = testRec;*/
+
 
 
 }
 
 function update() {
   // TODO
-  //testRec.rotation += 0.01;
-  //testRec.body.velocity.x=50;
-  /*if(this.cursors.left.isDown){
-    this.rect.setVelocityX(-20);
-  } else if(this.cursors.right.isDown){
-    this.rect.setVelocityX(20);
-  } else{
-    this.rect.setVelocityX(0);
-  }*/
+
 }
 
 

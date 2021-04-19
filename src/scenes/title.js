@@ -1,12 +1,12 @@
 /* eslint-disable quotes */
 import Phaser from 'phaser';
-import { CST } from '../CST';
+import { CONST } from '../constants';
 
 //loading bar is direct adaptation of https://www.youtube.com/watch?v=OS7neDUUhPE
 export class TitleScene extends Phaser.Scene {
   constructor() {
     super({
-      key:CST.SCENES.START
+      key:CONST.SCENES.START
     });
   }
   init(){
@@ -29,13 +29,12 @@ export class TitleScene extends Phaser.Scene {
     }
     this.load.on('progress', (percent)=>{
       loadBar.fillRect(0, 250, this.game.renderer.width * percent , 15)
-      console.log(percent);
     })
 
   }
   //must include create
   create(){
     //set origin to middle of screen instead of upper left
-    this.scene.start(CST.SCENES.MENU, "This is the TITLE SCENE");
+    this.scene.start(CONST.SCENES.MENU, "This is the TITLE SCENE");
   }
 }
