@@ -28,11 +28,18 @@ let config = {
 function preload()
 {
   // TODO
+  // Testing setting background sound, 
+  // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
+  this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
 }
 
+
+let bgm;
 function create()
 {
   // TODO
+  bgm = thisy.sound.add('bgm', { loop: true, volume: 0.25 });
+  bgm.play();
 }
 
 function update()
