@@ -41,7 +41,6 @@ function preload()
 // adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
 // https://shawnhymel.com/1220/getting-started-with-phaser-part-3-sprites-and-movement/
 
-
 let bgm;
 function create()
 {
