@@ -1,9 +1,8 @@
 import Phaser from 'phaser';
-import {TitleScene} from './scenes/title';
+import {Level} from './scenes/level';
 import {Menu} from './scenes/menu';
-import { Player } from './components/player';
-import { Virus } from './components/virus';
-import { FirstEnemy } from './scenes/enemy';
+import {TitleScene} from './scenes/title';
+import {FirstEnemy} from './scenes/enemy';
 
 console.log('Game script loaded successfully!');
 
@@ -11,7 +10,7 @@ let config = {
   type: Phaser.AUTO,
   width: 400,
   height: 300,
-  backgroundColor: '#000000',
+  //backgroundColor: '#000000',
   scale: {
     mode: Phaser.Scale.FIT
   },
@@ -24,38 +23,11 @@ let config = {
     }
   },
   scene: [
-    /*TitleScene, Menu*/FirstEnemy
-  ]/*{
-    preload: preload,
-    create: create,
-    update: update
-  }*/
+    TitleScene, Menu, Level, FirstEnemy
+  ]
 };
-//var testRec;
-let vir;
-function preload()
-{
-  // TODO
-  
-}
 
-// adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
-// https://shawnhymel.com/1220/getting-started-with-phaser-part-3-sprites-and-movement/
-let bgm;
-function create()
-{
-  // TODO
+// Begin
 
-}
-
-function update() {
-  // TODO
-}
-
+// eslint-disable-next-line
 let game = new Phaser.Game(config);
-/*
-let player = new Player();
-player.testFunc();
-//copied from above Kirsten C
-let virus = new Virus();
-virus.testFunc();*/
