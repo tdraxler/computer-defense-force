@@ -3,6 +3,7 @@ import {TitleScene} from './scenes/title';
 import {Menu} from './scenes/menu';
 import { Player } from './components/player';
 import { Virus } from './components/virus';
+import { FirstEnemy } from './scenes/enemy';
 
 console.log('Game script loaded successfully!');
 
@@ -22,24 +23,20 @@ let config = {
       gravity: { y: 100 }
     }
   },
-  scene: /*[
-    TitleScene, Menu
-  ]*/{
+  scene: [
+    /*TitleScene, Menu*/FirstEnemy
+  ]/*{
     preload: preload,
     create: create,
     update: update
-  }
+  }*/
 };
 //var testRec;
 let vir;
 function preload()
 {
   // TODO
-  // Testing setting background sound, 
-  // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
-  this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
-
-  this.load.image('enemy1', 'images/Sprite-0002.png');
+  
 }
 
 // adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
@@ -48,14 +45,11 @@ let bgm;
 function create()
 {
   // TODO
-  bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
-  bgm.play();
-  this.virus = this.add.image(200, game.config.height / 2, 'enemy1');
 
 }
 
 function update() {
-  
+  // TODO
 }
 
 let game = new Phaser.Game(config);
