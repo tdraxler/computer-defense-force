@@ -10,7 +10,7 @@ let config = {
   type: Phaser.AUTO,
   width: 400,
   height: 300,
-  backgroundColor: '#ffffff',
+  backgroundColor: '#000000',
   scale: {
     mode: Phaser.Scale.FIT
   },
@@ -30,7 +30,7 @@ let config = {
     update: update
   }*/
 };
-var testRec;
+//var testRec;
 function preload()
 {
   // TODO
