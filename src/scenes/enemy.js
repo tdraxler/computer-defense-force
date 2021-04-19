@@ -20,7 +20,7 @@ export class FirstEnemy extends Phaser.Scene {
   create() {
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
-    this.virus = this.add.image(200, this.game.config.height / 2, 'enemy1');
+    this.virus = this.add.image(this.game.config.height / 2, this.game.config.width, 'enemy1');
 
     this.walk();
   }
@@ -28,9 +28,9 @@ export class FirstEnemy extends Phaser.Scene {
   // from here on out adapted from udemy course examples with very minor changes:
   // https://www.udemy.com/course/making-html5-games-with-phaser-3/
   update() {
-    this.virus.x += 2;
-    if (this.virus.x > this.game.config.width) {
-      this.virus.x = 0;
+    this.virus.x -= 2;
+    if (this.virus.x < 0) {
+      this.virus.x = this.game.config.width;
     }
   }
 
@@ -38,7 +38,7 @@ export class FirstEnemy extends Phaser.Scene {
     this.tweens.add({
       targets: this.virus,
       duration: 2000,
-      x: this.game.config.width,
+      x: 0,
       y: 0,
       onComplete: this.onCompleteHandler.bind(this)
     });
@@ -46,7 +46,7 @@ export class FirstEnemy extends Phaser.Scene {
 
   onCompleteHandler(tween, targets, custom) {
     let virus = targets[0];
-    virus.x = 0;
+    virus.x = this.game.config.width;
     virus.y = this.game.config.height / 2;
     this.walk();
   }
