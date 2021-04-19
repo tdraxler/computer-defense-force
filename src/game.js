@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import {TitleScene} from './scenes/title';
+import {Level} from './scenes/level';
 import {Menu} from './scenes/menu';
-import { Player } from './components/player';
+import {TitleScene} from './scenes/title';
+// import { Player } from './components/player';
 
 console.log('Game script loaded successfully!');
 
@@ -22,7 +23,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu
+    Level, TitleScene, Menu
   ]/*{
     preload: preload,
     create: create,
@@ -30,28 +31,28 @@ let config = {
   }*/
 };
 //var testRec;
-function preload()
-{
-  this.load.setBaseURL('/');
-  // Load tile maps
-  this.load.image('tiles', 'images/level1.png');
-  this.load.tilemapTiledJSON('maps/level1');
-}
+// function preload()
+// {
+//   this.load.setBaseURL('/');
+//   // Load tile maps
+//   this.load.image('tiles', 'images/level1.png');
+//   this.load.tilemapTiledJSON('maps/level1');
+// }
 
-// adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
-// https://shawnhymel.com/1220/getting-started-with-phaser-part-3-sprites-and-movement/
-function create()
-{
-  // Set up the map
-  const tilemap = this.make.tilemap({ key: 'maps/level1' });
-  const tileset = tilemap.addTilesetImage('level1_tiles', 'tiles');
-  tilemap.createLayer('base', tileset);
-}
+// // adapted from https://phaser.io/examples/v3/view/game-objects/container/add-sprite-to-container
+// // https://shawnhymel.com/1220/getting-started-with-phaser-part-3-sprites-and-movement/
+// function create()
+// {
+//   // Set up the map
+//   const tilemap = this.make.tilemap({ key: 'maps/level1' });
+//   const tileset = tilemap.addTilesetImage('level1_tiles', 'tiles');
+//   tilemap.createLayer('base', tileset);
+// }
 
-function update() {
-  // TODO
+// function update() {
+//   // TODO
 
-}
+// }
 
 
 // Begin
