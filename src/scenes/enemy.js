@@ -16,14 +16,14 @@ export class FirstEnemy extends Phaser.Scene {
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     //this.load.image('enemy1', 'images/Sprite-0002.png');
-    this.virus2 = new Virus(this, 200, this.game.config.height / 2);
+    this.virus2 = new Virus(this, this.game.config.width, this.game.config.height / 2);
   }
 
   create() {
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
     //this.virus = this.add.image(this.game.config.height / 2, this.game.config.width, 'enemy1');
-    this.virus2.createVirus(this.game.config);
+    this.virus2.createVirus();
     this.walk();
     //this.walk();
   }
