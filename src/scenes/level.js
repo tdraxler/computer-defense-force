@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
 
-let mousePos = { x: 0, y: 0 };
-
+// For debugging the cursor position
+// let mousePos = { x: 0, y: 0 };
 
 export class Level extends Phaser.Scene {
   constructor() {
