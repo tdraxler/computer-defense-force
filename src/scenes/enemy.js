@@ -25,6 +25,8 @@ export class FirstEnemy extends Phaser.Scene {
     this.walk();
   }
 
+  // from here on out adapted from udemy course examples with very minor changes:
+  // https://www.udemy.com/course/making-html5-games-with-phaser-3/
   update() {
     this.virus.x += 2;
     if (this.virus.x > this.game.config.width) {
