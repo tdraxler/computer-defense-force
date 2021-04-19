@@ -39,10 +39,10 @@ export class Level extends Phaser.Scene {
     this.buildReady.y = (16 * Math.floor(this.input.y / 16));
 
     // Debugging - Prints the cursor position. Will be useful later
-    if (mousePos.x != this.input.x && mousePos.y != this.input.y) {
-      mousePos.x = this.input.x;
-      mousePos.y = this.input.y;
-      console.log(`x: ${mousePos.x}, y: ${mousePos.y}`)
-    }
+    // if (mousePos.x != this.input.x && mousePos.y != this.input.y) {
+    //   mousePos.x = this.input.x;
+    //   mousePos.y = this.input.y;
+    //   console.log(`x: ${mousePos.x}, y: ${mousePos.y}`)
+    // }
   }
 }
