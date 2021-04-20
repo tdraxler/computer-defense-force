@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import {Level} from './scenes/level';
 import {Menu} from './scenes/menu';
 import {TitleScene} from './scenes/title';
+// eslint-disable-next-line
+import {FirstEnemy} from './scenes/enemy';
 
 console.log('Game script loaded successfully!');
 
@@ -22,7 +24,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu, Level
+    TitleScene, Menu, Level, FirstEnemy
   ]
 };
 

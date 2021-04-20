@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
+import {FirstEnemy} from './enemy';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -31,6 +32,7 @@ export class Level extends Phaser.Scene {
 
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
+    this.scene.launch(CONST.SCENES.ENEMY); 
   }
 
   update(){

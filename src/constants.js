@@ -3,6 +3,7 @@ export const CONST = {
     START: 'START',
     MENU: 'MENU',
     LEVEL: 'LEVEL',
+    ENEMY: 'ENEMY',
     DEATH: 'DEATH',
     VIC: 'VIC'
   }
