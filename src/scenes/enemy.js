@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
-import { Virus } from '../components/virus';
+//import { Virus } from '../components/virus';
 
 let bgm;
 let num = -2;

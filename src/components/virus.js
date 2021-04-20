@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
 
-const VIRUS_KEY = 'virus';
-expexport class Virus extends Phaser.GameObjects.Image {
+export class Virus extends Phaser.GameObjects.Image {
   // TODO - Make this useful
 
   constructor(scene, xPos, yPos) {
