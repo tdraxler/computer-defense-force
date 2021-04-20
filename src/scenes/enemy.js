@@ -17,6 +17,7 @@ export class FirstEnemy extends Phaser.Scene {
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.image('enemy1', 'images/Sprite-0002.png');
+    // Will return to debug commented out code if modularization figured out.
     //this.virus2 = new Virus(this, this.game.config.width, this.game.config.height / 2);
   }
 
@@ -45,82 +46,41 @@ export class FirstEnemy extends Phaser.Scene {
   walk() {
     this.timeline = this.tweens.createTimeline();
 
-    // top right
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: this.game.config.width - 10,
-      y: 25,
-    });
+    let positions = [
+      {x: this.game.config.width - 10, y: 25,}, 
+      {x: 10, y: 25}, 
+      {x: 10, y: this.game.config.height - 10}, 
+      {x: this.game.config.width - 50, y: this.game.config.height - 15}, 
+      {x: this.game.config.width - 50, y: this.game.config.height - 200}, 
+      {x: this.game.config.width - 120, y: this.game.config.height - 200}, 
+      {x: this.game.config.width - 120, y: this.game.config.height - 100}, 
+      {x: this.game.config.width / 2, y: this.game.config.height - 100}, 
+      {x: this.game.config.width / 2, y: this.game.config.height / 2}
+    ];
 
-    // top left
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: 10,
-      y: 25
-    });
-
-    // bottom left
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: 10,
-      y: this.game.config.height - 10,
-    });
-
-    // bottom right - 50
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: this.game.config.width - 50,
-      y: this.game.config.height - 15,
-    });
-
-    // go up
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: this.game.config.width - 50,
-      y: this.game.config.height - 200
-    });
-
-    // go left
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: this.game.config.width - 120,
-      y: this.game.config.height - 200
-    });
-
-    // go down
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: this.game.config.width - 120,
-      y: this.game.config.height - 100
-    });
-
-    // left again
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: this.game.config.width / 2,
-      y: this.game.config.height - 100
-    });
-
-    // up to destination
-    this.timeline.add({
-      targets: this.virus,
-      duration: 2000,
-      x: this.game.config.width / 2,
-      y: this.game.config.height / 2,
-      onComplete: this.onCompleteHandler.bind(this)
-    });
+    for (let i = 0; i < positions.length; i++) {
+      if (i === 8) {
+        this.timeline.add({
+          targets: this.virus,
+          duration: 2000,
+          x: positions[i].x,
+          y: positions[i].y,
+          onComplete: this.onCompleteHandler.bind(this)
+        });
+      } else {
+        this.timeline.add({
+          targets: this.virus,
+          duration: 2000,
+          x: positions[i].x,
+          y: positions[i].y
+        });
+      }
+    }
 
     this.timeline.play();
   }
 
+  // reset
   onCompleteHandler(tween, targets, custom) {
     let virus = targets[0];
     virus.x = this.game.config.width - 10;

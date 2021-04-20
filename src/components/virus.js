@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
-const VIRUS_KEY = 'virus'
-export class Virus extends Phaser.GameObjects.Image {
+const VIRUS_KEY = 'virus';
+expexport class Virus extends Phaser.GameObjects.Image {
   // TODO - Make this useful
 
   constructor(scene, xPos, yPos) {
@@ -44,10 +44,5 @@ export class Virus extends Phaser.GameObjects.Image {
     let virus = targets[0];
     virus.x = 0;
     virus.y = this.scene.height / 2;
-    this.walk();
-  }
-
-  testFunc() {
-    console.log('test');
   }
 }
