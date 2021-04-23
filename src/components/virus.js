@@ -1,47 +1,69 @@
 import Phaser from 'phaser'
 
-export class Virus extends Phaser.GameObjects.Image {
+let wid;
+let hei;
+
+export class Virus extends Phaser.GameObjects.Container {
   // TODO - Make this useful
 
-  constructor(scene, xPos, yPos) {
-    super(scene, xPos, yPos, 'virus');
+  constructor(config) {
+    super(config.scene);
 
+    this.scene = config.scene;
     this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
-    this.xPos = xPos;
-    this.yPos = yPos;
-    this.scene.load.image('enemy2', 'images/Sprite-0002.png');
-    //this.config = config;
-    //this.config.scene.load.image('enemy2', 'images/Sprite-0002.png', { frameWidth: 200, frameHeight: 50 });
+    this.hp = 10;
   }
 
-  createVirus(){
-    //this.scene.virus = this.physics.add.sprite(,,VIRUS_KEY)
-    this.virus2 = this.scene.add.image(this.xPos, this.yPos, 'enemy2');
+  addVirus(x, y) {
+    this.obj = this.scene.add.image(x - 10, y / 2, 'enemy1');
+    this.add(this.obj);
   }
 
-  // from here on out adapted from udemy course examples with very minor changes:
-  // https://www.udemy.com/course/making-html5-games-with-phaser-3/
-  update() {
-    this.scene.virus2.x += 2;
-    if (this.scene.virus2.x > this.scene.width) {
-      this.scene.virus2.x = 0;
+  walk(width, height) {
+    this.timeline = this.scene.tweens.createTimeline();
+    wid = width;
+    hei = height;
+
+    let positions = [
+      {x: width - 10, y: 25,}, 
+      {x: 10, y: 25}, 
+      {x: 10, y: height - 10}, 
+      {x: width - 50, y: height - 15}, 
+      {x: width - 50, y: height - 200}, 
+      {x: width - 120, y: height - 200}, 
+      {x: width - 120, y: height - 100}, 
+      {x: width / 2, y: height - 100}, 
+      {x: width / 2, y: height / 2}
+    ];
+
+    for (let i = 0; i < positions.length; i++) {
+      if (i === 8) {
+        this.timeline.add({
+          targets: this.obj,
+          duration: 2000,
+          x: positions[i].x,
+          y: positions[i].y,
+          onComplete: this.onCompleteHandler.bind(this)
+        });
+      } else {
+        this.timeline.add({
+          targets: this.obj,
+          duration: 2000,
+          x: positions[i].x,
+          y: positions[i].y
+        });
+      }
     }
+
+    this.timeline.play();
   }
 
-  walk() {
-    this.scene.tweens.add({
-      targets: this.scene.virus2,
-      duration: 8000,
-      x: this.scene.width,
-      y: 0,
-      onComplete: this.onCompleteHandler.bind(this)
-    });
-  }
-
+  // center reached
   onCompleteHandler(tween, targets, custom) {
+    this.scene.events.emit('onCompleteHandler', 1); // <- event emitter
     let virus = targets[0];
-    virus.x = 0;
-    virus.y = this.scene.height / 2;
+    virus.x = wid - 10;
+    virus.y = hei - 25;
+    this.walk();
   }
 }

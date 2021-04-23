@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
-//import { Virus } from '../components/virus';
+import { Virus } from '../components/virus';
 
 let bgm;
 let num = -2;
@@ -24,11 +24,12 @@ export class FirstEnemy extends Phaser.Scene {
   create() {
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
-    this.virus = this.add.image(this.game.config.height - 25, this.game.config.width - 10, 'enemy1');
+    //this.virus = this.add.image(this.game.config.width - 10, this.game.config.height /2, 'enemy1');
+    this.virus = new Virus({ scene: this });
     this.virus.setScale(0.5, 0.5);
-    
+    this.virus.addVirus(this.game.config.width, this.game.config.height);
     //this.virus2.createVirus();
-    this.walk();
+    this.virus.walk();
   }
 
   // from here on out adapted from udemy course examples:
@@ -80,8 +81,9 @@ export class FirstEnemy extends Phaser.Scene {
     this.timeline.play();
   }
 
-  // reset
+  // center reached
   onCompleteHandler(tween, targets, custom) {
+    this.events.emit('onCompleteHandler', 1); // <- event emitter
     let virus = targets[0];
     virus.x = this.game.config.width - 10;
     virus.y = this.game.config.height - 25;
