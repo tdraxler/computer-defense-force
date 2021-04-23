@@ -25,11 +25,10 @@ export class FirstEnemy extends Phaser.Scene {
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
     //this.virus = this.add.image(this.game.config.width - 10, this.game.config.height /2, 'enemy1');
-    this.virus = new Virus({ scene: this });
+    this.virus = new Virus({scene: this, width: this.game.config.width, height: this.game.config.height});
     this.virus.setScale(0.5, 0.5);
-    this.virus.addVirus(this.game.config.width, this.game.config.height);
     //this.virus2.createVirus();
-    this.virus.walk();
+    this.walk();
   }
 
   // from here on out adapted from udemy course examples:

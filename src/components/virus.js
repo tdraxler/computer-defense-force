@@ -7,10 +7,12 @@ export class Virus extends Phaser.GameObjects.Container {
   // TODO - Make this useful
 
   constructor(config) {
-    super(config.scene);
+    super(config.scene, config.width, config.height);
 
     this.scene = config.scene;
     this.scene.add.existing(this);
+    this.obj = this.scene.add.image(config.width - 10, config.height / 2, 'enemy1');
+    this.add(this.obj);
     this.hp = 10;
   }
 
