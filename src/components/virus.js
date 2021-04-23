@@ -9,9 +9,7 @@ export class Virus extends Phaser.GameObjects.Container {
 
     this.scene = config.scene;
     this.scene.add.existing(this);
-    this.width = config.width;
-    this.height = config.height;
-    this.obj = this.scene.add.image(config.width - 10, config.height / 2, 'enemy1');
+    this.obj = this.scene.add.image(config.width - 380, config.height - 170, 'enemy1');
     this.add(this.obj);
     this.hp = 10;
   }
