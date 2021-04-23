@@ -1,7 +1,5 @@
 import Phaser from 'phaser'
 
-let wid;
-let hei;
 
 export class Virus extends Phaser.GameObjects.Container {
   // TODO - Make this useful
@@ -11,31 +9,26 @@ export class Virus extends Phaser.GameObjects.Container {
 
     this.scene = config.scene;
     this.scene.add.existing(this);
+    this.width = config.width;
+    this.height = config.height;
     this.obj = this.scene.add.image(config.width - 10, config.height / 2, 'enemy1');
     this.add(this.obj);
     this.hp = 10;
   }
 
-  addVirus(x, y) {
-    this.obj = this.scene.add.image(x - 10, y / 2, 'enemy1');
-    this.add(this.obj);
-  }
-
-  walk(width, height) {
+  walk() {
     this.timeline = this.scene.tweens.createTimeline();
-    wid = width;
-    hei = height;
 
     let positions = [
-      {x: width - 10, y: 25,}, 
+      {x: this.width - 10, y: 25,}, 
       {x: 10, y: 25}, 
-      {x: 10, y: height - 10}, 
-      {x: width - 50, y: height - 15}, 
-      {x: width - 50, y: height - 200}, 
-      {x: width - 120, y: height - 200}, 
-      {x: width - 120, y: height - 100}, 
-      {x: width / 2, y: height - 100}, 
-      {x: width / 2, y: height / 2}
+      {x: 10, y: this.height - 10}, 
+      {x: this.width - 50, y: this.height - 15}, 
+      {x: this.width - 50, y: this.height - 200}, 
+      {x: this.width - 120, y: this.height - 200}, 
+      {x: this.width - 120, y: this.height - 100}, 
+      {x: this.width / 2, y: this.height - 100}, 
+      {x: this.width / 2, y: this.height / 2}
     ];
 
     for (let i = 0; i < positions.length; i++) {
@@ -64,8 +57,8 @@ export class Virus extends Phaser.GameObjects.Container {
   onCompleteHandler(tween, targets, custom) {
     this.scene.events.emit('onCompleteHandler', 1); // <- event emitter
     let virus = targets[0];
-    virus.x = wid - 10;
-    virus.y = hei - 25;
+    virus.x = this.width - 10;
+    virus.y = this.height - 25;
     this.walk();
   }
 }
