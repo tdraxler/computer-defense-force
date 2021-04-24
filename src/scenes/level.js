@@ -7,6 +7,12 @@ import {Turret} from '../components/turret';
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
 
+const TILE = CONST.T_SIZE;
+
+const nearestTile = (num) => {
+  return (TILE * Math.floor(num / TILE));
+}
+
 export class Level extends Phaser.Scene {
   constructor() {
     super({
@@ -24,7 +30,8 @@ export class Level extends Phaser.Scene {
 
     // Load core for the player to protect (TODO - change to spritesheet)
     this.load.image('core', 'images/player-sprites/core.png');
-    this.load.image('firewall', 'images/player-sprites/firewall.png');
+    // this.load.image('firewall', 'images/player-sprites/firewall.png');
+    this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
   }
 
   create(){
@@ -42,20 +49,27 @@ export class Level extends Phaser.Scene {
     this.scene.launch(CONST.SCENES.ENEMY); 
 
     // Set up core for the player to protect
-    this.core = new Core(this, 12 * 16, 10 * 16);
+    this.core = new Core(this, 12 * TILE, 10 * TILE);
 
     this.turrets = [];
 
+    // Add a turret upon click
     this.input.on('pointerup', (pointer) => {
-      console.log(pointer.worldX, pointer.worldY);
-      this.turrets.push(new Turret(this, pointer.worldX, pointer.worldY, 'firewall'));
+      this.turrets.push(
+        new Turret(
+          this,
+          nearestTile(pointer.worldX) + TILE / 2,
+          nearestTile(pointer.worldY),
+          'firewall'
+        )
+      );
     });
   }
 
   update(){
     // Update buildable area indicator
-    this.buildReady.x = (16 * Math.floor(this.input.x / 16));
-    this.buildReady.y = (16 * Math.floor(this.input.y / 16));
+    this.buildReady.x = (TILE * Math.floor(this.input.x / TILE));
+    this.buildReady.y = (TILE * Math.floor(this.input.y / TILE));
 
     // Debugging - Prints the cursor position. Will be useful later
     // if (mousePos.x != this.input.x && mousePos.y != this.input.y) {
@@ -64,5 +78,10 @@ export class Level extends Phaser.Scene {
     //   console.log(`x: ${mousePos.x}, y: ${mousePos.y}`)
     // }
 
+
+    // Turret logic
+    this.turrets.forEach(turret => {
+      turret.update();
+    });
   }
 }
