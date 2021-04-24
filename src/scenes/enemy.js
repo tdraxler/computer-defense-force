@@ -20,7 +20,7 @@ export class FirstEnemy extends Phaser.Scene {
     // Testing setting background sound, 
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
-    this.load.image('enemy1', 'images/Sprite-0002.png');
+    this.load.spritesheet('enemy1', 'images/virus_v1.png', { frameWidth: 50, frameHeight: 50, endFrame: 4 });
   }
 
   create() {
@@ -28,6 +28,14 @@ export class FirstEnemy extends Phaser.Scene {
     bgm.play();
     this.virus = new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height / 2});
     this.virus.setScale(0.5, 0.5);
+    let enemyAnims = { 
+      key: 'walking', 
+      frames: this.anims.generateFrameNames('enemy1', { start: 0, end: 3, first: 3 }),
+      frameRate: 8,
+      repeat: -1
+    };
+    this.anims.create(enemyAnims);
+    this.virus.play('walking');
     this.walk();
   }
 
