@@ -40,8 +40,7 @@ export class FirstEnemy extends Phaser.Scene {
     this.viruses = [];
     // create viruses and have them do their path
     for(let i = 0; i < 4; i++) {
-      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}))
-      this.viruses[i].setScale(0.5, 0.5);
+      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
       this.viruses[i].play('walking');
       // delay each virus walk start
       this.timer = this.time.delayedCall(i * 5000, this.walk, [this.viruses[i]], this);
