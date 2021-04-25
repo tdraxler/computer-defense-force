@@ -9,7 +9,7 @@ export class Death extends Phaser.Scene {
     });
   }
   //data from others scenes gets passed in here
-  init(data){
+  init(){
 
   }
   preload(){
@@ -21,16 +21,16 @@ export class Death extends Phaser.Scene {
     this.add.image(55,25,'game-over').setOrigin(0).setDepth(3);
     this.add.image(30,15,'over-back').setOrigin(0).setDepth(2);
 
-    let startButton = this.add.image(150,200,'startButton').setOrigin(0).setDepth(1)
-    startButton.setInteractive();
-    startButton.on('pointerover',()=>{
-      startButton.alpha=.7;
+    let playAgainButton = this.add.image(150,250,'play-again_death').setOrigin(0).setDepth(1)
+    playAgainButton.setInteractive();
+    playAgainButton.on('pointerover',()=>{
+      playAgainButton.alpha=.7;
     })
-    startButton.on('pointerout', ()=>{
-      startButton.alpha=1;
+    playAgainButton.on('pointerout', ()=>{
+      playAgainButton.alpha=1;
     })
-    startButton.on('pointerup', ()=>{
-      startButton.alpha=1;
+    playAgainButton.on('pointerup', ()=>{
+      playAgainButton.alpha=1;
       this.scene.start(CONST.SCENES.MENU);
     })
 

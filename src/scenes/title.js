@@ -23,6 +23,9 @@ export class TitleScene extends Phaser.Scene {
     this.load.image('game-over', './images/game-over.png');
     this.load.image('over-back', './images/over-back.png');
     this.load.image('gameOver-back', './images/gameOver-background.png');
+    this.load.image('victory-background', './images/VictoryPage-Background.png');
+    this.load.image('play-again_vic', './images/playAgain.png');
+    this.load.image('play-again_death', './images/playAgainDeath.png');
 
     let loadBar = this.add.graphics({
       fillStyle: {
