@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
-import {FirstEnemy} from './enemy';
 import {Core} from '../components/core';
 import {Turret} from '../components/turret';
 
@@ -63,6 +62,14 @@ export class Level extends Phaser.Scene {
           'firewall'
         )
       );
+    });
+
+    // Enemy stuff, on separate scene for now.
+    this.scene.run(CONST.SCENES.ENEMY);
+
+    // when event triggered, print GAME OVER on screen
+    this.scene.get(CONST.SCENES.ENEMY).events.on('onCompleteHandler', () => {
+      this.label = this.add.text(10, 10, 'GAME OVER', {fontSize: 32});
     });
   }
 

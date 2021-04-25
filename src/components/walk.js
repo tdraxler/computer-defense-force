@@ -1,3 +1,6 @@
+// from here on out adapted from udemy course examples:
+// https://www.udemy.com/course/making-html5-games-with-phaser-3/
+// Main change is the use of a timeline instead of a single event
 export function walk(enemy) {
   this.timeline = this.tweens.createTimeline();
 
@@ -17,7 +20,7 @@ export function walk(enemy) {
     if (i === 8) {
       this.timeline.add({
         targets: enemy,
-        duration: 2000,
+        duration: 5000,
         x: positions[i].x,
         y: positions[i].y,
         onComplete: this.onCompleteHandler
@@ -25,7 +28,7 @@ export function walk(enemy) {
     } else {
       this.timeline.add({
         targets: enemy,
-        duration: 2000,
+        duration: 5000,
         x: positions[i].x,
         y: positions[i].y
       });
@@ -41,5 +44,6 @@ export function onCompleteHandler (tween, targets, custom) {
   let virus = targets[0];
   virus.x = this.game.config.width - 10;
   virus.y = this.game.config.height - 25;
+  this.explosion.play();
   this.walk(virus);
 }

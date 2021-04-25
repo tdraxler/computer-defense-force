@@ -20,12 +20,14 @@ export class FirstEnemy extends Phaser.Scene {
     // Testing setting background sound, 
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
+    this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
     this.load.spritesheet('enemy1', 'images/virus_v1.png', { frameWidth: 50, frameHeight: 50, endFrame: 4 });
   }
 
   create() {
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
+    this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     let enemyAnims = { 
       key: 'walking', 
