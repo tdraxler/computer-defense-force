@@ -3,9 +3,6 @@ import { CONST } from '../constants';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 
-let bgm;
-let num = -2;
-
 export class FirstEnemy extends Phaser.Scene {
   constructor() {
     super({
@@ -17,22 +14,15 @@ export class FirstEnemy extends Phaser.Scene {
   }
 
   preload() {
-    // Testing setting background sound, 
-    // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
-    this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
-    this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
-    this.load.spritesheet('enemy1', 'images/virus_v1.png', { frameWidth: 50, frameHeight: 50, endFrame: 4 });
   }
 
   create() {
-    bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
-    bgm.play();
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     // Add walking animation for sprite
     let enemyAnims = { 
       key: 'walking', 
-      frames: this.anims.generateFrameNames('enemy1', { start: 0, end: 3, first: 3 }),
+      frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 3, first: 3 }),
       frameRate: 8,
       repeat: -1
     };

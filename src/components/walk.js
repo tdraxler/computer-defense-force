@@ -41,9 +41,6 @@ export function walk(enemy) {
 // center reached
 export function onCompleteHandler (tween, targets, custom) {
   this.events.emit('onCompleteHandler', 1); // <- event emitter
-  let virus = targets[0];
-  virus.x = this.game.config.width - 10;
-  virus.y = this.game.config.height - 25;
   this.explosion.play();
-  this.walk(virus);
+  targets[0].destroy();
 }
