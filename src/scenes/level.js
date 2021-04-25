@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
-import {FirstEnemy} from './enemy';
 import {Core} from '../components/core';
 import {Turret} from '../components/turret';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
+
+let bgm;
 
 const TILE = CONST.T_SIZE;
 
@@ -21,6 +22,12 @@ export class Level extends Phaser.Scene {
   }
 
   preload(){
+    // Testing setting background sound, 
+    // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
+    this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
+    this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
+    this.load.spritesheet('enemy1', 'images/virus_v1.png', { frameWidth: 50, frameHeight: 50, endFrame: 4 });
+
     // Map & tiles
     this.load.image('tiles', 'images/level1.png');
     this.load.tilemapTiledJSON('maps/level1');
@@ -35,6 +42,10 @@ export class Level extends Phaser.Scene {
   }
 
   create(){
+    // Star BGM
+    bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
+    bgm.play();
+
     // Map and tiles setup
     this.tilemap = this.make.tilemap({ key: 'maps/level1' });
     let tileset = this.tilemap.addTilesetImage('level1_tiles', 'tiles');
@@ -63,6 +74,14 @@ export class Level extends Phaser.Scene {
           'firewall'
         )
       );
+    });
+
+    // Enemy stuff, on separate scene for now.
+    this.scene.run(CONST.SCENES.ENEMY);
+
+    // when event triggered, print GAME OVER on screen
+    this.scene.get(CONST.SCENES.ENEMY).events.on('onCompleteHandler', () => {
+      this.scene.start(CONST.SCENES.DEATH); // Thanx Kirsten
     });
   }
 
