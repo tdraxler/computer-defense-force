@@ -26,8 +26,7 @@ export class FirstEnemy extends Phaser.Scene {
   create() {
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
-    this.virus = new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height / 2});
-    this.virus.setScale(0.5, 0.5);
+
     let enemyAnims = { 
       key: 'walking', 
       frames: this.anims.generateFrameNames('enemy1', { start: 0, end: 3, first: 3 }),
@@ -35,17 +34,18 @@ export class FirstEnemy extends Phaser.Scene {
       repeat: -1
     };
     this.anims.create(enemyAnims);
-    this.virus.play('walking');
-    this.walk();
+    this.viruses = [];
+    for(let i = 0; i < 4; i++) {
+      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height / 2}))
+      this.viruses[i].setScale(0.5, 0.5);
+      this.viruses[i].play('walking');
+      this.timer = this.time.delayedCall(i * 5000, this.walk, [this.viruses[i]], this);
+    }
   }
 
   // from here on out adapted from udemy course examples:
   // https://www.udemy.com/course/making-html5-games-with-phaser-3/
   // Main change is the use of a timeline instead of a single event
   update() {
-    this.virus.x += num;
-    if (this.virus.x < 0) {
-      num *= -1;
-    }
   }
 }
