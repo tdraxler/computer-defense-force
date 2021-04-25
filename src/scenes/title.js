@@ -15,7 +15,17 @@ export class TitleScene extends Phaser.Scene {
   preload(){
     this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
     this.load.image('imgTitle', './images/TitlePage-Background.png');
-    this.load.image('startButton', './images/start.png')
+    this.load.image('startButton', './images/start.png');
+    this.load.image('title', './images/titlePage-title.png');
+    this.load.image('title_back', './images/titleName_background.png');
+    this.load.image('victory', './images/victory-letters.png');
+    this.load.image('vic_back', './images/vicTitle_background.png');
+    this.load.image('game-over', './images/game-over.png');
+    this.load.image('over-back', './images/over-back.png');
+    this.load.image('gameOver-back', './images/gameOver-background.png');
+    this.load.image('victory-background', './images/VictoryPage-Background.png');
+    this.load.image('play-again_vic', './images/playAgain.png');
+    this.load.image('play-again_death', './images/playAgainDeath.png');
 
     let loadBar = this.add.graphics({
       fillStyle: {
