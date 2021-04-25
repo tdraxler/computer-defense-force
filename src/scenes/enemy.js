@@ -36,7 +36,7 @@ export class FirstEnemy extends Phaser.Scene {
     this.anims.create(enemyAnims);
     this.viruses = [];
     for(let i = 0; i < 4; i++) {
-      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height / 2}))
+      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}))
       this.viruses[i].setScale(0.5, 0.5);
       this.viruses[i].play('walking');
       this.timer = this.time.delayedCall(i * 5000, this.walk, [this.viruses[i]], this);
