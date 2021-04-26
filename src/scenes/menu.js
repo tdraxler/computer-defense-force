@@ -9,14 +9,16 @@ export class Menu extends Phaser.Scene {
       key:CONST.SCENES.MENU
     });
   }
+
   //data from others scenes gets passed in here
   init(data){
     console.log(data);
     console.log('I am now the menu scene, I got data from the title scene!')
   }
-  preload(){
 
+  preload(){        
   }
+
   //must include create
   create(){
     this.add.image(0,0,'imgTitle').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
@@ -33,10 +35,11 @@ export class Menu extends Phaser.Scene {
     })
     startButton.on('pointerup', ()=>{
       startButton.alpha=1;
-      this.scene.start(CONST.SCENES.TUTORIAL);
+      this.scene.start(CONST.SCENES.LEVEL);
     })
 
   }
+  
   //the rotation of the rectangle
   update(){
   }
