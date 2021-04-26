@@ -39,6 +39,16 @@ export class Level extends Phaser.Scene {
     this.load.image('core', 'images/player-sprites/core.png');
     // this.load.image('firewall', 'images/player-sprites/firewall.png');
     this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
+
+    // Set up keyboard handler
+    this.keyUp = this.input.keyboard.addKey('W');
+    this.keyDown = this.input.keyboard.addKey('S');
+    this.keyLeft = this.input.keyboard.addKey('A');
+    this.keyRight = this.input.keyboard.addKey('D');
+    this.keyAltUp = this.input.keyboard.addKey('Up');
+    this.keyAltDown = this.input.keyboard.addKey('Down');
+    this.keyAltLeft = this.input.keyboard.addKey('Left');
+    this.keyAltRight = this.input.keyboard.addKey('Right');
   }
 
   create(){
@@ -83,18 +93,34 @@ export class Level extends Phaser.Scene {
     this.scene.get(CONST.SCENES.ENEMY).events.on('onCompleteHandler', () => {
       this.scene.start(CONST.SCENES.DEATH); // Thanx Kirsten
     });
+
+    // Set up camera
+    this.physics.world.bounds.width = this.tilemap.widthInPixels;
+    this.physics.world.bounds.height = this.tilemap.heightInPixels;
+    this.cameras.main.setBounds(
+      0,
+      0,
+      this.tilemap.widthInPixels,
+      this.tilemap.heightInPixels
+    );
   }
 
   update(){
     // Update buildable area indicator
-    this.buildReady.x = (TILE * Math.floor(this.input.x / TILE));
-    this.buildReady.y = (TILE * Math.floor(this.input.y / TILE));
+    this.input.activePointer.updateWorldPoint(this.cameras.main);
+    this.buildReady.x = (TILE * Math.floor(this.input.activePointer.worldX / TILE));
+    this.buildReady.y = (TILE * Math.floor(this.input.activePointer.worldY / TILE));
 
     // Debugging - Prints the cursor position. Will be useful later
     // if (mousePos.x != this.input.x && mousePos.y != this.input.y) {
-    //   mousePos.x = this.input.x;
+    //   mousePos.x = this.input.x
     //   mousePos.y = this.input.y;
+
+    //   // this.input.pointer.updateWorldPoint(this.cameras.main);
+    //   this.input.activePointer.updateWorldPoint(this.cameras.main);
+
     //   console.log(`x: ${mousePos.x}, y: ${mousePos.y}`)
+    //   console.log(`x: ${this.input.activePointer.worldX}, y: ${this.input.activePointer.worldY}`)
     // }
 
 
@@ -102,5 +128,19 @@ export class Level extends Phaser.Scene {
     this.turrets.forEach(turret => {
       turret.update();
     });
+
+    // Keyboard camera controls
+    if (this.keyDown.isDown || this.keyAltDown.isDown) {
+      this.cameras.main.scrollY += 5;
+    }
+    if (this.keyUp.isDown || this.keyAltUp.isDown) {
+      this.cameras.main.scrollY -= 5;
+    }
+    if (this.keyRight.isDown || this.keyAltRight.isDown) {
+      this.cameras.main.scrollX += 5;
+    }
+    if (this.keyLeft.isDown || this.keyAltLeft.isDown) {
+      this.cameras.main.scrollX -= 5;
+    }
   }
 }
