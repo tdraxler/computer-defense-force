@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import {Level} from './scenes/level';
+import {BuildMenu} from './scenes/build-ui';
 import {Menu} from './scenes/menu';
 import {TitleScene} from './scenes/title';
 import {Tutorial} from './scenes/tutorial';
@@ -27,7 +28,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu, Tutorial, Level, FirstEnemy, Death, Victory
+    TitleScene, Menu, Tutorial, Level, FirstEnemy, Death, Victory, BuildMenu
   ]
 };
 

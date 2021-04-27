@@ -103,6 +103,9 @@ export class Level extends Phaser.Scene {
       this.tilemap.widthInPixels,
       this.tilemap.heightInPixels
     );
+
+    // Launch Build Menu UI
+    this.scene.launch(CONST.SCENES.BUILD_MENU); 
   }
 
   update(){
