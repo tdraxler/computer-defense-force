@@ -3,6 +3,8 @@ import { CONST, CURRENT_ACTION } from '../constants';
 import { Core } from '../components/core';
 import { Turret } from '../components/turret';
 import Player from '../components/player';
+import { Virus } from '../components/virus';
+import { walk, onCompleteHandler } from '../components/walk';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -124,12 +126,32 @@ export class Level extends Phaser.Scene {
       }
     });
 
-    // Enemy stuff, on separate scene for now.
-    this.scene.run(CONST.SCENES.ENEMY);
+    // Enemy stuff
+    this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
+
+    // Add walking animation for sprite
+    let enemyAnims = { 
+      key: 'walking', 
+      frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 3, first: 3 }),
+      frameRate: 8,
+      repeat: -1
+    };
+    this.anims.create(enemyAnims);
+    this.viruses = [];
+    // create viruses and have them do their path
+    for(let i = 0; i < 4; i++) {
+      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
+      this.viruses[i].play('walking');
+      // delay each virus walk start
+      this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
+    }
+
+    // end of enemy stuff
 
     // when event triggered, print GAME OVER on screen
-    this.scene.get(CONST.SCENES.ENEMY).events.on('onCompleteHandler', () => {
-      this.scene.start(CONST.SCENES.DEATH); // Thanx Kirsten
+    this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
+      this.scene.start(CONST.SCENES.DEATH);
+      bgm.stop();
     });
 
     // Set up camera
