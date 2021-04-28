@@ -57,4 +57,9 @@ export class Turret extends Phaser.GameObjects.Sprite {
   update() {
     this.head.update();
   }
+
+  dismantle() {
+    this.head.destroy();
+    this.head = null;
+  }
 }

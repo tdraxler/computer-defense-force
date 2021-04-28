@@ -3,7 +3,7 @@ import { CURRENT_ACTION } from '../constants';
 class Player {
   constructor() {
     this.score = 0
-    this.action = CURRENT_ACTION.BUILD;
+    this.action = CURRENT_ACTION.NONE;
   }
 
   reset() {
@@ -11,8 +11,8 @@ class Player {
     this.action = CURRENT_ACTION.BUILD;
   }
 
-  testFunc() {
-    console.log('test');
+  setAction(newAction) {
+    this.action = newAction;
   }
 }
 
