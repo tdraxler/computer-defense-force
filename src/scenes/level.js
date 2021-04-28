@@ -154,6 +154,7 @@ export class Level extends Phaser.Scene {
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
       this.scene.start(CONST.SCENES.DEATH);
+      this.scene.stop(CONST.SCENES.LEVEL);
       bgm.stop();
     });
 
@@ -207,16 +208,6 @@ export class Level extends Phaser.Scene {
     }
     if (this.keyLeft.isDown || this.keyAltLeft.isDown) {
       this.cameras.main.scrollX -= 5;
-    }
-
-    for (let i = 0; i < this.viruses.length; i++) {
-      if (this.turrets.length > 0) {
-        for(let j = 0; j < this.turrets.length; j++) {
-          if (this.viruses[i].x === this.turrets[j].x) {
-            this.viruses[i].timeline.stop()
-          }
-        }
-      }
     }
   }
 }
