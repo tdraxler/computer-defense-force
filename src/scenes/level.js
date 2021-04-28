@@ -115,6 +115,7 @@ export class Level extends Phaser.Scene {
 
           // Remove all references to it.
           this.turrets.splice(turretsArrInd, 1);
+          console.log(this.turrets.length);
           this.turretMap[mapInd] = null;
         }
       }
