@@ -74,7 +74,6 @@ export class Level extends Phaser.Scene {
 
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
-    this.scene.launch(CONST.SCENES.ENEMY); 
 
     // Set up core for the player to protect
     this.core = new Core(this, 19 * TILE, 11 * TILE);
