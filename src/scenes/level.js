@@ -26,9 +26,6 @@ export class Level extends Phaser.Scene {
     super({
       key:CONST.SCENES.LEVEL
     });
-
-    this.walk = walk.bind(this);
-    this.onCompleteHandler = onCompleteHandler.bind(this);
   }
 
   preload(){
@@ -146,7 +143,7 @@ export class Level extends Phaser.Scene {
       this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
       this.viruses[i].play('walking');
       // delay each virus walk start
-      this.timer = this.time.delayedCall(i * 5000, this.walk, [this.viruses[i]], this);
+      this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
     }
 
     // end of enemy stuff
