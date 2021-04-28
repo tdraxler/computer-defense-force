@@ -129,8 +129,7 @@ export class Level extends Phaser.Scene {
       }
     });
 
-    // Enemy stuff, on separate scene for now.
-    //this.scene.run(CONST.SCENES.ENEMY);
+  // Enemy stuff
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     // Add walking animation for sprite
@@ -147,14 +146,14 @@ export class Level extends Phaser.Scene {
       this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
       this.viruses[i].play('walking');
       // delay each virus walk start
-      this.timer = this.time.delayedCall(i * 5000, this.walk, [this.viruses[i]], this);
+      this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
     }
 
     // end of enemy stuff
 
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
-      this.scene.start(CONST.SCENES.DEATH); // Thanx Kirsten
+      this.scene.start(CONST.SCENES.DEATH);
       bgm.stop();
     });
 
