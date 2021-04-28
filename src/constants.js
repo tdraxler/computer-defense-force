@@ -11,3 +11,9 @@ export const CONST = {
   },
   T_SIZE: 16
 };
+
+export const CURRENT_ACTION = {
+  BUILD:    'BUILD',
+  DEMOLISH: 'DEMOLISH',
+  NONE:     'NONE'
+};

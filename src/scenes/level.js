@@ -63,7 +63,7 @@ export class Level extends Phaser.Scene {
     this.tilemap.createLayer('above1', tileset);
 
     // Cursor
-    this.input.setDefaultCursor('url(images/cursor.png), pointer');
+    this.input.setDefaultCursor('url(images/ui/cursors/delete.png), pointer');
 
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
