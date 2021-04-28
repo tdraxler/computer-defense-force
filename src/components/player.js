@@ -1,11 +1,20 @@
-export class Player {
-  // TODO - Make this useful
+import { CURRENT_ACTION } from '../constants';
 
-  construction() {
-    this.score = 0;
+class Player {
+  constructor() {
+    this.score = 0
+    this.action = CURRENT_ACTION.NONE;
   }
 
-  testFunc() {
-    console.log('test');
+  reset() {
+    this.score = 0;
+    this.action = CURRENT_ACTION.BUILD;
+  }
+
+  setAction(newAction) {
+    this.action = newAction;
   }
 }
+
+// This next line makes it so the entire game just uses one Player instance
+export default (new Player);

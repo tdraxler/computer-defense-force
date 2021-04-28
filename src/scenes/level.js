@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import { CONST } from '../constants';
-import {Core} from '../components/core';
-import {Turret} from '../components/turret';
+import { CONST, CURRENT_ACTION } from '../constants';
+import { Core } from '../components/core';
+import { Turret } from '../components/turret';
+import Player from '../components/player';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -12,6 +13,10 @@ const TILE = CONST.T_SIZE;
 
 const nearestTile = (num) => {
   return (TILE * Math.floor(num / TILE));
+}
+
+const nearestIndex = (num) => {
+  return (Math.floor(num / TILE));
 }
 
 export class Level extends Phaser.Scene {
@@ -63,7 +68,7 @@ export class Level extends Phaser.Scene {
     this.tilemap.createLayer('above1', tileset);
 
     // Cursor
-    this.input.setDefaultCursor('url(images/cursor.png), pointer');
+    this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
 
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
@@ -73,17 +78,50 @@ export class Level extends Phaser.Scene {
     this.core = new Core(this, 12 * TILE, 10 * TILE);
 
     this.turrets = [];
+    this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
 
-    // Add a turret upon click
+    // Add or remove a turret upon click
     this.input.on('pointerup', (pointer) => {
-      this.turrets.push(
-        new Turret(
-          this,
-          nearestTile(pointer.worldX) + TILE / 2,
-          nearestTile(pointer.worldY),
-          'firewall'
-        )
-      );
+      let mapInd = (nearestIndex(pointer.worldY) * this.tilemap.width + nearestIndex(pointer.worldX));
+
+      if (Player.action == CURRENT_ACTION.BUILD) {
+        if (this.turretMap[mapInd] == null) {
+          let newTurret = new Turret(
+            this,
+            nearestTile(pointer.worldX) + TILE / 2,
+            nearestTile(pointer.worldY),
+            'firewall'
+          );
+  
+          this.turrets.push(newTurret);
+  
+          this.turretMap[mapInd] = newTurret;
+        }
+        else {
+          console.log('occupied - can\'t build');
+        }
+      }
+      else if (Player.action == CURRENT_ACTION.DEMOLISH) {
+        if (this.turretMap[mapInd] == null) {
+          console.log('unoccupied space - nothing to delete');
+        }
+        else {
+          let toDelete = this.turretMap[mapInd]; // Get object ref
+          let turretsArrInd = this.turrets.indexOf(toDelete);
+
+          // Clean up and destroy it
+          toDelete.dismantle();
+          toDelete.destroy();
+
+          // Remove all references to it.
+          this.turrets.splice(turretsArrInd, 1);
+          console.log(this.turrets.length);
+          this.turretMap[mapInd] = null;
+        }
+      }
+      else {
+        console.log('No action selected');
+      }
     });
 
     // Enemy stuff, on separate scene for now.
@@ -103,6 +141,9 @@ export class Level extends Phaser.Scene {
       this.tilemap.widthInPixels,
       this.tilemap.heightInPixels
     );
+
+    // Launch Build Menu UI
+    this.scene.launch(CONST.SCENES.BUILD_MENU); 
   }
 
   update(){
