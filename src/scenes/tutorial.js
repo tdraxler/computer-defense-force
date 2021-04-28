@@ -32,7 +32,7 @@ export class Tutorial extends Phaser.Scene {
     })
     nextButton.on('pointerup', ()=>{
       nextButton.alpha=1;
-      this.scene.start(CONST.SCENES.VIC);
+      this.scene.start(CONST.SCENES.LEVEL);
     })
   }
   //the rotation of the rectangle
