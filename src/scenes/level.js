@@ -26,6 +26,9 @@ export class Level extends Phaser.Scene {
     super({
       key:CONST.SCENES.LEVEL
     });
+
+    this.walk = walk.bind(this);
+    this.onCompleteHandler = onCompleteHandler.bind(this);
   }
 
   preload(){
@@ -126,7 +129,7 @@ export class Level extends Phaser.Scene {
       }
     });
 
-    // Enemy stuff
+  // Enemy stuff
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     // Add walking animation for sprite
@@ -151,6 +154,7 @@ export class Level extends Phaser.Scene {
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
       this.scene.start(CONST.SCENES.DEATH);
+      this.scene.stop(CONST.SCENES.LEVEL);
       bgm.stop();
     });
 
