@@ -128,7 +128,7 @@ export class Level extends Phaser.Scene {
       }
     });
 
-  // Enemy stuff
+    // Enemy stuff
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     // Add walking animation for sprite
