@@ -152,8 +152,10 @@ export class Level extends Phaser.Scene {
 
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
+      this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
       this.scene.start(CONST.SCENES.DEATH);
       this.scene.stop(CONST.SCENES.LEVEL);
+      this.scene.stop(CONST.SCENES.BUILD_MENU);
       bgm.stop();
     });
 
