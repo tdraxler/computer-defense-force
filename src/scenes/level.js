@@ -75,7 +75,7 @@ export class Level extends Phaser.Scene {
     this.scene.launch(CONST.SCENES.ENEMY); 
 
     // Set up core for the player to protect
-    this.core = new Core(this, 12 * TILE, 10 * TILE);
+    this.core = new Core(this, 19 * TILE, 11 * TILE);
 
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
