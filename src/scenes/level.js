@@ -77,10 +77,9 @@ export class Level extends Phaser.Scene {
 
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
-    this.scene.launch(CONST.SCENES.ENEMY); 
 
     // Set up core for the player to protect
-    this.core = new Core(this, 12 * TILE, 10 * TILE);
+    this.core = new Core(this, 19 * TILE, 11 * TILE);
 
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
@@ -129,7 +128,7 @@ export class Level extends Phaser.Scene {
       }
     });
 
-  // Enemy stuff
+    // Enemy stuff
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     // Add walking animation for sprite
