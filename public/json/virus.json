@@ -1,0 +1,14 @@
+{
+  "name": "Virus",
+  "hp": 20,
+  "damage": 25,
+  "source": "images/virus_v1.png",
+  "width": 50,
+  "height": 50,
+  "start": [
+    {"x": -20, "y": -20},
+    {"x": -20, "y": 320},
+    {"x": 420, "y": 320},
+    {"x": 420, "y": -20}
+  ]
+}
