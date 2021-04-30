@@ -5,6 +5,7 @@ import { Turret } from '../components/turret';
 import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
+import { generatePathMap, nextDir } from '../components/pathfinding';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -153,8 +154,14 @@ export class Level extends Phaser.Scene {
       // delay each virus walk start
       this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
     }
-
     // end of enemy stuff
+
+    // After enemies are set up, create second layer that will render above everything else
+    this.tilemap.createLayer('above2', tileset);
+    this.collidemap = this.tilemap.createLayer('collide', tileset);
+    this.collidemap.setVisible(false);
+
+
 
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
@@ -177,6 +184,10 @@ export class Level extends Phaser.Scene {
 
     // Launch Build Menu UI
     this.scene.launch(CONST.SCENES.BUILD_MENU); 
+
+    // console.log(this.collidemap);
+    this.pathmap = generatePathMap(20, 11, this.collidemap);
+    // console.log()
   }
 
   update(){
