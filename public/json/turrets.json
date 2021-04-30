@@ -3,6 +3,7 @@
     "name": "firewall",
     "hp": 5,
     "damage": 2,
+    "rtf": 1,
     "source": "images/player-sprites/firewall.png",
     "width": 16,
     "height": 24
@@ -11,6 +12,7 @@
     "name": "virus-blaster",
     "hp": 15,
     "damage": 5,
+    "rtf": 2,
     "source": "",
     "width": 16,
     "height": 24
@@ -19,6 +21,7 @@
     "name": "rectifier",
     "hp": 20,
     "damage": 20,
+    "rtf": 5,
     "source": "",
     "width": 16,
     "height": 24
@@ -27,6 +30,7 @@
     "name": "psu",
     "hp": 5,
     "damage": 0,
+    "ep": 0.33,
     "source": "",
     "width": 16,
     "height": 24
