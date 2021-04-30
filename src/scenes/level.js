@@ -32,6 +32,7 @@ export class Level extends Phaser.Scene {
   }
 
   preload(){
+    // Load config data from JSON
     const request = new XMLHttpRequest();
     request.open('GET', 'json/enemies.json', false);
     request.send(null);
