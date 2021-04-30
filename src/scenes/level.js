@@ -32,11 +32,16 @@ export class Level extends Phaser.Scene {
   }
 
   preload(){
+    const request = new XMLHttpRequest();
+    request.open('GET', 'json/virus.json', false);
+    request.send(null);
+    this.vir = JSON.parse(request.responseText);
+
     // Testing setting background sound, 
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
-    this.load.spritesheet('enemy1', 'images/virus_v1.png', { frameWidth: 50, frameHeight: 50, endFrame: 4 });
+    this.load.spritesheet(this.vir.name, this.vir.source, { frameWidth: this.vir.width, frameHeight: this.vir.height, endFrame: 4 });
 
     // Map & tiles
     this.load.image('tiles', 'images/level1.png');
@@ -134,7 +139,7 @@ export class Level extends Phaser.Scene {
     // Add walking animation for sprite
     let enemyAnims = { 
       key: 'walking', 
-      frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 3, first: 3 }),
+      frames: this.anims.generateFrameNumbers(this.vir.name, { start: 0, end: 3, first: 3 }),
       frameRate: 8,
       repeat: -1
     };
@@ -142,7 +147,7 @@ export class Level extends Phaser.Scene {
     this.viruses = [];
     // create viruses and have them do their path
     for(let i = 0; i < 4; i++) {
-      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
+      this.viruses.push(new Virus({scene: this, x: this.vir.start[2]['x'], y: this.vir.start[2]['y']}));
       this.viruses[i].play('walking');
       // delay each virus walk start
       this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
