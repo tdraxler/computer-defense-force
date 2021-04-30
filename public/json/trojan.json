@@ -2,7 +2,7 @@
   "name": "Trojan",
   "hp": 15,
   "damage": 25,
-  "source": "",
+  "source": "images/trojan-horse.png",
   "width": 50,
   "height": 50,
   "start": [
