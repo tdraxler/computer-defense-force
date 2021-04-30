@@ -1,7 +1,11 @@
 import Phaser from 'phaser';
 import {Level} from './scenes/level';
+import {BuildMenu} from './scenes/build-ui';
 import {Menu} from './scenes/menu';
 import {TitleScene} from './scenes/title';
+import {Tutorial} from './scenes/tutorial';
+import {Death} from './scenes/death';
+import {Victory} from './scenes/victory';
 // eslint-disable-next-line
 import {FirstEnemy} from './scenes/enemy';
 
@@ -24,7 +28,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu, Level, FirstEnemy
+    TitleScene, Menu, Tutorial, Level, FirstEnemy, Death, Victory, BuildMenu
   ]
 };
 
