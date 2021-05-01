@@ -32,11 +32,17 @@ export class Level extends Phaser.Scene {
   }
 
   preload(){
+    // Load config data from JSON
+    const request = new XMLHttpRequest();
+    request.open('GET', 'json/enemies.json', false);
+    request.send(null);
+    this.eData = JSON.parse(request.responseText);
+
     // Testing setting background sound, 
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
-    this.load.spritesheet('enemy1', 'images/virus_v1.png', { frameWidth: 50, frameHeight: 50, endFrame: 4 });
+    this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 });
 
     // Map & tiles
     this.load.image('tiles', 'images/level1.png');
@@ -134,7 +140,7 @@ export class Level extends Phaser.Scene {
     // Add walking animation for sprite
     let enemyAnims = { 
       key: 'walking', 
-      frames: this.anims.generateFrameNumbers('enemy1', { start: 0, end: 3, first: 3 }),
+      frames: this.anims.generateFrameNumbers(this.eData[3].name, { start: 0, end: 3, first: 3 }),
       frameRate: 8,
       repeat: -1
     };
@@ -209,6 +215,14 @@ export class Level extends Phaser.Scene {
     }
     if (this.keyLeft.isDown || this.keyAltLeft.isDown) {
       this.cameras.main.scrollX -= 5;
+    }
+
+    if (this.turrets.length > 0) {
+      for (let i = 0; i < this.viruses.length; i++) {
+        if (this.viruses[i].y === this.turrets[0].y) {
+          console.log('same');
+        }
+      }
     }
   }
 }
