@@ -1,0 +1,53 @@
+{
+  "spyware": {
+    "name": "spyware",
+    "hp": 5,
+    "damage": 5,
+    "speed": 5,
+    "source": "",
+    "width": 50,
+    "height": 50
+  },
+  "worm": {
+    "name": "worm",
+    "hp": 10,
+    "damage": 15,
+    "speed": 3,
+    "source": "",
+    "width": 50,
+    "height": 50
+  },
+  "trojan": {
+    "name": "trojan",
+    "hp": 15,
+    "damage": 25,
+    "speed": 2,
+    "source": "images/trojan-horse.png",
+    "width": 50,
+    "height": 50
+  },
+  "virus": {
+    "name": "virus",
+    "hp": 20,
+    "damage": 25,
+    "speed": 4,
+    "source": "images/virus_v1.png",
+    "width": 50,
+    "height": 50
+  },
+  "rootkit": {
+    "name": "rootkit",
+    "hp": 25,
+    "damage": 75,
+    "speed": 1,
+    "source": "",
+    "width": 50,
+    "height": 50
+  },
+  "starts": [
+    {"x": -0, "y": -50},
+    {"x": -0, "y": 350},
+    {"x": 390, "y": 350},
+    {"x": 390, "y": -50}
+  ]
+}
