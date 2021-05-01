@@ -264,6 +264,20 @@ export class Level extends Phaser.Scene {
       };
     }
 
+    if (this.testCritters.length === 0) {
+      for (let i = 0; i < 10; i++) {
+        let choice = Math.floor(Math.random() * 6);
+        let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2});
+        newOne.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
+        newOne.moveX = 0;
+        newOne.moveY = 0;
+        newOne.moveVal = -1;
+        newOne.dirVector = {x: 0, y: 0};
+        newOne.play('walking');
+        this.testCritters.push(newOne);
+      }
+    }
+
     // Keyboard camera controls
     if (this.keyDown.isDown || this.keyAltDown.isDown) {
       this.cameras.main.scrollY += 5;
