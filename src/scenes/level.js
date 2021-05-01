@@ -273,13 +273,5 @@ export class Level extends Phaser.Scene {
     if (this.keyLeft.isDown || this.keyAltLeft.isDown) {
       this.cameras.main.scrollX -= 5;
     }
-
-    if (this.turrets.length > 0) {
-      for (let i = 0; i < this.viruses.length; i++) {
-        if (this.viruses[i].y === this.turrets[0].y) {
-          console.log('same');
-        }
-      }
-    }
   }
 }
