@@ -105,7 +105,13 @@ export class Level extends Phaser.Scene {
             nearestTile(pointer.worldY),
             'firewall'
           );
-  
+          //getting turrets to fallow viruses
+          /*this.turrets.children.each(function (child){
+            let thisTurret;
+            thisTurret = child;
+            thisTurret.setTarget(this.testCritters)
+          })*/
+          newTurret.setTarget(this.testCritters)
           this.turrets.push(newTurret);
   
           this.turretMap[mapInd] = newTurret;
@@ -171,7 +177,7 @@ export class Level extends Phaser.Scene {
       this.testCritters.push(newOne);
     }
     // end of enemy stuff
-
+    //this.turrets.setTarget(this.testCritters[0])
     // After enemies are set up, create second layer that will render above everything else
     this.tilemap.createLayer('above2', tileset);
     this.collidemap = this.tilemap.createLayer('collide', tileset);
@@ -203,11 +209,7 @@ export class Level extends Phaser.Scene {
 
     this.pathmap = generatePathMap(20, 11, this.collidemap);
 
-    this.turrets.children.each(child=>{
-      let thisTurret;
-      thisTurret = child;
-      thisTurret.setTarget(this.testCritters)
-    })
+
 
   }
 
