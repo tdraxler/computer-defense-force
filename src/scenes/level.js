@@ -230,7 +230,8 @@ export class Level extends Phaser.Scene {
 
     // Test critter logic
     if (this.pathmap) {
-      this.testCritters.forEach(critter => {
+      for (let [index, critter] of this.testCritters.entries()) {
+      //this.testCritters.forEach(critter => {
         if (critter.delay > 0) {
           critter.delay--;
         }
@@ -249,6 +250,7 @@ export class Level extends Phaser.Scene {
               critter.dirVector = {x: 0, y: 0};*/
               critter.destroy();
               this.explosion.play();
+              this.testCritters.splice(index, 1);
             }
 
             critter.dirVector = nextDir(Math.floor(critter.x / TILE), Math.floor(critter.y / TILE), this.pathmap);
@@ -259,7 +261,7 @@ export class Level extends Phaser.Scene {
           critter.y += critter.dirVector.y;
           critter.moveVal--;
         }
-      });
+      };
     }
 
     // Keyboard camera controls
