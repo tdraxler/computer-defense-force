@@ -27,7 +27,7 @@ class Head extends Phaser.GameObjects.Sprite {
     let enemyUnits = toTrack;
     //print(enemyUnits.length);
     for(let i = 0; i<enemyUnits.length; i++){
-      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)){
+      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=50){
         let newAngle = Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)
         this.angle = (newAngle+ Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation(newAngle)
@@ -79,8 +79,8 @@ export class Turret extends Phaser.GameObjects.Sprite {
     // this.add.Sprite(new Head(this.scene, x, y, buildType))
   }
 
-  update() {
-    this.head.update();
+  update(toTrack) {
+    this.head.update(toTrack);
   }
 
   dismantle() {
