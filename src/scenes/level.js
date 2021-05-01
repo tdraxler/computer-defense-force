@@ -202,6 +202,13 @@ export class Level extends Phaser.Scene {
     this.scene.launch(CONST.SCENES.BUILD_MENU); 
 
     this.pathmap = generatePathMap(20, 11, this.collidemap);
+
+    this.turrets.children.each(child=>{
+      let thisTurret;
+      thisTurret = child;
+      thisTurret.setTarget(this.testCritters)
+    })
+
   }
 
   update(){

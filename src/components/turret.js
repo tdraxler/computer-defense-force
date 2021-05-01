@@ -17,10 +17,24 @@ class Head extends Phaser.GameObjects.Sprite {
     this.angle = (Math.random() * 360.0).toFixed(5);
     this.rotSpeed = (Math.random() * 10.0) - 5;
   }
-
+  // adapted from: https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
+  setTarget(target = Phaser.GameObjects.Components.Transform){
+    this.target=target
+  }
   update() {
     // TODO - rotate
-    this.angle += this.rotSpeed;
+    //this.angle += this.rotSpeed;
+    if(!this.target){
+      return
+    }
+    const targetX=this.target.x;
+    const targetY=this.target.y;
+
+    const turretX = this.x;
+    const turretY = this.y;
+
+    const rotation = Phaser.Math.Angle.Between(turretX, turretY, targetX, targetY)
+    this.setRotation(rotation)
   }
 }
 
