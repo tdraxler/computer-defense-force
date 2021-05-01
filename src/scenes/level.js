@@ -48,7 +48,7 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 });
 
     // Map & tiles
-    this.load.image('tiles', 'images/level1.png');
+    this.load.image('tiles', 'images/tiles/level1.png');
     this.load.tilemapTiledJSON('maps/level1');
 
     // Valid build location sprite (drawn on tilemap)
