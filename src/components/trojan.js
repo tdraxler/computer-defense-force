@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 
-export class Virus extends Phaser.GameObjects.Sprite {
+export class Trojan extends Phaser.GameObjects.Sprite {
   // TODO - Make this useful
 
   constructor(config) {
