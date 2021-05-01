@@ -170,28 +170,7 @@ export class Level extends Phaser.Scene {
 
 
     this.testCritters = [];
-    for (let i = 0; i < waveCount; i++) {
-      let min = Math.ceil(2);
-      let max = Math.floor(3);
-      let en = Math.floor(Math.random() * (3 - 2 + 1) + 2);
-      let choice = Math.floor(Math.random() * 6);
-      let newOne;
-      if (en === 2) {
-        newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
-        newOne.play('moving');
-      } else {
-        newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[3].hp, dmg: this.eData[3].damage});
-        newOne.play('walking');
-      }
-      //let newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
-      newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
-      newOne.moveX = 0;
-      newOne.moveY = 0;
-      newOne.moveVal = -1;
-      newOne.dirVector = {x: 0, y: 0};
-      //newOne.play('moving');
-      this.testCritters.push(newOne);
-    }
+    this.wave(waveCount);
     waveCount--; // update the wave count
     // end of enemy stuff
 
@@ -225,6 +204,29 @@ export class Level extends Phaser.Scene {
     this.scene.launch(CONST.SCENES.BUILD_MENU); 
 
     this.pathmap = generatePathMap(20, 11, this.collidemap);
+  }
+
+  wave(enemyCount) {
+    for (let i = 0; i < waveCount; i++) {
+      let en = Math.floor(Math.random() * (3 - 2 + 1) + 2); // choose a trojan or virus
+      let choice = Math.floor(Math.random() * 6);
+      let newOne;
+      if (en === 2) { // Trojan
+        newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
+        newOne.play('moving');
+      } else { // Virus
+        newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[3].hp, dmg: this.eData[3].damage});
+        newOne.play('walking');
+      }
+      //let newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
+      newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
+      newOne.moveX = 0;
+      newOne.moveY = 0;
+      newOne.moveVal = -1;
+      newOne.dirVector = {x: 0, y: 0};
+      //newOne.play('moving');
+      this.testCritters.push(newOne);
+    }
   }
 
   update(){
@@ -273,6 +275,7 @@ export class Level extends Phaser.Scene {
               critter.dirVector = {x: 0, y: 0};*/
               // cause damage and disappear
               this.core.hp -= critter.dmg;
+              console.log(this.core.hp);
               critter.destroy();
               this.explosion.play();
               this.testCritters.splice(index, 1);
@@ -303,28 +306,7 @@ export class Level extends Phaser.Scene {
 
     // New wave
     if (this.testCritters.length === 0 && waveCount > 0) {
-      for (let i = 0; i < 10; i++) {
-        let min = Math.ceil(2);
-        let max = Math.floor(3);
-        let en = Math.floor(Math.random() * (3 - 2 + 1) + 2);
-        let choice = Math.floor(Math.random() * 6);
-        let newOne;
-        if (en === 2) {
-          newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
-          newOne.play('moving');
-        } else {
-          newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[3].hp, dmg: this.eData[3].damage});
-          newOne.play('walking');
-        }
-        //let newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
-        newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
-        newOne.moveX = 0;
-        newOne.moveY = 0;
-        newOne.moveVal = -1;
-        newOne.dirVector = {x: 0, y: 0};
-        //newOne.play('moving');
-        this.testCritters.push(newOne);
-      }
+      this.wave(waveCount);
       waveCount--;
     }
 
