@@ -159,7 +159,7 @@ export class Level extends Phaser.Scene {
 
 
     this.testCritters = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 10; i++) {
       let choice = Math.floor(Math.random() * 6);
       let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2});
       newOne.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
@@ -239,14 +239,16 @@ export class Level extends Phaser.Scene {
           if (critter.moveVal <= 0) {
             // Figure out direction to move in
             if (Math.floor(critter.x / TILE) == 20 && Math.floor(critter.y / TILE) == 11) {
-              let choice = Math.floor(Math.random() * 6);
+              /*let choice = Math.floor(Math.random() * 6);
               critter.x = possibles[choice].x * TILE + TILE / 2;
               critter.y = possibles[choice].y * TILE + TILE / 2;
               critter.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
               critter.moveX = 0;
               critter.moveY = 0;
               critter.moveVal = -1;
-              critter.dirVector = {x: 0, y: 0};
+              critter.dirVector = {x: 0, y: 0};*/
+              critter.destroy();
+              this.explosion.play();
             }
 
             critter.dirVector = nextDir(Math.floor(critter.x / TILE), Math.floor(critter.y / TILE), this.pathmap);
