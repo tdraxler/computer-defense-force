@@ -57,53 +57,16 @@ export const generatePathMap = (destX, destY, collidemap) => {
       pathmap[curr.y][curr.x] = curr.dist;
     }
 
-    // Mark the current tile as traversed
-
 
     // Add adjacent tiles to checkStack if they're accessible/unchecked
-
     // Iterate through possible directions (using vectors defined at beginning of this file)
     for (let i = 0; i < dirVectors.length; i++) {
       if (mapVal(curr.x + dirVectors[i].x, curr.y + dirVectors[i].y, pathmap) > curr.dist + 1) {
         checkStack.push({x: curr.x + dirVectors[i].x, y: curr.y + dirVectors[i].y, dist: curr.dist + 1});
       }
     }
-
-    // Up
-    // if (mapVal(curr.x, curr.y - 1, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x, y: curr.y - 1, dist: curr.dist + 1});
-    // }
-    // // Down
-    // if (mapVal(curr.x, curr.y + 1, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x, y: curr.y + 1, dist: curr.dist + 1});
-    // }
-    // // Left
-    // if (mapVal(curr.x - 1, curr.y, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x - 1, y: curr.y, dist: curr.dist + 1});
-    // }
-    // // Right
-    // if (mapVal(curr.x + 1, curr.y, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x + 1, y: curr.y, dist: curr.dist + 1});
-    // }
-    // // Up-left
-    // if (mapVal(curr.x - 1, curr.y - 1, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x - 1, y: curr.y - 1, dist: curr.dist + 1});
-    // }
-    // // Up-right
-    // if (mapVal(curr.x + 1, curr.y - 1, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x + 1, y: curr.y - 1, dist: curr.dist + 1});
-    // }
-    // // Down-left
-    // if (mapVal(curr.x - 1, curr.y + 1, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x - 1, y: curr.y + 1, dist: curr.dist + 1});
-    // }
-    // // Down-right
-    // if (mapVal(curr.x + 1, curr.y + 1, pathmap) > curr.dist + 1) {
-    //   checkStack.push({x: curr.x + 1, y: curr.y + 1, dist: curr.dist + 1});
-    // }
   }
 
-  console.log(pathmap);
   return pathmap;
 };
 
@@ -111,10 +74,9 @@ export const generatePathMap = (destX, destY, collidemap) => {
 // Returns an object/vector with an x and y component that indicates the
 // direction of the shortest path to the destination from the current location
 export const nextDir = (x, y, pathmap) => {
-  console.log(x, y, pathmap);
-
   let pathVector = {x: 0, y: 0}; // Default case - don't move!
 
+  // Edge cases - what to do if x/y values are out of bounds
   if (x < 0) {
     pathVector.x = 1;
   }
@@ -136,7 +98,7 @@ export const nextDir = (x, y, pathmap) => {
     // Iterate through each possible direction, looking for the lowest value
     for (let i = 0; i < dirVectors.length; i++) {
       let curr = mapVal(x + dirVectors[i].x, y + dirVectors[i].y, pathmap);
-      if (curr == -999) curr = 44444; // inaccessible direction
+      if (curr == -999 || curr == -1) curr = 44444; // inaccessible direction
 
       if (curr < lowestValue) { // New lowest value found. Update path
         lowestValue = curr;
