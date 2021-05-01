@@ -27,13 +27,13 @@ class Head extends Phaser.GameObjects.Sprite {
     if(!this.target){
       return
     }
-    const targetX=this.target.x;
-    const targetY=this.target.y;
+    let targetX=this.target.x;
+    let targetY=this.target.y;
 
-    const turretX = this.x;
-    const turretY = this.y;
+    let turretX = this.x;
+    let turretY = this.y;
 
-    const rotation = Phaser.Math.Angle.Between(turretX, turretY, targetX, targetY)
+    let rotation = Phaser.Math.Angle.Between(turretX, turretY, targetX, targetY)
     this.setRotation(rotation)
   }
 }

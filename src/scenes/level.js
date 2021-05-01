@@ -106,15 +106,17 @@ export class Level extends Phaser.Scene {
             'firewall'
           );
           //getting turrets to fallow viruses
-          /*this.turrets.children.each(function (child){
+
+          //newTurret.setTarget(this.testCritters)
+          this.turrets.push(newTurret);
+
+          //sets turret to look at newest enemy on map, delete now works as well
+          this.turretMap[mapInd] = newTurret;
+          this.turrets.each(function (child){
             let thisTurret;
             thisTurret = child;
-            thisTurret.setTarget(this.testCritters)
-          })*/
-          newTurret.setTarget(this.testCritters)
-          this.turrets.push(newTurret);
-  
-          this.turretMap[mapInd] = newTurret;
+            thisTurret.setTarget(this.testCritters.each())
+          })
         }
         else {
           console.log('occupied - can\'t build');
