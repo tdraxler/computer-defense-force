@@ -26,7 +26,7 @@ class Head extends Phaser.GameObjects.Sprite {
       if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=50){
         let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
-        this.setRotation((newAngle + Math.PI/2))
+        this.setRotation((newAngle + Math.PI/2)-160)
       }
     }
     // TODO - rotate
