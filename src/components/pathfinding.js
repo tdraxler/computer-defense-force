@@ -23,11 +23,8 @@ const mapVal = (x, y, theMap) => {
   return theMap[y][x];
 };
 
-// Simple pass in a tilemap layer and this function will take care of the rest.
+// Simply pass in a tilemap layer and this function will take care of the rest.
 export const generatePathMap = (destX, destY, collidemap) => {
-  // The 4th layer contains collision data - what we need to generate the path map.
-  console.log(collidemap.layer.data);
-
   // First, count how many accessible tiles there are starting from the destination point.
   let checkStack = [];
   let pathmap = [];
