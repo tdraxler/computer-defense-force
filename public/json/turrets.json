@@ -1,5 +1,5 @@
-{
-  "firewall": {
+[
+  {
     "name": "firewall",
     "hp": 5,
     "damage": 2,
@@ -8,7 +8,7 @@
     "width": 16,
     "height": 24
   },
-  "virus-blaster": {
+  {
     "name": "virus-blaster",
     "hp": 15,
     "damage": 5,
@@ -17,7 +17,7 @@
     "width": 16,
     "height": 24
   },
-  "rectifier": {
+  {
     "name": "rectifier",
     "hp": 20,
     "damage": 20,
@@ -26,7 +26,7 @@
     "width": 16,
     "height": 24
   },
-  "psu": {
+  {
     "name": "psu",
     "hp": 5,
     "damage": 0,
@@ -35,4 +35,4 @@
     "width": 16,
     "height": 24
   }
-}
+]
