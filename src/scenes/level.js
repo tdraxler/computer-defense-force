@@ -5,6 +5,7 @@ import { Turret } from '../components/turret';
 import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
+import { generatePathMap, nextDir } from '../components/pathfinding';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -12,6 +13,8 @@ import { walk, onCompleteHandler } from '../components/walk';
 let bgm;
 
 const TILE = CONST.T_SIZE;
+const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
+
 
 const nearestTile = (num) => {
   return (TILE * Math.floor(num / TILE));
@@ -145,16 +148,36 @@ export class Level extends Phaser.Scene {
       repeat: -1
     };
     this.anims.create(enemyAnims);
-    this.viruses = [];
-    // create viruses and have them do their path
-    for(let i = 0; i < 4; i++) {
-      this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
-      this.viruses[i].play('walking');
-      // delay each virus walk start
-      this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
-    }
+    // this.viruses = [];
+    // // create viruses and have them do their path
+    // for(let i = 0; i < 4; i++) {
+    //   this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
+    //   this.viruses[i].play('walking');
+    //   // delay each virus walk start
+    //   this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
+    // }
 
+
+    this.testCritters = [];
+    for (let i = 0; i < 100; i++) {
+      let choice = Math.floor(Math.random() * 6);
+      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2});
+      newOne.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
+      newOne.moveX = 0;
+      newOne.moveY = 0;
+      newOne.moveVal = -1;
+      newOne.dirVector = {x: 0, y: 0};
+      newOne.play('walking');
+      this.testCritters.push(newOne);
+    }
     // end of enemy stuff
+
+    // After enemies are set up, create second layer that will render above everything else
+    this.tilemap.createLayer('above2', tileset);
+    this.collidemap = this.tilemap.createLayer('collide', tileset);
+    this.collidemap.setVisible(false);
+
+
 
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
@@ -177,6 +200,8 @@ export class Level extends Phaser.Scene {
 
     // Launch Build Menu UI
     this.scene.launch(CONST.SCENES.BUILD_MENU); 
+
+    this.pathmap = generatePathMap(20, 11, this.collidemap);
   }
 
   update(){
@@ -203,6 +228,38 @@ export class Level extends Phaser.Scene {
       turret.update();
     });
 
+    // Test critter logic
+    if (this.pathmap) {
+      this.testCritters.forEach(critter => {
+        if (critter.delay > 0) {
+          critter.delay--;
+        }
+        else {
+          // Move it!
+          if (critter.moveVal <= 0) {
+            // Figure out direction to move in
+            if (Math.floor(critter.x / TILE) == 20 && Math.floor(critter.y / TILE) == 11) {
+              let choice = Math.floor(Math.random() * 6);
+              critter.x = possibles[choice].x * TILE + TILE / 2;
+              critter.y = possibles[choice].y * TILE + TILE / 2;
+              critter.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
+              critter.moveX = 0;
+              critter.moveY = 0;
+              critter.moveVal = -1;
+              critter.dirVector = {x: 0, y: 0};
+            }
+
+            critter.dirVector = nextDir(Math.floor(critter.x / TILE), Math.floor(critter.y / TILE), this.pathmap);
+            critter.moveVal = TILE;
+          }
+  
+          critter.x += critter.dirVector.x;
+          critter.y += critter.dirVector.y;
+          critter.moveVal--;
+        }
+      });
+    }
+
     // Keyboard camera controls
     if (this.keyDown.isDown || this.keyAltDown.isDown) {
       this.cameras.main.scrollY += 5;
@@ -215,14 +272,6 @@ export class Level extends Phaser.Scene {
     }
     if (this.keyLeft.isDown || this.keyAltLeft.isDown) {
       this.cameras.main.scrollX -= 5;
-    }
-
-    if (this.turrets.length > 0) {
-      for (let i = 0; i < this.viruses.length; i++) {
-        if (this.viruses[i].y === this.turrets[0].y) {
-          console.log('same');
-        }
-      }
     }
   }
 }
