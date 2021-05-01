@@ -22,7 +22,7 @@ export class Tutorial extends Phaser.Scene {
   create(){
     this.add.image(0,0,'imgTitle').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
     testRec = this.add.sprite(200, 150, 'testRec').setOrigin(0).setDepth(2);
-    let nextButton = this.add.image(150,200,'startButton').setOrigin(0).setDepth(1)
+    let nextButton = this.add.image(150,200,'startButton').setOrigin(0).setDepth(1);
     nextButton.setInteractive();
     nextButton.on('pointerover',()=>{
       nextButton.alpha=.7;
