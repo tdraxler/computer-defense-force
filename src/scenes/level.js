@@ -11,6 +11,7 @@ import { generatePathMap, nextDir } from '../components/pathfinding';
 // let mousePos = { x: 0, y: 0 };
 
 let bgm;
+let waveCount = 10;
 
 const TILE = CONST.T_SIZE;
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
@@ -89,6 +90,7 @@ export class Level extends Phaser.Scene {
 
     // Set up core for the player to protect
     this.core = new Core(this, 19 * TILE, 11 * TILE);
+    this.core.hp = 500; // test HP
 
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
@@ -159,9 +161,9 @@ export class Level extends Phaser.Scene {
 
 
     this.testCritters = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 1; i++) {
       let choice = Math.floor(Math.random() * 6);
-      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2});
+      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[3].hp, dmg: this.eData[3].damage});
       newOne.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
       newOne.moveX = 0;
       newOne.moveY = 0;
@@ -170,6 +172,7 @@ export class Level extends Phaser.Scene {
       newOne.play('walking');
       this.testCritters.push(newOne);
     }
+    waveCount--; // update the wave count
     // end of enemy stuff
 
     // After enemies are set up, create second layer that will render above everything else
@@ -248,9 +251,11 @@ export class Level extends Phaser.Scene {
               critter.moveY = 0;
               critter.moveVal = -1;
               critter.dirVector = {x: 0, y: 0};*/
+              this.core.hp -= critter.dmg;
               critter.destroy();
               this.explosion.play();
               this.testCritters.splice(index, 1);
+              break;
             }
 
             critter.dirVector = nextDir(Math.floor(critter.x / TILE), Math.floor(critter.y / TILE), this.pathmap);
@@ -264,10 +269,22 @@ export class Level extends Phaser.Scene {
       };
     }
 
-    if (this.testCritters.length === 0) {
-      for (let i = 0; i < 10; i++) {
+    // GAME OVER, YOU LOSE
+    if (this.core.hp <= 0) {
+      this.scene.start(CONST.SCENES.DEATH);
+      bgm.stop();
+      this.scene.stop(CONST.SCENES.LEVEL);
+    } else if (this.core.hp > 0 && waveCount === 0) { // YOU WIN
+      this.scene.start(CONST.SCENES.VIC);
+      bgm.stop();
+      this.scene.stop(CONST.SCENES.LEVEL);
+    }
+
+    // New wave
+    if (this.testCritters.length === 0 && waveCount > 0) {
+      for (let i = 0; i < 1; i++) {
         let choice = Math.floor(Math.random() * 6);
-        let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2});
+        let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[3].hp, dmg: this.eData[3].damage});
         newOne.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
         newOne.moveX = 0;
         newOne.moveY = 0;
@@ -276,6 +293,7 @@ export class Level extends Phaser.Scene {
         newOne.play('walking');
         this.testCritters.push(newOne);
       }
+      waveCount--;
     }
 
     // Keyboard camera controls
