@@ -1,0 +1,16 @@
+[
+  {
+    "name": "kernel-core",
+    "hp": 75,
+    "source": "images/player-sprites/core.png",
+    "width": 32,
+    "height": 32
+  },
+  {
+    "name": "hardened-core",
+    "hp": 150,
+    "source": "images/player-sprites/core.png",
+    "width": 32,
+    "height": 32
+  }
+]

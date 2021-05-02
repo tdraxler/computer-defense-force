@@ -15,6 +15,9 @@ let bgm;
 const TILE = CONST.T_SIZE;
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
 
+const LEVEL_LO = 1;
+const LEVEL_HI = 3;
+
 
 const nearestTile = (num) => {
   return (TILE * Math.floor(num / TILE));
@@ -34,12 +37,37 @@ export class Level extends Phaser.Scene {
     this.onCompleteHandler = onCompleteHandler.bind(this);
   }
 
-  preload(){
+  // Should eventually be populated with enough to reset the map
+  // (like when advancing a level)
+  loadLevel(levelNum) {
+    // Default to the first level if an invalid level is passed in.
+    if (levelNum < LEVEL_LO || levelNum > LEVEL_HI) {
+      levelNum = 1; 
+    }
+
+
+    // Set up core for the player to protect
+    let coreConfig = {};
+    this.core = new Core(this, 19 * TILE, 11 * TILE, coreConfig);
+  }
+
+  async preload(){
     // Load config data from JSON
     const request = new XMLHttpRequest();
     request.open('GET', 'json/enemies.json', false);
     request.send(null);
     this.eData = JSON.parse(request.responseText);
+
+    // Load level and core JSON files
+    this.levelData = {};
+    fetch('json/levels.json')
+      .then(response => response.json())
+      .then(data => this.levelData = data);
+
+    this.coreData = {};
+    fetch('json/levels.json')
+      .then(response => response.json())
+      .then(data => this.coreData = data);
 
     // Testing setting background sound, 
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
@@ -87,8 +115,7 @@ export class Level extends Phaser.Scene {
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
 
-    // Set up core for the player to protect
-    this.core = new Core(this, 19 * TILE, 11 * TILE);
+    this.loadLevel(1);
 
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
