@@ -6,6 +6,7 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
+import { BulletGroup } from '../components/bullet';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -199,7 +200,7 @@ export class Level extends Phaser.Scene {
     this.collidemap = this.tilemap.createLayer('collide', tileset);
     this.collidemap.setVisible(false);
 
-
+    this.bulletGroup = new BulletGroup(this);
 
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {

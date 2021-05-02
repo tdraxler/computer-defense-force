@@ -26,6 +26,7 @@ export class TitleScene extends Phaser.Scene {
     this.load.image('victory-background', './images/VictoryPage-Background.png');
     this.load.image('play-again_vic', './images/playAgain.png');
     this.load.image('play-again_death', './images/playAgainDeath.png');
+    this.load.spritesheet('bullet', '../public/images/bullet_5px.png', {frameWidth: 5, frameHeight: 5});
 
     let loadBar = this.add.graphics({
       fillStyle: {

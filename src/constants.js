@@ -7,7 +7,8 @@ export const CONST = {
     BUILD_MENU: 'BUILD-MENU',
     ENEMY:      'ENEMY',
     DEATH:      'DEATH',
-    VIC:        'VIC'
+    VIC:        'VIC',
+    BULLET:     'BULLET'
   },
   T_SIZE: 16
 };
