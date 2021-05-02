@@ -16,9 +16,6 @@ let waveCount = 10;
 const TILE = CONST.T_SIZE;
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
 
-const LEVEL_LO = 1;
-const LEVEL_HI = 3;
-
 
 const nearestTile = (num) => {
   return (TILE * Math.floor(num / TILE));
@@ -38,21 +35,7 @@ export class Level extends Phaser.Scene {
     this.onCompleteHandler = onCompleteHandler.bind(this);
   }
 
-  // Should eventually be populated with enough to reset the map
-  // (like when advancing a level)
-  loadLevel(levelNum) {
-    // Default to the first level if an invalid level is passed in.
-    if (levelNum < LEVEL_LO || levelNum > LEVEL_HI) {
-      levelNum = 1; 
-    }
-
-
-    // Set up core for the player to protect
-    let coreConfig = {};
-    this.core = new Core(this, 19 * TILE, 11 * TILE, coreConfig);
-  }
-
-  async preload(){
+  preload() {
     // Load config data from JSON
     const request = new XMLHttpRequest();
     request.open('GET', 'json/enemies.json', false);
@@ -60,15 +43,17 @@ export class Level extends Phaser.Scene {
     this.eData = JSON.parse(request.responseText);
 
     // Load level and core JSON files
-    this.levelData = {};
-    fetch('json/levels.json')
-      .then(response => response.json())
-      .then(data => this.levelData = data);
+    request.open('GET', 'json/levels.json', false);
+    request.send(null);
+    this.levelData = JSON.parse(request.responseText);
 
-    this.coreData = {};
-    fetch('json/levels.json')
-      .then(response => response.json())
-      .then(data => this.coreData = data);
+    request.open('GET', 'json/cores.json', false);
+    request.send(null);
+    this.coreData = JSON.parse(request.responseText);
+
+    let lev = Player.level - 1; // Current level index
+    console.log(lev);
+
 
     // Testing setting background sound, 
     // Background music via https://www.FesliyanStudios.com
@@ -79,8 +64,11 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet(this.eData[2].name, this.eData[2].source, { frameWidth: this.eData[2].width, frameHeight: this.eData[2].height, endFrame: 6});
 
     // Map & tiles
-    this.load.image('tiles', 'images/tiles/level1.png');
-    this.load.tilemapTiledJSON('maps/level1');
+    if (this.textures.exists('tiles')) { // Prevents warnings/errors upon reload
+      this.textures.remove('tiles'); // Have to remove from cache or it won't change
+    }
+    this.load.image('tiles', this.levelData[lev].tileset);
+    this.load.tilemapTiledJSON(this.levelData[lev].map);
 
     // Valid build location sprite (drawn on tilemap)
     this.load.image('build-ready', 'images/valid-build.png');
@@ -99,6 +87,7 @@ export class Level extends Phaser.Scene {
     this.keyAltDown = this.input.keyboard.addKey('Down');
     this.keyAltLeft = this.input.keyboard.addKey('Left');
     this.keyAltRight = this.input.keyboard.addKey('Right');
+    this.keyC = this.input.keyboard.addKey('M'); // For debug operations
   }
 
   create(){
@@ -107,8 +96,8 @@ export class Level extends Phaser.Scene {
     bgm.play();
 
     // Map and tiles setup
-    this.tilemap = this.make.tilemap({ key: 'maps/level1' });
-    let tileset = this.tilemap.addTilesetImage('level1_tiles', 'tiles');
+    this.tilemap = this.make.tilemap({ key: this.levelData[Player.level - 1].map });
+    let tileset = this.tilemap.addTilesetImage(this.levelData[Player.level - 1].tiles, 'tiles');
     this.tilemap.createLayer('base', tileset);
     this.tilemap.createLayer('above1', tileset);
 
@@ -118,7 +107,11 @@ export class Level extends Phaser.Scene {
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
 
-    this.loadLevel(1);
+    // Set up core for the player to protect
+    let coreConfig = {}; // TODO - core parameters
+    this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, coreConfig);
+    this.targetX = Math.floor(this.levelData[Player.level - 1].core_x);
+    this.targetY = Math.floor(this.levelData[Player.level - 1].core_y);
 
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
@@ -231,7 +224,7 @@ export class Level extends Phaser.Scene {
     // Launch Build Menu UI
     this.scene.launch(CONST.SCENES.BUILD_MENU); 
 
-    this.pathmap = generatePathMap(20, 11, this.collidemap);
+    this.pathmap = generatePathMap(this.levelData[Player.level - 1].core_x, this.levelData[Player.level - 1].core_y, this.collidemap);
 
 
 
@@ -294,7 +287,7 @@ export class Level extends Phaser.Scene {
           // Move it!
           if (critter.moveVal <= 0) {
             // Figure out direction to move in
-            if (Math.floor(critter.x / TILE) == 20 && Math.floor(critter.y / TILE) == 11) {
+            if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               /*let choice = Math.floor(Math.random() * 6);
               critter.x = possibles[choice].x * TILE + TILE / 2;
               critter.y = possibles[choice].y * TILE + TILE / 2;
@@ -360,6 +353,11 @@ export class Level extends Phaser.Scene {
     }
     if (this.keyLeft.isDown || this.keyAltLeft.isDown) {
       this.cameras.main.scrollX -= 5;
+    }
+    if (this.keyC.isDown) { // Debug - restarts the scene
+      console.log('Hit');
+      Player.levelUp();
+      this.scene.restart();
     }
   }
 }

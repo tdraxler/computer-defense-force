@@ -3,18 +3,24 @@
     "name": "Defend the USB Drive!",
     "core_x": 19.5,
     "core_y": 11,
-    "map": "maps/level1"
+    "map": "maps/level1",
+    "tiles": "level1_tiles",
+    "tileset": "images/tiles/level1.png"
+  },
+  {
+    "name": "Defend the USB Drive!",
+    "core_x": 29,
+    "core_y": 19,
+    "map": "maps/level2",
+    "tiles": "level2_tiles",
+    "tileset": "images/tiles/level2.png"
   },
   {
     "name": "Defend the USB Drive!",
     "core_x": 19.5,
     "core_y": 11,
-    "map": "maps/level2"
-  },
-  {
-    "name": "Defend the USB Drive!",
-    "core_x": 19.5,
-    "core_y": 11,
-    "map": "maps/level3"
+    "map": "maps/level3",
+    "tiles": "level3_tiles",
+    "tileset": "images/tiles/level3.png"
   }
 ]
