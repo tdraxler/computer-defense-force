@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import '../scenes/level';
 
 // Since JavaScript doesn't have type checking, we need a way to make sure the
 // construction for the class below has a way to validate parameters
@@ -13,14 +14,21 @@ class Head extends Phaser.GameObjects.Sprite {
     super(scene, x, y, headType, 1);
     this.scene.add.existing(this);
 
-    // Temporary
-    this.angle = (Math.random() * 360.0).toFixed(5);
-    this.rotSpeed = (Math.random() * 10.0) - 5;
   }
 
-  update() {
-    // TODO - rotate
-    this.angle += this.rotSpeed;
+  update(toTrack) {
+    //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
+    //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
+    let enemyUnits = toTrack;
+    //print(enemyUnits.length);
+    for(let i = 0; i<enemyUnits.length; i++){
+      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=50){
+        let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)
+        this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
+        this.setRotation((newAngle + Math.PI/2)-160)
+        //this.fire(this.x, this.y, this.angle, Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y))
+      }
+    }
   }
 }
 
@@ -53,9 +61,12 @@ export class Turret extends Phaser.GameObjects.Sprite {
     this.head = new Head(this.scene, x, y, buildType);
     // this.add.Sprite(new Head(this.scene, x, y, buildType))
   }
+  preload(){
 
-  update() {
-    this.head.update();
+  }
+
+  update(toTrack) {
+    this.head.update(toTrack);
   }
 
   dismantle() {

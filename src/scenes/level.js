@@ -109,10 +109,12 @@ export class Level extends Phaser.Scene {
             nearestTile(pointer.worldY),
             'firewall'
           );
-  
+
           this.turrets.push(newTurret);
-  
+
+          //sets turret to look at newest enemy on map, delete now works as well
           this.turretMap[mapInd] = newTurret;
+
         }
         else {
           console.log('occupied - can\'t build');
@@ -204,6 +206,9 @@ export class Level extends Phaser.Scene {
     this.scene.launch(CONST.SCENES.BUILD_MENU); 
 
     this.pathmap = generatePathMap(20, 11, this.collidemap);
+
+
+
   }
 
   wave(enemyCount) {
@@ -250,10 +255,7 @@ export class Level extends Phaser.Scene {
     // }
 
 
-    // Turret logic
-    this.turrets.forEach(turret => {
-      turret.update();
-    });
+
 
     // Test critter logic
     if (this.pathmap) {
@@ -311,6 +313,14 @@ export class Level extends Phaser.Scene {
       this.wave(waveCount);
       waveCount--;
     }
+    // Turret logic
+    this.turrets.forEach(turret => {
+      if(this.testCritters.length !== 0){
+        let passArray = this.testCritters;
+        turret.update(passArray);
+      }
+
+    });
 
     // Keyboard camera controls
     if (this.keyDown.isDown || this.keyAltDown.isDown) {
