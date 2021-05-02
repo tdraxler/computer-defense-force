@@ -3,7 +3,7 @@ import { CONST } from '../constants';
 //import {start} from '../';
 
 
-
+let vBgm;
 export class Victory extends Phaser.Scene {
   constructor() {
     super({
@@ -15,10 +15,12 @@ export class Victory extends Phaser.Scene {
 
   }
   preload(){
-
+    this.load.audio('vBgm', ['sound/bgm/POL-sky-wanderer-short.wav']);
   }
   //must include create
   create(){
+    vBgm = this.sound.add('vBgm', { loop: true, volume: 0.25 });
+    vBgm.play();
     this.add.image(0,0,'victory-background').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
     this.add.image(55,35,'victory').setOrigin(0).setDepth(3);
     this.add.image(55,25,'vic_back').setOrigin(0).setDepth(2);
@@ -33,6 +35,7 @@ export class Victory extends Phaser.Scene {
     })
     playAgainButton.on('pointerup', ()=>{
       playAgainButton.alpha=1;
+      vBgm.stop();
       this.scene.start(CONST.SCENES.DEATH);
     })
 
