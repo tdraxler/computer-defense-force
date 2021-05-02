@@ -207,7 +207,7 @@ export class Level extends Phaser.Scene {
   }
 
   wave(enemyCount) {
-    for (let i = 0; i < waveCount; i++) {
+    for (let i = 0; i < enemyCount; i++) {
       let en = Math.floor(Math.random() * (3 - 2 + 1) + 2); // choose a trojan or virus
       let choice = Math.floor(Math.random() * 6);
       let newOne;
@@ -290,7 +290,7 @@ export class Level extends Phaser.Scene {
           critter.y += critter.dirVector.y;
           critter.moveVal--;
         }
-      };
+      }
     }
 
     // GAME OVER, YOU LOSE
