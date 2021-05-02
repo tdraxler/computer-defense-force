@@ -10,7 +10,7 @@ class Bullet extends Phaser.GameObjects.Sprite {
   //bullet could accelerate towards X enemy using https://phaser.io/examples/v3/view/physics/arcade/accelerate-to
   fire(x, y, angle, dist, enemy) {
     var addBullet = this.physics.add.sprite(x, y, 'bullet');//load bullet image at position of turret
-    this.physics.accelerateToObject(addBullet, enemy, 60, 300, 300);
+    this.physics.accelerateToObject(addBullet, enemy, 60, 100, 100);
     //angle towards enemy
     //shoot bullet with X speed for some sort of distance/until hits enemy or wall
     //do damage
