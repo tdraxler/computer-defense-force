@@ -4,7 +4,8 @@
     "hp": 5,
     "damage": 5,
     "speed": 5,
-    "source": "",
+    "points": 5,
+    "source": "images/spyware.png",
     "width": 50,
     "height": 50
   },
@@ -13,7 +14,8 @@
     "hp": 10,
     "damage": 15,
     "speed": 3,
-    "source": "",
+    "points": 15,
+    "source": "images/worm.png",
     "width": 50,
     "height": 50
   },
@@ -22,6 +24,7 @@
     "hp": 15,
     "damage": 25,
     "speed": 2,
+    "points": 25,
     "source": "images/trojan-horse.png",
     "width": 50,
     "height": 50
@@ -29,8 +32,9 @@
   {
     "name": "virus",
     "hp": 20,
-    "damage": 25,
+    "damage": 45,
     "speed": 4,
+    "points": 40,
     "source": "images/virus_v1.png",
     "width": 50,
     "height": 50
@@ -40,6 +44,7 @@
     "hp": 25,
     "damage": 75,
     "speed": 1,
+    "points": 70,
     "source": "",
     "width": 50,
     "height": 50

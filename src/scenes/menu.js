@@ -3,6 +3,7 @@ import { CONST } from '../constants';
 //import {start} from '../';
 
 
+let mBgm;
 export class Menu extends Phaser.Scene {
   constructor() {
     super({
@@ -16,11 +17,17 @@ export class Menu extends Phaser.Scene {
     console.log('I am now the menu scene, I got data from the title scene!')
   }
 
-  preload(){        
+  preload(){
+    // Music: “Spinning Gears”, from PlayOnLoop.com
+    // Licensed under Creative Commons by Attribution 4.0
+    // https://www.playonloop.com/2016-music-loops/spinning-gears/
+    this.load.audio('mBgm', ['sound/bgm/POL-spinning-gears-short.wav']);
   }
 
   //must include create
   create(){
+    mBgm = this.sound.add('mBgm', { loop: true, volume: 0.25 });
+    mBgm.play();
     this.add.image(0,0,'imgTitle').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
     this.add.image(55,35,'title').setOrigin(0).setDepth(3);
     this.add.image(55,25,'title_back').setOrigin(0).setDepth(2);
@@ -35,6 +42,7 @@ export class Menu extends Phaser.Scene {
     })
     startButton.on('pointerup', ()=>{
       startButton.alpha=1;
+      mBgm.stop();
       this.scene.start(CONST.SCENES.LEVEL);
     })
 
