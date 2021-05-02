@@ -32,11 +32,7 @@ export class TitleScene extends Phaser.Scene {
         color: 0x89DDFF
       }
     })
-    //create a loading bar
-    //simulate larger load for testing purposes
-    for (let i = 0; i < 200; i++){
-      this.load.spritesheet('testRec' + i, './images/testRec.png', {frameHeight: 20, frameWidth: 20});
-    }
+    //create a loading bar https://www.youtube.com/watch?v=OS7neDUUhPE
     this.load.on('progress', (percent)=>{
       loadBar.fillRect(0, 250, this.game.renderer.width * percent , 15)
     })
@@ -45,6 +41,6 @@ export class TitleScene extends Phaser.Scene {
   //must include create
   create(){
     //set origin to middle of screen instead of upper left
-    this.scene.start(CONST.SCENES.MENU, "This is the TITLE SCENE");
+    this.scene.start(CONST.SCENES.MENU);
   }
 }
