@@ -6,14 +6,17 @@ export class Core extends Phaser.GameObjects.Sprite {
     return this.body;
   }
 
-  constructor(scene, x, y) {
+  constructor(scene, x, y, coreConfig) {
     super(scene, x, y, 'core');
 
+    console.log(coreConfig);
     // Add object to the scene
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.getBody().setCollideWorldBounds(true);
     this.getBody().setAllowGravity(false);
+
+    this.hp = coreConfig.hp;
   }
 
   update() {

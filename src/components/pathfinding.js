@@ -44,7 +44,7 @@ export const generatePathMap = (destX, destY, collidemap) => {
   }
 
   // Add first element to stack
-  checkStack.push({x: destX, y: destY, dist: 0});
+  checkStack.push({x: Math.floor(destX), y: Math.floor(destY), dist: 0});
 
   while (checkStack.length > 0) {
     // Get current coordinates to check

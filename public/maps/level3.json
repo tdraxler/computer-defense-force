@@ -4,7 +4,7 @@
      "export":
         {
          "format":"json",
-         "target":"level1.json"
+         "target":"level3.json"
         }
     },
  "height":30,
@@ -68,11 +68,11 @@
         {
          "columns":16,
          "firstgid":1,
-         "image":"..\/images\/tiles\/level1.png",
+         "image":"..\/images\/tiles\/level3.png",
          "imageheight":256,
          "imagewidth":256,
          "margin":0,
-         "name":"level1_tiles",
+         "name":"level3_tiles",
          "spacing":0,
          "tilecount":256,
          "tileheight":16,
