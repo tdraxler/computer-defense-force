@@ -4,7 +4,6 @@ import { Core } from '../components/core';
 import { Turret } from '../components/turret';
 import Player from '../components/player';
 import { Virus } from '../components/virus';
-import { Trojan } from '../components/trojan';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
 
