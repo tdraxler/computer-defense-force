@@ -47,6 +47,7 @@ export class Level extends Phaser.Scene {
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
+    this.load.audio('build-turret', ['sound/sfx/make_turret.mp3'])
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 });
     this.load.spritesheet(this.eData[2].name, this.eData[2].source, { frameWidth: this.eData[2].width, frameHeight: this.eData[2].height, endFrame: 6});
 
@@ -77,6 +78,10 @@ export class Level extends Phaser.Scene {
     // Star BGM
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
+
+    // SFX
+    this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
+    this.buildSfx = this.sound.add('build-turret', { loop: false, volume: 0.25 });
 
     // Map and tiles setup
     this.tilemap = this.make.tilemap({ key: 'maps/level1' });
@@ -111,6 +116,7 @@ export class Level extends Phaser.Scene {
           );
 
           this.turrets.push(newTurret);
+          this.buildSfx.play();
 
           //sets turret to look at newest enemy on map, delete now works as well
           this.turretMap[mapInd] = newTurret;
@@ -144,7 +150,6 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-    this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     // Add walking animation for sprite
     let enemyAnims = { 
@@ -215,23 +220,17 @@ export class Level extends Phaser.Scene {
     for (let i = 0; i < enemyCount; i++) {
       let en = Math.floor(Math.random() * (3 - 2 + 1) + 2); // choose a trojan or virus
       let choice = Math.floor(Math.random() * 6);
-      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2});
+      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage});
       if (en === 2) { // Trojan
-        newOne.hp = this.eData[2].hp;
-        newOne.dmg = this.eData[2].damage;
         newOne.play('moving');
       } else { // Virus
-        newOne.hp = this.eData[3].hp;
-        newOne.dmg = this.eData[3].damage;
         newOne.play('walking');
       }
-      //let newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
       newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
       newOne.moveX = 0;
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
-      //newOne.play('moving');
       this.testCritters.push(newOne);
     }
   }
@@ -269,16 +268,8 @@ export class Level extends Phaser.Scene {
           if (critter.moveVal <= 0) {
             // Figure out direction to move in
             if (Math.floor(critter.x / TILE) == 20 && Math.floor(critter.y / TILE) == 11) {
-              /*let choice = Math.floor(Math.random() * 6);
-              critter.x = possibles[choice].x * TILE + TILE / 2;
-              critter.y = possibles[choice].y * TILE + TILE / 2;
-              critter.delay = Math.floor(Math.random() * 10 * 60); // Number of frames to delay movement
-              critter.moveX = 0;
-              critter.moveY = 0;
-              critter.moveVal = -1;
-              critter.dirVector = {x: 0, y: 0};*/
               // cause damage and disappear
-              this.core.hp -= critter.dmg;
+              this.core.hp -= critter.damage;
               console.log(this.core.hp);
               critter.destroy();
               this.explosion.play();
