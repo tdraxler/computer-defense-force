@@ -44,6 +44,7 @@ export class Level extends Phaser.Scene {
     this.eData = JSON.parse(request.responseText);
 
     // Testing setting background sound, 
+    // Background music via https://www.FesliyanStudios.com
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
@@ -210,12 +211,14 @@ export class Level extends Phaser.Scene {
     for (let i = 0; i < enemyCount; i++) {
       let en = Math.floor(Math.random() * (3 - 2 + 1) + 2); // choose a trojan or virus
       let choice = Math.floor(Math.random() * 6);
-      let newOne;
+      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2});
       if (en === 2) { // Trojan
-        newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
+        newOne.hp = this.eData[2].hp;
+        newOne.dmg = this.eData[2].damage;
         newOne.play('moving');
       } else { // Virus
-        newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[3].hp, dmg: this.eData[3].damage});
+        newOne.hp = this.eData[3].hp;
+        newOne.dmg = this.eData[3].damage;
         newOne.play('walking');
       }
       //let newOne = new Trojan({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[2].hp, dmg: this.eData[2].damage});
