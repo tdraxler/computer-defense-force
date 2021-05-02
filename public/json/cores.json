@@ -1,7 +1,7 @@
 [
   {
     "name": "kernel-core",
-    "hp": 75,
+    "hp": 500,
     "source": "images/player-sprites/core.png",
     "width": 32,
     "height": 32

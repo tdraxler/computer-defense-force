@@ -15,6 +15,8 @@ export class Core extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this);
     this.getBody().setCollideWorldBounds(true);
     this.getBody().setAllowGravity(false);
+
+    this.hp = coreConfig.hp;
   }
 
   update() {

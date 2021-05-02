@@ -108,8 +108,7 @@ export class Level extends Phaser.Scene {
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
 
     // Set up core for the player to protect
-    let coreConfig = {}; // TODO - core parameters
-    this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, coreConfig);
+    this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[0]);
     this.targetX = Math.floor(this.levelData[Player.level - 1].core_x);
     this.targetY = Math.floor(this.levelData[Player.level - 1].core_y);
 
@@ -355,7 +354,8 @@ export class Level extends Phaser.Scene {
       this.cameras.main.scrollX -= 5;
     }
     if (this.keyC.isDown) { // Debug - restarts the scene
-      console.log('Hit');
+      console.log('Restart!');
+      bgm.stop();
       Player.levelUp();
       this.scene.restart();
     }
