@@ -47,7 +47,8 @@ export class Level extends Phaser.Scene {
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
-    this.load.audio('build-turret', ['sound/sfx/make_turret.mp3'])
+    this.load.audio('build-turret', ['sound/sfx/make_turret.mp3']);
+    this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']); 
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 });
     this.load.spritesheet(this.eData[2].name, this.eData[2].source, { frameWidth: this.eData[2].width, frameHeight: this.eData[2].height, endFrame: 6});
 
@@ -82,6 +83,7 @@ export class Level extends Phaser.Scene {
     // SFX
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
     this.buildSfx = this.sound.add('build-turret', { loop: false, volume: 0.25 });
+    this.delTurret = this.sound.add('delete-turret', { loop: false, volume: 0.25 });
 
     // Map and tiles setup
     this.tilemap = this.make.tilemap({ key: 'maps/level1' });
@@ -135,6 +137,7 @@ export class Level extends Phaser.Scene {
           let turretsArrInd = this.turrets.indexOf(toDelete);
 
           // Clean up and destroy it
+          this.delTurret.play();
           toDelete.dismantle();
           toDelete.destroy();
 
