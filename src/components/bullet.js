@@ -2,6 +2,19 @@ import Phaser from 'phaser';
 
 //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
 class Bullet extends Phaser.GameObjects.Sprite {
+  constructor(
+    scene,
+    x, y,
+    buildType  // Should be a string here
+  ) {
+
+    super(scene, x, y, buildType, 0);
+    this.scene.add.existing(this);
+    this.scene.physics.add.existing(this);
+    this.getBody().setCollideWorldBounds(true);
+    this.getBody().setAllowGravity(false);
+  }
+
   preload(){
     //link for bullet sprite
     this.load.image('bullet', '../public/images/bullet_5px.png');
