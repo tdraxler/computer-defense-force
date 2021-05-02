@@ -17,3 +17,7 @@ export const CURRENT_ACTION = {
   DEMOLISH: 'DEMOLISH',
   NONE:     'NONE'
 };
+
+export const LIMITS = {
+  LEVELS: 3
+};
