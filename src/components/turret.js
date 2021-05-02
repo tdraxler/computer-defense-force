@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 import '../scenes/level';
+import {Bullet} from './bullet';
+import { CONST } from '../constants';
 
 // Since JavaScript doesn't have type checking, we need a way to make sure the
 // construction for the class below has a way to validate parameters
@@ -15,17 +17,24 @@ class Head extends Phaser.GameObjects.Sprite {
     this.scene.add.existing(this);
 
   }
+  preload(){
+
+  }
 
   update(toTrack) {
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
+    //const BulletScene = Phaser.Scenes.get('Bullet');
     let enemyUnits = toTrack;
     //print(enemyUnits.length);
     for(let i = 0; i<enemyUnits.length; i++){
       if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=50){
-        let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)
+        let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
-        this.setRotation((newAngle + Math.PI/2)-160)
+        this.setRotation((newAngle + Math.PI/2)-160);
+        //BulletScene.fire(this.x, this.y, this.angle, enemyUnits[i]);
+        let bullet = new Bullet();
+        bullet.fire(this.x, this.y, this.angle, enemyUnits[i]);
         //this.fire(this.x, this.y, this.angle, Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y))
       }
     }
