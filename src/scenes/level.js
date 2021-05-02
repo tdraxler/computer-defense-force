@@ -109,18 +109,12 @@ export class Level extends Phaser.Scene {
             nearestTile(pointer.worldY),
             'firewall'
           );
-          //getting turrets to fallow viruses
 
-          //newTurret.setTarget(this.testCritters)
           this.turrets.push(newTurret);
 
           //sets turret to look at newest enemy on map, delete now works as well
           this.turretMap[mapInd] = newTurret;
-          /*this.turrets.each(function (child){
-            let thisTurret;
-            thisTurret = child;
-            thisTurret.setTarget(this.testCritters.each())
-          })*/
+
         }
         else {
           console.log('occupied - can\'t build');
@@ -181,7 +175,7 @@ export class Level extends Phaser.Scene {
     this.wave(waveCount);
     waveCount--; // update the wave count
     // end of enemy stuff
-    //this.turrets.setTarget(this.testCritters[0])
+
     // After enemies are set up, create second layer that will render above everything else
     this.tilemap.createLayer('above2', tileset);
     this.collidemap = this.tilemap.createLayer('collide', tileset);
@@ -298,7 +292,7 @@ export class Level extends Phaser.Scene {
           critter.y += critter.dirVector.y;
           critter.moveVal--;
         }
-      };
+      }
     }
 
     // GAME OVER, YOU LOSE
