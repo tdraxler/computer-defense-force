@@ -17,7 +17,10 @@ export class Menu extends Phaser.Scene {
     console.log('I am now the menu scene, I got data from the title scene!')
   }
 
-  preload(){       
+  preload(){
+    // Music: “Spinning Gears”, from PlayOnLoop.com
+    // Licensed under Creative Commons by Attribution 4.0
+    // https://www.playonloop.com/2016-music-loops/spinning-gears/
     this.load.audio('mBgm', ['sound/bgm/POL-spinning-gears-short.wav']);
   }
 

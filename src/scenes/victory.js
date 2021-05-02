@@ -15,6 +15,9 @@ export class Victory extends Phaser.Scene {
 
   }
   preload(){
+    // Music: “Sky Wanderer”, from PlayOnLoop.com
+    // Licensed under Creative Commons by Attribution 4.0
+    // https://www.playonloop.com/2016-music-loops/sky-wanderer/
     this.load.audio('vBgm', ['sound/bgm/POL-sky-wanderer-short.wav']);
   }
   //must include create

@@ -42,7 +42,7 @@ export class Level extends Phaser.Scene {
     request.send(null);
     this.eData = JSON.parse(request.responseText);
 
-    // Testing setting background sound, 
+    // Music: "A Bit of Hope", from FesliyanStudios.com
     // Background music via https://www.FesliyanStudios.com
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);

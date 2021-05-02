@@ -14,6 +14,9 @@ export class Death extends Phaser.Scene {
 
   }
   preload(){
+    // Music: "Ruined Planet", from patrickdearteaga.com
+    // By Patrick de Arteaga
+    // https://patrickdearteaga.com/arcade-music/
     this.load.audio('dBgm', ['sound/bgm/Ruined_Planet.ogg']);
   }
   //must include create
