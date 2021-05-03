@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import '../scenes/level';
-import {Bullet} from './bullet';
+//import {Bullet} from './projectile';
 import { CONST } from '../constants';
 
 // Since JavaScript doesn't have type checking, we need a way to make sure the
@@ -18,9 +18,21 @@ class Head extends Phaser.GameObjects.Sprite {
 
   }
   preload(){
-
+    //this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
   }
-
+  fire(x, y, angle, enemy) {
+    this.addBullet = this.physics.add.sprite(this.x, this.y, 'testRec');  //load bullet image at position of turret
+    this.addBullet.setVelocity(100, 100);
+    this.physics.add.collider(this.addBullet, enemy);
+    this.physics.accelerateToObject(this.addBullet, enemy, 60, 100, 100);
+    //angle towards enemy
+    //shoot bullet with X speed for some sort of distance/until hits enemy or wall
+    //do damage
+    let attack = this.physics.add.overlap(this.addBullet, enemy, function (destroyBullet) {
+      destroyBullet.body.stop();
+      this.physics.world.removeCollider(attack)
+    }, null, this);
+  }
   update(toTrack) {
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
@@ -33,8 +45,8 @@ class Head extends Phaser.GameObjects.Sprite {
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
         //BulletScene.fire(this.x, this.y, this.angle, enemyUnits[i]);
-        let bullet = new Bullet();
-        bullet.fire(this.x, this.y, this.angle, enemyUnits[i]);
+        this.fire(this.x, this.y, this.angle, enemyUnits[i]);
+        //bullet.fire(this.x, this.y, this.angle, enemyUnits[i]);
         //this.fire(this.x, this.y, this.angle, Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y))
       }
     }

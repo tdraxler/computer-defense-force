@@ -6,7 +6,7 @@ import {CONST} from '../constants';
 export class Bullet extends Phaser.Scene {
   constructor() {
     super({
-      key:CONST.SCENES.START
+      key:CONST.SCENES.BULLET
     });
   }
   preload()
