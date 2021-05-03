@@ -22,6 +22,9 @@ developing this project.
 ### death.js
 - https://www.youtube.com/watch?v=OS7neDUUhPE
 
-###bullet.js
+### bullet.js
 - https://phaser.io/examples/v3/view/physics/arcade/accelerate-to
 - https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
+
+### explosion.js
+- https://phaser.discourse.group/t/phaser-3-destroy-after-animation/1259/5 (make a sprite disappear after animation)
