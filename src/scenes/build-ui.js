@@ -11,6 +11,7 @@ export class BuildMenu extends Phaser.Scene {
 
   preload() {
     this.load.image('build-bar-upper', 'images/ui/build-bar1.png');
+    this.load.image('build-bar-left', 'images/ui/build-bar2.png');
     this.load.spritesheet('buttons', 'images/ui/buttons.png', { frameWidth: 42, frameHeight: 18 });
 
     this.input.setTopOnly(true); // Makes it so clicking on this UI not register a click below
@@ -21,6 +22,7 @@ export class BuildMenu extends Phaser.Scene {
     // Since we will be adding more buttons, we'll eventually want to create
     // a button class so we don't repeat ourselves.
     this.buildBarUpper = this.add.sprite(100, 0, 'build-bar-upper').setOrigin(0,0);
+    this.buildBarUpper = this.add.sprite(0, 100, 'build-bar-left').setOrigin(0,0);
     this.buildButton = this.add.sprite(131, 2, 'buttons', 0).setOrigin(0,0);
     this.demolishButton = this.add.sprite(179, 2, 'buttons', 2).setOrigin(0,0);
 
