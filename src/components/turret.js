@@ -58,7 +58,7 @@ class Head extends Phaser.GameObjects.Sprite {
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
         //BulletScene.fire(this.x, this.y, this.angle, enemyUnits[i]);
-        this.fire(this.x, this.y, this.angle, enemyUnits[i]); //cannot read property of add of 'undefined'
+        this.fire(this.x, this.y, (newAngle + Math.PI/2)-160, enemyUnits[i]); //cannot read property of add of 'undefined'
         //bullet.fire(this.x, this.y, this.angle, enemyUnits[i]);
         //this.fire(this.x, this.y, this.angle, Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y))
       }
