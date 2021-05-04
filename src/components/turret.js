@@ -18,19 +18,31 @@ class Head extends Phaser.GameObjects.Sprite {
 
   }
   preload(){
-    this.load.spritesheet('testRec', 'images/testRec.png', {frameHeight: 20, frameWidth: 20});
+  }
+  //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
+  setAngleBullet(angle){
+    let rads = angle * Math.PI/180;
+    var tanX = Math.cos(rads);
+    var tanY = Math.sin(rads);
+    return {tanX, tanY}
   }
   fire(x, y, angle, enemy) {
-    this.addBullet = this.physics.add.sprite(this.x, this.y, 'testRec');  //load bullet image at position of turret
-    this.addBullet.setVelocity(100, 100);
-    this.physics.add.collider(this.addBullet, enemy);
-    this.physics.accelerateToObject(this.addBullet, enemy, 60, 100, 100);
+    let dirctBull = this.setAngleBullet(angle)
+    this.addBullet = this.scene.physics.add.sprite(this.x + dirctBull.tanX * 30, this.y + dirctBull.tanY * 30, 'bullet');  //load bullet image at position of turret
+    this.addBullet.angle = (angle);
+    this.addBullet.body.setVelocity(dirctBull.tanX*100, dirctBull.tanY*100)
+    //this.addBullet.setVelocity(100, 100);
+
+    this.scene.physics.add.collider(this.addBullet, enemy);
+// from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
+
+   // this.scene.physics.accelerateToObject(this.addBullet, enemy, 60, 60, 60);
     //angle towards enemy
     //shoot bullet with X speed for some sort of distance/until hits enemy or wall
     //do damage
-    let attack = this.physics.add.overlap(this.addBullet, enemy, function (destroyBullet) {
+    let attack = this.scene.physics.add.overlap(this.addBullet, enemy, function (destroyBullet) {
       destroyBullet.body.stop();
-      this.physics.world.removeCollider(attack)
+      this.scene.physics.world.removeCollider(attack)
     }, null, this);
   }
   update(toTrack) {
@@ -84,7 +96,6 @@ export class Turret extends Phaser.GameObjects.Sprite {
     // this.add.Sprite(new Head(this.scene, x, y, buildType))
   }
   preload(){
-    this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
   }
 
   update(toTrack) {

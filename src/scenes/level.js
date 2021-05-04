@@ -83,7 +83,7 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
 
     //**************************
-    this.load.image('testRec', 'images/testRec.png')//, {frameHeight: 20, frameWidth: 20});
+    this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});//, {frameHeight: 20, frameWidth: 20});
     //**************************
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
