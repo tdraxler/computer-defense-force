@@ -18,7 +18,7 @@ class Head extends Phaser.GameObjects.Sprite {
 
   }
   preload(){
-    //this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
+    this.load.spritesheet('testRec', 'images/testRec.png', {frameHeight: 20, frameWidth: 20});
   }
   fire(x, y, angle, enemy) {
     this.addBullet = this.physics.add.sprite(this.x, this.y, 'testRec');  //load bullet image at position of turret
@@ -37,6 +37,7 @@ class Head extends Phaser.GameObjects.Sprite {
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
     //const BulletScene = Phaser.Scenes.get('Bullet');
+
     let enemyUnits = toTrack;
     //print(enemyUnits.length);
     for(let i = 0; i<enemyUnits.length; i++){
@@ -45,7 +46,7 @@ class Head extends Phaser.GameObjects.Sprite {
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
         //BulletScene.fire(this.x, this.y, this.angle, enemyUnits[i]);
-        this.fire(this.x, this.y, this.angle, enemyUnits[i]);
+        this.fire(this.x, this.y, this.angle, enemyUnits[i]); //cannot read property of add of 'undefined'
         //bullet.fire(this.x, this.y, this.angle, enemyUnits[i]);
         //this.fire(this.x, this.y, this.angle, Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y))
       }
@@ -83,7 +84,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
     // this.add.Sprite(new Head(this.scene, x, y, buildType))
   }
   preload(){
-
+    this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
   }
 
   update(toTrack) {
