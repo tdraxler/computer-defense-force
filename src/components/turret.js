@@ -25,7 +25,9 @@ class Head extends Phaser.GameObjects.Sprite {
   fire(x, y, enemy) {
     this.addBullet = this.scene.physics.add.sprite(this.x, this.y, 'bullet');
     this.scene.physics.moveTo(this.addBullet, enemy.x, enemy.y);
+    //this.addBullet.body.collideWorldBounds = true; // sets so that the bullets don't keep going off of the map
     this.scene.physics.add.collider(this.addBullet, enemy);
+    this.addBullet.setMaxVelocity(100, 100)
     // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     let attack = this.scene.physics.add.overlap(this.addBullet, enemy, function (destroyBullet) {
       destroyBullet.body.stop();
