@@ -6,6 +6,7 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
+import {Bullet} from '../components/bullet';
 //import { Bullet } from '../components/bullet';
 
 // For debugging the cursor position
@@ -343,6 +344,8 @@ export class Level extends Phaser.Scene {
       if(this.testCritters.length !== 0){
         let passArray = this.testCritters;
         turret.update(passArray);
+        //let bullet = new Bullet(this, passArray)
+        //bullet.update(passArray)
       }
 
     });

@@ -16,7 +16,7 @@ function validTurretType(buildType) {
 class Head extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, headType) {
     super(scene, x, y, headType, 1);
-    this.scene.add.existing(this);
+    this.scene.add.existing(this).setDepth(3);
 
   }
   preload(){
@@ -24,7 +24,8 @@ class Head extends Phaser.GameObjects.Sprite {
   //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
   //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
   fire(x, y, enemy) {
-    this.addBullet = this.scene.physics.add.sprite(this.x, this.y, 'bullet');
+    this.addBullet = this.scene.physics.add.sprite(this.x, this.y, 'bullet').setDepth(2);
+    //this.addBullet.setDepth(0);10
     this.scene.physics.moveTo(this.addBullet, enemy.x, enemy.y);
     //this.addBullet.body.collideWorldBounds = true; // sets so that the bullets don't keep going off of the map
     this.scene.physics.add.collider(this.addBullet, enemy);
@@ -84,7 +85,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
 
     // Add object to the scene
     this.scene.add.existing(this);
-    this.scene.physics.add.existing(this);
+    this.scene.physics.add.existing(this).setDepth(1);
     this.getBody().setCollideWorldBounds(true);
     this.getBody().setAllowGravity(false);
 
