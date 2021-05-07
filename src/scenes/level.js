@@ -8,6 +8,7 @@ import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
 import {Bullet} from '../components/bullet';
 //import { Bullet } from '../components/bullet';
+import { Explosion } from '../components/explosion';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -80,12 +81,15 @@ export class Level extends Phaser.Scene {
 
     // Load core for the player to protect (TODO - change to spritesheet)
     this.load.image('core', 'images/player-sprites/core.png');
-    // this.load.image('firewall', 'images/player-sprites/firewall.png');
     this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
 
     //**************************
     this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});//, {frameHeight: 20, frameWidth: 20});
     //**************************
+    // Explosion
+    this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
+
+
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
     this.keyDown = this.input.keyboard.addKey('S');
@@ -192,6 +196,14 @@ export class Level extends Phaser.Scene {
       frameRate: 8,
       repeat: -1
     }
+
+    this.anims.create({
+      key: 'explosion-anim',
+      frameRate: 30,
+      frames: this.anims.generateFrameNumbers('explosion-frames', { start: 14, end: 27 }),
+      repeat: 0
+    });
+
     this.anims.create(trojanAnims);
     let wormAnims = {
       key: 'crawling',
@@ -309,6 +321,10 @@ export class Level extends Phaser.Scene {
               critter.destroy();
               this.explosion.play();
               this.testCritters.splice(index, 1);
+
+              // Play explosion
+              let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
+              newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
               break;
             }
 
@@ -347,7 +363,6 @@ export class Level extends Phaser.Scene {
         //let bullet = new Bullet(this, passArray)
         //bullet.update(passArray)
       }
-
     });
 
     // Keyboard camera controls
