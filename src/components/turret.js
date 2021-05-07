@@ -10,6 +10,15 @@ function validTurretType(buildType) {
   return buildType === 'firewall';
 }
 
+function updateBullet(bullet, delta){
+  bullet.state -= delta;
+  if(bullet.state <=0){
+    bullet.disableBody(true, true);
+  }
+}
+function onEvent(){
+  this.addBullet.setVisible(false);
+}
 
 // Unfortunately, Phaser seems to struggle with child sprites, so for now we
 // a reference to the turret Head in the Turret class instance.
@@ -31,6 +40,7 @@ class Head extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.collider(this.addBullet, enemy);
     this.addBullet.setMaxVelocity(700, 700);
     this.addBullet.lifespan=300;
+    let timer = this.scene.time.delayedCall(500, onEvent, [], this)
     // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     let attack = this.scene.physics.add.overlap(this.addBullet, enemy, function (destroyBullet) {
       destroyBullet.body.stop();
@@ -62,6 +72,8 @@ class Head extends Phaser.GameObjects.Sprite {
       }
     }
   }
+
+
 }
 
 
