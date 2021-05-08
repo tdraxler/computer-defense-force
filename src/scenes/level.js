@@ -135,6 +135,9 @@ export class Level extends Phaser.Scene {
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
 
+    // Add HP counter
+    this.hpCount = this.add.text(300, 15, "HP: " + this.core.hp, {fontSize: '20px'});
+
     // Add or remove a turret upon click
     this.input.on('pointerup', (pointer) => {
       let mapInd = (nearestIndex(pointer.worldY) * this.tilemap.width + nearestIndex(pointer.worldX));
@@ -330,6 +333,7 @@ export class Level extends Phaser.Scene {
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
+              this.hpCount.setText('HP: ' + this.core.hp);
               console.log(this.core.hp);
               critter.destroy();
               this.explosion.play();
