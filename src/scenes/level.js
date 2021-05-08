@@ -151,6 +151,8 @@ export class Level extends Phaser.Scene {
             'firewall'
           );
 
+          newTurret.hp = 5;
+
           this.turrets.push(newTurret);
           this.buildSfx.play();
 
@@ -232,6 +234,7 @@ export class Level extends Phaser.Scene {
       repeat: -1
     };
     this.anims.create(spywareAnims);
+    this.eneAnims = ['spyware-mov', 'worm-mov', 'trojan-mov', 'virus-mov', 'rootkit-mov'];
 
     // this.viruses = [];
     // // create viruses and have them do their path
@@ -283,7 +286,6 @@ export class Level extends Phaser.Scene {
   }
 
   wave(enemyCount) {
-    this.eneAnims = ['spyware-mov', 'worm-mov', 'trojan-mov', 'virus-mov', 'rootkit-mov'];
     for (let i = 0; i < enemyCount; i++) {
       let en = Math.floor(Math.random() * 5); // choose any of the 5 possible enemies
       let choice = Math.floor(Math.random() * 6);
@@ -327,9 +329,36 @@ export class Level extends Phaser.Scene {
           critter.delay--;
         }
         else {
+          for (let [turretIndex, turret] of this.turrets.entries()) {
+            if (Math.floor(turret.x / TILE) == Math.floor(critter.x / TILE) && Math.floor(turret.y / TILE) == Math.floor(critter.y / TILE)) {
+              turret.hp -= critter.damage;
+              if (turret.hp <= 0) {
+                //let toDelete = this.turretMap[turretIndex]; // Get object ref
+                //let turretsArrInd = this.turrets.indexOf(toDelete);
+
+                // Clean up and destroy it
+                this.delTurret.play();
+                turret.dismantle();
+                turret.destroy();
+
+                // Remove all references to it.
+                this.turrets.splice(turretIndex, 1);
+                console.log(this.turrets.length);
+                let mapInd = (nearestIndex(turret.y) * this.tilemap.width + nearestIndex(turret.x));
+                this.turretMap[mapInd] = null;
+
+                critter.destroy();
+                this.explosion.play();
+                this.testCritters.splice(index, 1);
+                break;
+              }
+            }
+          }
+
           // Move it!
           if (critter.moveVal <= 0) {
             // Figure out direction to move in
+
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
