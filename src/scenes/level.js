@@ -135,8 +135,9 @@ export class Level extends Phaser.Scene {
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
 
-    // Add HP counter
+    // Add HP counter and Score
     this.hpCount = this.add.text(300, 15, "HP: " + this.core.hp, {fontSize: '20px'});
+    this.score = this.add.text(400, 15, "Score: " + 0, {fontSize: '20px'});
 
     // Add or remove a turret upon click
     this.input.on('pointerup', (pointer) => {
@@ -289,7 +290,7 @@ export class Level extends Phaser.Scene {
     for (let i = 0; i < enemyCount; i++) {
       let en = Math.floor(Math.random() * 5); // choose any of the 5 possible enemies
       let choice = Math.floor(Math.random() * 6);
-      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage});
+      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage, points: this.eData[en].points});
       newOne.play(this.eneAnims[en]);
       newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
       newOne.moveX = 0;
@@ -329,6 +330,7 @@ export class Level extends Phaser.Scene {
           critter.delay--;
         }
         else {
+          // Check to see if Turret is in same tile as enemy, in which case delete both
           for (let [turretIndex, turret] of this.turrets.entries()) {
             if (Math.floor(turret.x / TILE) == Math.floor(critter.x / TILE) && Math.floor(turret.y / TILE) == Math.floor(critter.y / TILE)) {
               turret.hp -= critter.damage;
@@ -342,6 +344,9 @@ export class Level extends Phaser.Scene {
                 console.log(this.turrets.length);
                 let mapInd = (nearestIndex(turret.y) * this.tilemap.width + nearestIndex(turret.x));
                 this.turretMap[mapInd] = null;
+
+                // Increase score
+                this.score.setText('Score: ' + critter.points);
 
                 // destroy enemy
                 critter.destroy();
