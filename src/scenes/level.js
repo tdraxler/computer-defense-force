@@ -188,7 +188,7 @@ export class Level extends Phaser.Scene {
     // Add walking animation for enemy sprites
     let rootkitAnims = {
       key: 'rootkit-mov',
-      freames: this.anims.generateFrameNumbers(this.eData[4].name, { start: 0, end: 9, first: 9}),
+      frames: this.anims.generateFrameNumbers(this.eData[4].name, { start: 0, end: 9, first: 9}),
       frameRate: 8,
       repeat: -1
     }
@@ -282,7 +282,7 @@ export class Level extends Phaser.Scene {
   wave(enemyCount) {
     this.eneAnims = ['spyware-mov', 'worm-mov', 'trojan-mov', 'virus-mov', 'rootkit-mov'];
     for (let i = 0; i < enemyCount; i++) {
-      let en = Math.floor(Math.random() * (5 - 0 + 0) + 0); // choose any of the 5 possible enemies
+      let en = Math.floor(Math.random() * 5); // choose any of the 5 possible enemies
       let choice = Math.floor(Math.random() * 6);
       let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage});
       newOne.play(this.eneAnims[en]);
