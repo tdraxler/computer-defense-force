@@ -65,9 +65,12 @@ export class Level extends Phaser.Scene {
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
     this.load.audio('build-turret', ['sound/sfx/make_turret.mp3']);
     this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']); 
+    // Load enemy sprites
+    this.load.spritesheet(this.eData[4].name, this.eData[4].source, { frameWidth: this.eData[4].width, frameHeight: this.eData[4].height, endFrame: 10 }); // Rootkit
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 }); // Virus
     this.load.spritesheet(this.eData[2].name, this.eData[2].source, { frameWidth: this.eData[2].width, frameHeight: this.eData[2].height, endFrame: 6}); // Trojan
     this.load.spritesheet(this.eData[1].name, this.eData[1].source, { frameWidth: this.eData[1].width, frameHeight: this.eData[1].height, endFrame: 4}); // Worm
+    this.load.spritesheet(this.eData[0].name, this.eData[0].source, { frameWidth: this.eData[0].width, frameHeight: this.eData[0].height, endFrame:  8}); // Spyware
 
     // Map & tiles
     if (this.textures.exists('tiles')) { // Prevents warnings/errors upon reload
@@ -182,20 +185,27 @@ export class Level extends Phaser.Scene {
 
     // Enemy stuff
 
-    // Add walking animation for sprite
+    // Add walking animation for enemy sprites
+    let rootkitAnims = {
+      key: 'rootkit-mov',
+      freames: this.anims.generateFrameNumbers(this.eData[4].name, { start: 0, end: 9, first: 9}),
+      frameRate: 8,
+      repeat: -1
+    }
+    this.anims.create(rootkitAnims);
     let virusAnims = { 
-      key: 'walking', 
+      key: 'virus-mov', 
       frames: this.anims.generateFrameNumbers(this.eData[3].name, { start: 0, end: 3, first: 3 }),
       frameRate: 8,
       repeat: -1
     };
     this.anims.create(virusAnims);
     let trojanAnims = {
-      key: 'moving',
+      key: 'trojan-mov',
       frames: this.anims.generateFrameNumbers(this.eData[2].name, { start: 0, end: 5, first: 5 }),
       frameRate: 8,
       repeat: -1
-    }
+    };
 
     this.anims.create({
       key: 'explosion-anim',
@@ -206,12 +216,20 @@ export class Level extends Phaser.Scene {
 
     this.anims.create(trojanAnims);
     let wormAnims = {
-      key: 'crawling',
+      key: 'worm-mov',
       frames: this.anims.generateFrameNumbers(this.eData[1].name, { start: 0, end: 3, first: 3 }),
       frameRate: 8,
       repeat: -1
-    }
+    };
     this.anims.create(wormAnims);
+    let spywareAnims = {
+      key: 'spyware-mov',
+      frames: this.anims.generateFrameNumbers(this.eData[0].name, { start: 0, end: 7, first: 7}),
+      frameRate: 8,
+      repeat: -1
+    };
+    this.anims.create(spywareAnims);
+
     // this.viruses = [];
     // // create viruses and have them do their path
     // for(let i = 0; i < 4; i++) {
@@ -262,17 +280,12 @@ export class Level extends Phaser.Scene {
   }
 
   wave(enemyCount) {
+    this.eneAnims = ['spyware-mov', 'worm-mov', 'trojan-mov', 'virus-mov', 'rootkit-mov'];
     for (let i = 0; i < enemyCount; i++) {
-      let en = Math.floor(Math.random() * (3 - 1 + 1) + 1); // choose a worm, trojan or virus
+      let en = Math.floor(Math.random() * (5 - 0 + 0) + 0); // choose any of the 5 possible enemies
       let choice = Math.floor(Math.random() * 6);
       let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage});
-      if (en === 1) { // Worm
-        newOne.play('crawling');
-      } else if (en === 2) { // Trojan
-        newOne.play('moving');
-      } else { // Virus
-        newOne.play('walking');
-      }
+      newOne.play(this.eneAnims[en]);
       newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
       newOne.moveX = 0;
       newOne.moveY = 0;
