@@ -333,11 +333,7 @@ export class Level extends Phaser.Scene {
             if (Math.floor(turret.x / TILE) == Math.floor(critter.x / TILE) && Math.floor(turret.y / TILE) == Math.floor(critter.y / TILE)) {
               turret.hp -= critter.damage;
               if (turret.hp <= 0) {
-                //let toDelete = this.turretMap[turretIndex]; // Get object ref
-                //let turretsArrInd = this.turrets.indexOf(toDelete);
-
                 // Clean up and destroy it
-                this.delTurret.play();
                 turret.dismantle();
                 turret.destroy();
 
@@ -347,6 +343,7 @@ export class Level extends Phaser.Scene {
                 let mapInd = (nearestIndex(turret.y) * this.tilemap.width + nearestIndex(turret.x));
                 this.turretMap[mapInd] = null;
 
+                // destroy enemy
                 critter.destroy();
                 this.explosion.play();
                 this.testCritters.splice(index, 1);
