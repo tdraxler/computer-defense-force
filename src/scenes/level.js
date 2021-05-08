@@ -6,6 +6,8 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
+import {Bullet} from '../components/bullet';
+//import { Bullet } from '../components/bullet';
 import { Explosion } from '../components/explosion';
 
 // For debugging the cursor position
@@ -81,6 +83,9 @@ export class Level extends Phaser.Scene {
     this.load.image('core', 'images/player-sprites/core.png');
     this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
 
+    //**************************
+    this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});//, {frameHeight: 20, frameWidth: 20});
+    //**************************
     // Explosion
     this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
 
@@ -228,7 +233,6 @@ export class Level extends Phaser.Scene {
     this.collidemap.setVisible(false);
 
 
-
     // when event triggered, print GAME OVER on screen
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
       this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
@@ -351,11 +355,13 @@ export class Level extends Phaser.Scene {
       this.wave(waveCount);
       waveCount--;
     }
-    // Turret logic
+    //Passes array of critters to Turrets to see when a critter is near a turret
     this.turrets.forEach(turret => {
       if(this.testCritters.length !== 0){
         let passArray = this.testCritters;
         turret.update(passArray);
+        //let bullet = new Bullet(this, passArray)
+        //bullet.update(passArray)
       }
     });
 

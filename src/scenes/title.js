@@ -27,6 +27,7 @@ export class TitleScene extends Phaser.Scene {
     this.load.image('play-again_vic', './images/playAgain.png');
     this.load.image('play-again_death', './images/playAgainDeath.png');
 
+
     let loadBar = this.add.graphics({
       fillStyle: {
         color: 0x89DDFF
