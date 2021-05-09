@@ -192,26 +192,7 @@ export class Level extends Phaser.Scene {
     // Enemy stuff
 
     // Add walking animation for enemy sprites
-    let rootkitAnims = {
-      key: 'rootkit-mov',
-      frames: this.anims.generateFrameNumbers(this.eData[4].name, { start: 0, end: 9, first: 9}),
-      frameRate: 8,
-      repeat: -1
-    }
-    this.anims.create(rootkitAnims);
-    let virusAnims = { 
-      key: 'virus-mov', 
-      frames: this.anims.generateFrameNumbers(this.eData[3].name, { start: 0, end: 3, first: 3 }),
-      frameRate: 8,
-      repeat: -1
-    };
-    this.anims.create(virusAnims);
-    let trojanAnims = {
-      key: 'trojan-mov',
-      frames: this.anims.generateFrameNumbers(this.eData[2].name, { start: 0, end: 5, first: 5 }),
-      frameRate: 8,
-      repeat: -1
-    };
+    this.addEnemyAnims();
 
     this.anims.create({
       key: 'explosion-anim',
@@ -219,23 +200,6 @@ export class Level extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers('explosion-frames', { start: 14, end: 27 }),
       repeat: 0
     });
-
-    this.anims.create(trojanAnims);
-    let wormAnims = {
-      key: 'worm-mov',
-      frames: this.anims.generateFrameNumbers(this.eData[1].name, { start: 0, end: 3, first: 3 }),
-      frameRate: 8,
-      repeat: -1
-    };
-    this.anims.create(wormAnims);
-    let spywareAnims = {
-      key: 'spyware-mov',
-      frames: this.anims.generateFrameNumbers(this.eData[0].name, { start: 0, end: 7, first: 7}),
-      frameRate: 8,
-      repeat: -1
-    };
-    this.anims.create(spywareAnims);
-    this.eneAnims = ['spyware-mov', 'worm-mov', 'trojan-mov', 'virus-mov', 'rootkit-mov'];
 
     // this.viruses = [];
     // // create viruses and have them do their path
@@ -301,6 +265,42 @@ export class Level extends Phaser.Scene {
       newOne.dirVector = {x: 0, y: 0};
       this.testCritters.push(newOne);
     }
+  }
+
+  addEnemyAnims() {
+    // Add walking animation for enemy sprites
+    const enemyAnims = [
+      {
+        key: 'spyware-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[0].name, { start: 0, end: 7, first: 7}),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'worm-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[1].name, { start: 0, end: 3, first: 3 }),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'trojan-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[2].name, { start: 0, end: 5, first: 5 }),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'virus-mov', 
+        frames: this.anims.generateFrameNumbers(this.eData[3].name, { start: 0, end: 3, first: 3 }),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'rootkit-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[4].name, { start: 0, end: 9, first: 9}),
+        frameRate: 8,
+        repeat: -1
+      }
+    ]
+    for(let i = 0; i < 5; i++) {
+      this.anims.create(enemyAnims[i]);
+    }
+    this.eneAnims = ['spyware-mov', 'worm-mov', 'trojan-mov', 'virus-mov', 'rootkit-mov'];
   }
 
   update(){
