@@ -14,7 +14,7 @@ import { Explosion } from '../components/explosion';
 // let mousePos = { x: 0, y: 0 };
 
 let bgm;
-let waveCount = 10;
+let waveCount = 1;
 
 const TILE = CONST.T_SIZE;
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
@@ -136,8 +136,8 @@ export class Level extends Phaser.Scene {
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
 
     // Add HP counter and Score
-    this.hpCount = this.add.text(300, 15, "HP: " + this.core.hp, {fontSize: '20px'});
-    this.score = this.add.text(400, 15, "Score: " + 0, {fontSize: '20px'});
+    this.hpCount = this.add.text(300, 15, 'HP: ' + this.core.hp, {fontSize: '20px'});
+    this.score = this.add.text(400, 15, 'Score: ' + Player.score, {fontSize: '20px'});
 
     // Add or remove a turret upon click
     this.input.on('pointerup', (pointer) => {
@@ -249,7 +249,7 @@ export class Level extends Phaser.Scene {
 
     this.testCritters = [];
     this.wave(waveCount);
-    waveCount--; // update the wave count
+    waveCount++; // update the wave count
     // end of enemy stuff
 
     // After enemies are set up, create second layer that will render above everything else
@@ -286,9 +286,11 @@ export class Level extends Phaser.Scene {
 
   }
 
-  wave(enemyCount) {
-    for (let i = 0; i < enemyCount; i++) {
-      let en = Math.floor(Math.random() * 5); // choose any of the 5 possible enemies
+  wave(waveCount) {
+    const min = Player.level - 1; 
+    const max = min + 3;
+    for (let i = 0; i < waveCount + 2; i++) {
+      let en = Math.floor(Math.random() * (max - min) + min); // choose any of the 5 possible enemies
       let choice = Math.floor(Math.random() * 6);
       let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage, points: this.eData[en].points});
       newOne.play(this.eneAnims[en]);
@@ -346,7 +348,8 @@ export class Level extends Phaser.Scene {
                 this.turretMap[mapInd] = null;
 
                 // Increase score
-                this.score.setText('Score: ' + critter.points);
+                Player.score += critter.points;
+                this.score.setText('Score: ' + Player.score);
 
                 // destroy enemy
                 critter.destroy();
@@ -392,16 +395,16 @@ export class Level extends Phaser.Scene {
       this.scene.start(CONST.SCENES.DEATH);
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
-    } else if (this.core.hp > 0 && waveCount === 0) { // YOU WIN
+    } else if (this.core.hp > 0 && waveCount === 11) { // YOU WIN
       this.scene.start(CONST.SCENES.VIC);
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
     }
 
     // New wave
-    if (this.testCritters.length === 0 && waveCount > 0) {
+    if (this.testCritters.length === 0 && waveCount < 11) {
       this.wave(waveCount);
-      waveCount--;
+      waveCount++;
     }
     //Passes array of critters to Turrets to see when a critter is near a turret
     this.turrets.forEach(turret => {
