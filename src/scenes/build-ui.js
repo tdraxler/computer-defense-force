@@ -38,25 +38,33 @@ export class BuildMenu extends Phaser.Scene {
     );
 
     // Buttons for side panel
-    this.fireWallButton = new Button(
-      this, 1, 123, 'turret-buttons', 0, true,
-      null, { turretChoice: 'firewall'}
-    );
+    if (Player.unlocked['firewall']) {
+      this.fireWallButton = new Button(
+        this, 1, 123, 'turret-buttons', 0, true,
+        null, { turretChoice: 'firewall'}
+      );
+    }
 
-    this.virusBlasterButton = new Button(
-      this, 1, 144, 'turret-buttons', 2, true,
-      null, { turretChoice: 'virus-blaster'}
-    );
+    if (Player.unlocked['virus-blaster']) {
+      this.virusBlasterButton = new Button(
+        this, 1, 144, 'turret-buttons', 2, true,
+        null, { turretChoice: 'virus-blaster'}
+      );
+    }
 
-    this.rectifierButton = new Button(
-      this, 1, 165, 'turret-buttons', 4, true,
-      null, { turretChoice: 'rectifier'}
-    );
+    if (Player.unlocked['rectifier']) {
+      this.rectifierButton = new Button(
+        this, 1, 165, 'turret-buttons', 4, true,
+        null, { turretChoice: 'rectifier'}
+      );
+    }
 
-    this.psuButton = new Button(
-      this, 1, 186, 'turret-buttons', 6, true,
-      null, { turretChoice: 'psu'}
-    );
+    if (Player.unlocked['psu']) {
+      this.psuButton = new Button(
+        this, 1, 186, 'turret-buttons', 6, true,
+        null, { turretChoice: 'psu'}
+      );
+    }
 
     this.buildBarUpper.setInteractive();
     this.buildBarLeft.setInteractive();
