@@ -5,52 +5,39 @@ import {CONST} from '../constants';
 //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
 
 export class Bullet extends Phaser.GameObjects.Sprite {
-  constructor(scene, enemy) {
-    super(
-      scene, enemy
-    );
-    this.scene.add.existing(this);
-    this.setInteractive();
+
+  constructor(scene, x, y, enemy) {
+    super(scene, x, y, enemy);
     this.enemy = enemy;
+    this.x = x;
+    this.y=y;
+    this.scene.add.existing(this);
+    this.scene.physics.add.existing(this).setDepth(1);
+    this.getBody().setCollideWorldBounds(true);
+    this.getBody().setAllowGravity(false);
   }
+
   preload()
   {
-    //this.load.spritesheet('bullet', './images/bullet_5px.png', {frameWidth: 5, frameHeight: 5});
-    //this.load.image('smBullet', '../images/bullet_5px.png');
-    //, {frameWidth:5, frameHeight: 5}
-  }
 
-  fire(x, y, curEnemy) {
-    this.addBullet = this.scene.physics.add.sprite(x, y, 'bullet');
-    this.scene.physics.moveTo(this.addBullet, curEnemy.x, curEnemy.y);
-    //this.addBullet.body.collideWorldBounds = true; // sets so that the bullets don't keep going off of the map
-    this.scene.physics.add.collider(this.addBullet, curEnemy);
-    this.addBullet.setMaxVelocity(700, 700);
-    this.addBullet.lifespan=300;
-    // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
-    let attack = this.scene.physics.add.overlap(this.addBullet, curEnemy, function (destroyBullet) {
-      destroyBullet.body.stop();
-      this.scene.physics.world.removeCollider(attack)
-    }, null, this);
   }
-
   create()
   {
-
+    this.addBullet = this.physics.add.sprite(this.x, this.y, 'bullet').setDepth(2);
   }
-
+  fire() {
+    //this.addBullet = this.scene.physics.add.sprite(this.x, this.y, 'bullet').setDepth(2);
+    this.physics.moveToObject(this.addBullet, this.enemy, 400); //suggested by Abraham
+    this.addBullet.setVisible(true);
+    // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
+    this.physics.add.overlap(this.addBullet, this.enemy);
+    //return this.addBullet;
+  }
   update(){
-    for(let i = 0; i<this.enemy.length; i++){
-      if(this.enemy[i].active && Phaser.Math.Distance.Between(this.x, this.y, this.enemy[i].x, this.enemy[i].y)<=50){
-        let newAngle = Phaser.Math.Angle.Between(this.x, this.y, this.enemy[i].x, this.enemy[i].y);
-        this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
-        this.setRotation((newAngle + Math.PI/2)-160);
-        this.fire(this.x, this.y, this.enemy[i]);
-        //let bullet = new Bullet({scene: this, x: this.x, y: this.y, enemy: enemyUnits[i]});
-        //this.fire();
-        //bullet.fire(this.x, this.y, enemyUnits[i]);
-        //firedUpon.push(bullet);
-      }
-    }
+    this.add.overlap(this.addBullet, this.enemy, destroy, null, this)
   }
 }
+function destroy(){
+  this.addBullet.disableBody(true,true);
+}
+

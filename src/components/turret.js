@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import '../scenes/level';
-import {Bullet} from './bullet';
+import {Bullet} from '../components/bullet';
 import { CONST } from '../constants';
 
 
@@ -26,6 +26,10 @@ function onEvent(){
   }
 
 }
+function destroy(bullet, enemy){
+  bullet.disableBody(true, true);
+  enemy.disableBody(true, true);
+}
 
 
 
@@ -46,16 +50,15 @@ class Head extends Phaser.GameObjects.Sprite {
     //this.addBullet.setDepth(0);10
     this.scene.physics.moveToObject(this.addBullet, enemy, 400); //suggested by Abraham
     //this.addBullet.body.collideWorldBounds = true; // sets so that the bullets don't keep going off of the map
-    this.scene.physics.add.collider(this.addBullet, enemy);
+    //this.scene.physics.add.collider(this.addBullet, enemy);
     //this.addBullet.lifespan=10;
     arrBullets.push(this.addBullet)
-    this.scene.time.delayedCall(1000, onEvent, [], this)
+    //this.scene.time.delayedCall(1000, onEvent, [], this)
     this.addBullet.setVisible(true);
     // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
-    let attack = this.scene.physics.add.overlap(this.addBullet, enemy, function (destroyBullet) {
-      destroyBullet.body.stop();
-      this.scene.physics.world.removeCollider(attack)
-    }, null, this);
+    //this.scene.physics.add.overlap(this.addBullet, enemy, destroy, null, this);
+    return this.addBullet;
+
   }
   create(){
 
@@ -74,7 +77,13 @@ class Head extends Phaser.GameObjects.Sprite {
         let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
-        this.fire(this.x, this.y, enemyUnits[i]);
+        let bullet = new Bullet(this, this.x, this.y, enemyUnits[i]);
+        bullet.fire();
+        // for testing when fire is a part of turret
+        /*
+        let newBullet = this.fire(this.x, this.y, enemyUnits[i]);
+        this.scene.physics.add.overlap(newBullet, enemyUnits[i], destroy, null, this);
+        this.scene.time.delayedCall(1000, onEvent, [newBullet], this);*/
         //let bullet = new Bullet({scene: this, x: this.x, y: this.y, enemy: enemyUnits[i]});
         // bullet.fire();
         //bullet.fire(this.x, this.y, enemyUnits[i]);
