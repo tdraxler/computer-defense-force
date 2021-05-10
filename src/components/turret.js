@@ -19,6 +19,7 @@ function updateBullet(bullet, delta){
 
 let arrBullets=[];
 
+// adapted from: https://labs.phaser.io/edit.html?src=src/time\timer%20event.js
 function onEvent(){
   for(var i = 0; i < arrBullets.length; i++){
     arrBullets[i].setVisible(false);
@@ -43,13 +44,13 @@ class Head extends Phaser.GameObjects.Sprite {
   fire(x, y, enemy) {
     this.addBullet = this.scene.physics.add.sprite(this.x, this.y, 'bullet').setDepth(2);
     //this.addBullet.setDepth(0);10
-    this.scene.physics.moveTo(this.addBullet, enemy.x, enemy.y);
+    this.scene.physics.moveToObject(this.addBullet, enemy, 400); //suggested by Abraham
     //this.addBullet.body.collideWorldBounds = true; // sets so that the bullets don't keep going off of the map
     this.scene.physics.add.collider(this.addBullet, enemy);
-    this.addBullet.setMaxVelocity(700, 700);
-    //this.addBullet.lifespan=300;
+    //this.addBullet.lifespan=10;
     arrBullets.push(this.addBullet)
-    this.scene.time.delayedCall(2000, onEvent, [], this)
+    this.scene.time.delayedCall(1000, onEvent, [], this)
+    this.addBullet.setVisible(true);
     // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     let attack = this.scene.physics.add.overlap(this.addBullet, enemy, function (destroyBullet) {
       destroyBullet.body.stop();
