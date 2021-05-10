@@ -17,6 +17,7 @@ let bgm;
 let waveCount = 1;
 
 const TILE = CONST.T_SIZE;
+const BUILD_AREA_INDEX = 146;
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
 
 
@@ -80,7 +81,7 @@ export class Level extends Phaser.Scene {
     this.load.tilemapTiledJSON(this.levelData[lev].map);
 
     // Valid build location sprite (drawn on tilemap)
-    this.load.image('build-ready', 'images/valid-build.png');
+    this.load.spritesheet('build-ready', 'images/valid-build.png', { frameWidth: 16, frameHeight: 16 });
 
     // Load core for the player to protect (TODO - change to spritesheet)
     this.load.image('core', 'images/player-sprites/core.png');
@@ -125,7 +126,7 @@ export class Level extends Phaser.Scene {
     this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
 
     // Valid build location (drawn on tilemap)
-    this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
+    this.buildReady = this.add.sprite(0, 0, 'build-ready', 1).setOrigin(0,0);
 
     // Set up core for the player to protect
     this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[0]);
@@ -138,8 +139,9 @@ export class Level extends Phaser.Scene {
     // Add or remove a turret upon click
     this.input.on('pointerup', (pointer) => {
       let mapInd = (nearestIndex(pointer.worldY) * this.tilemap.width + nearestIndex(pointer.worldX));
+      let buildArea = this.collidemap.layer.data[Math.floor(this.input.activePointer.worldY / TILE)][Math.floor(this.input.activePointer.worldX / TILE)].index;
 
-      if (Player.action == CURRENT_ACTION.BUILD) {
+      if (Player.action == CURRENT_ACTION.BUILD && buildArea == BUILD_AREA_INDEX) {
         if (this.turretMap[mapInd] == null) {
           let newTurret = new Turret(
             this,
@@ -302,6 +304,16 @@ export class Level extends Phaser.Scene {
   update(){
     // Update buildable area indicator
     this.input.activePointer.updateWorldPoint(this.cameras.main);
+
+    // Change sprite index if cursor position is a valid area to build in.
+    let mapInd = this.collidemap.layer.data[Math.floor(this.input.activePointer.worldY / TILE)][Math.floor(this.input.activePointer.worldX / TILE)].index;
+
+    if (mapInd == BUILD_AREA_INDEX) {  // 'B' (buildable) block
+      this.buildReady.setFrame(0);
+    }
+    else {
+      this.buildReady.setFrame(1);
+    }
     this.buildReady.x = (TILE * Math.floor(this.input.activePointer.worldX / TILE));
     this.buildReady.y = (TILE * Math.floor(this.input.activePointer.worldY / TILE));
 
