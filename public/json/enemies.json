@@ -17,7 +17,7 @@
     "points": 15,
     "source": "images/worm.png",
     "width": 50,
-    "height": 50
+    "height": 25
   },
   {
     "name": "trojan",
