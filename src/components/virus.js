@@ -13,5 +13,6 @@ export class Virus extends Phaser.GameObjects.Sprite {
     this.y = config.y;
     this.hp = config.hp;
     this.damage = config.damage;
+    this.points = config.points;
   }
 }
