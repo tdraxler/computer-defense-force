@@ -5,6 +5,7 @@ class Player {
     this.score = 0
     this.action = CURRENT_ACTION.NONE;
     this.level = 1;
+    this.chosenTurret = 'firewall';
   }
 
   reset() {
@@ -15,6 +16,17 @@ class Player {
 
   setAction(newAction) {
     this.action = newAction;
+  }
+
+  setVal(newVal) {
+    if (newVal) {
+      // Change turret type
+      if (newVal.turretChoice) {
+        this.chosenTurret = newVal.turretChoice;
+      }
+
+      // TODO - other actions
+    }
   }
 
   levelUp() {

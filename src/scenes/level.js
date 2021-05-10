@@ -306,9 +306,10 @@ export class Level extends Phaser.Scene {
     this.input.activePointer.updateWorldPoint(this.cameras.main);
 
     // Change sprite index if cursor position is a valid area to build in.
-    let mapInd = this.collidemap.layer.data[Math.floor(this.input.activePointer.worldY / TILE)][Math.floor(this.input.activePointer.worldX / TILE)].index;
+    // let mapInd = this.collidemap.layer.data[Math.floor(this.input.activePointer.worldY / TILE)][Math.floor(this.input.activePointer.worldX / TILE)].index;
+    let mapInd = this.collidemap.getTileAt(Math.floor(this.input.activePointer.worldX / TILE), Math.floor(this.input.activePointer.worldY / TILE));
 
-    if (mapInd == BUILD_AREA_INDEX) {  // 'B' (buildable) block
+    if (mapInd && mapInd.index == BUILD_AREA_INDEX) {  // 'B' (buildable) block
       this.buildReady.setFrame(0);
     }
     else {
