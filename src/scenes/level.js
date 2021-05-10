@@ -6,15 +6,15 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
-import {Bullet} from '../components/bullet';
 //import { Bullet } from '../components/bullet';
 import { Explosion } from '../components/explosion';
+import updateHpScore from '../components/hpscoreevent';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
 
 let bgm;
-let waveCount = 10;
+let waveCount = 1;
 
 const TILE = CONST.T_SIZE;
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
@@ -65,9 +65,12 @@ export class Level extends Phaser.Scene {
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
     this.load.audio('build-turret', ['sound/sfx/make_turret.mp3']);
     this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']); 
+    // Load enemy sprites
+    this.load.spritesheet(this.eData[4].name, this.eData[4].source, { frameWidth: this.eData[4].width, frameHeight: this.eData[4].height, endFrame: 10 }); // Rootkit
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 }); // Virus
     this.load.spritesheet(this.eData[2].name, this.eData[2].source, { frameWidth: this.eData[2].width, frameHeight: this.eData[2].height, endFrame: 6}); // Trojan
     this.load.spritesheet(this.eData[1].name, this.eData[1].source, { frameWidth: this.eData[1].width, frameHeight: this.eData[1].height, endFrame: 4}); // Worm
+    this.load.spritesheet(this.eData[0].name, this.eData[0].source, { frameWidth: this.eData[0].width, frameHeight: this.eData[0].height, endFrame:  8}); // Spyware
 
     // Map & tiles
     if (this.textures.exists('tiles')) { // Prevents warnings/errors upon reload
@@ -145,6 +148,8 @@ export class Level extends Phaser.Scene {
             'firewall'
           );
 
+          newTurret.hp = 5;
+
           this.turrets.push(newTurret);
           this.buildSfx.play();
 
@@ -182,20 +187,8 @@ export class Level extends Phaser.Scene {
 
     // Enemy stuff
 
-    // Add walking animation for sprite
-    let virusAnims = { 
-      key: 'walking', 
-      frames: this.anims.generateFrameNumbers(this.eData[3].name, { start: 0, end: 3, first: 3 }),
-      frameRate: 8,
-      repeat: -1
-    };
-    this.anims.create(virusAnims);
-    let trojanAnims = {
-      key: 'moving',
-      frames: this.anims.generateFrameNumbers(this.eData[2].name, { start: 0, end: 5, first: 5 }),
-      frameRate: 8,
-      repeat: -1
-    }
+    // Add walking animation for enemy sprites
+    this.addEnemyAnims();
 
     this.anims.create({
       key: 'explosion-anim',
@@ -204,14 +197,6 @@ export class Level extends Phaser.Scene {
       repeat: 0
     });
 
-    this.anims.create(trojanAnims);
-    let wormAnims = {
-      key: 'crawling',
-      frames: this.anims.generateFrameNumbers(this.eData[1].name, { start: 0, end: 3, first: 3 }),
-      frameRate: 8,
-      repeat: -1
-    }
-    this.anims.create(wormAnims);
     // this.viruses = [];
     // // create viruses and have them do their path
     // for(let i = 0; i < 4; i++) {
@@ -224,7 +209,7 @@ export class Level extends Phaser.Scene {
 
     this.testCritters = [];
     this.wave(waveCount);
-    waveCount--; // update the wave count
+    waveCount++; // update the wave count
     // end of enemy stuff
 
     // After enemies are set up, create second layer that will render above everything else
@@ -261,18 +246,14 @@ export class Level extends Phaser.Scene {
 
   }
 
-  wave(enemyCount) {
-    for (let i = 0; i < enemyCount; i++) {
-      let en = Math.floor(Math.random() * (3 - 1 + 1) + 1); // choose a worm, trojan or virus
+  wave(waveCount) {
+    const min = Player.level - 1; 
+    const max = min + 3;
+    for (let i = 0; i < waveCount + 2; i++) {
+      let en = Math.floor(Math.random() * (max - min) + min); // choose any of the 5 possible enemies
       let choice = Math.floor(Math.random() * 6);
-      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage});
-      if (en === 1) { // Worm
-        newOne.play('crawling');
-      } else if (en === 2) { // Trojan
-        newOne.play('moving');
-      } else { // Virus
-        newOne.play('walking');
-      }
+      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage, points: this.eData[en].points});
+      newOne.play(this.eneAnims[en]);
       newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
       newOne.moveX = 0;
       newOne.moveY = 0;
@@ -280,6 +261,42 @@ export class Level extends Phaser.Scene {
       newOne.dirVector = {x: 0, y: 0};
       this.testCritters.push(newOne);
     }
+  }
+
+  addEnemyAnims() {
+    // Add walking animation for enemy sprites
+    const enemyAnims = [
+      {
+        key: 'spyware-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[0].name, { start: 0, end: 7, first: 7}),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'worm-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[1].name, { start: 0, end: 3, first: 3 }),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'trojan-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[2].name, { start: 0, end: 5, first: 5 }),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'virus-mov', 
+        frames: this.anims.generateFrameNumbers(this.eData[3].name, { start: 0, end: 3, first: 3 }),
+        frameRate: 8,
+        repeat: -1
+      }, {
+        key: 'rootkit-mov',
+        frames: this.anims.generateFrameNumbers(this.eData[4].name, { start: 0, end: 9, first: 9}),
+        frameRate: 8,
+        repeat: -1
+      }
+    ]
+    for(let i = 0; i < 5; i++) {
+      this.anims.create(enemyAnims[i]);
+    }
+    this.eneAnims = ['spyware-mov', 'worm-mov', 'trojan-mov', 'virus-mov', 'rootkit-mov'];
   }
 
   update(){
@@ -311,12 +328,45 @@ export class Level extends Phaser.Scene {
           critter.delay--;
         }
         else {
+          // Check to see if Turret is in same tile as enemy, in which case delete both
+          for (let [turretIndex, turret] of this.turrets.entries()) {
+            if (Math.floor(turret.x / TILE) == Math.floor(critter.x / TILE) && Math.floor(turret.y / TILE) == Math.floor(critter.y / TILE)) {
+              turret.hp -= critter.damage;
+              if (turret.hp <= 0) {
+                // Clean up and destroy it
+                turret.dismantle();
+                turret.destroy();
+
+                // Remove all references to it.
+                this.turrets.splice(turretIndex, 1);
+                console.log(this.turrets.length);
+                let mapInd = (nearestIndex(turret.y) * this.tilemap.width + nearestIndex(turret.x));
+                this.turretMap[mapInd] = null;
+
+                // Increase score
+                Player.score += critter.points;
+                updateHpScore.emit('update-hp-score', this.core.hp);
+
+                // destroy enemy
+                critter.destroy();
+                this.explosion.play();
+                this.testCritters.splice(index, 1);
+                // Play explosion
+                let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
+                newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
+                break;
+              }
+            }
+          }
+
           // Move it!
           if (critter.moveVal <= 0) {
             // Figure out direction to move in
+
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
+              updateHpScore.emit('update-hp-score', this.core.hp);
               console.log(this.core.hp);
               critter.destroy();
               this.explosion.play();
@@ -344,16 +394,16 @@ export class Level extends Phaser.Scene {
       this.scene.start(CONST.SCENES.DEATH);
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
-    } else if (this.core.hp > 0 && waveCount === 0) { // YOU WIN
+    } else if (this.core.hp > 0 && waveCount === 11) { // YOU WIN
       this.scene.start(CONST.SCENES.VIC);
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
     }
 
     // New wave
-    if (this.testCritters.length === 0 && waveCount > 0) {
+    if (this.testCritters.length === 0 && waveCount < 11) {
       this.wave(waveCount);
-      waveCount--;
+      waveCount++;
     }
     //Passes array of critters to Turrets to see when a critter is near a turret
     this.turrets.forEach(turret => {
