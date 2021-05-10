@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import '../scenes/level';
-import {Bullet} from '../components/bullet';
+import {Bullet} from './bullet';
 import { CONST } from '../constants';
 
 
@@ -8,27 +8,6 @@ import { CONST } from '../constants';
 // construction for the class below has a way to validate parameters
 function validTurretType(buildType) {
   return buildType === 'firewall';
-}
-
-function updateBullet(bullet, delta){
-  bullet.state -= delta;
-  if(bullet.state <=0){
-    bullet.disableBody(true, true);
-  }
-}
-
-let arrBullets=[];
-
-// adapted from: https://labs.phaser.io/edit.html?src=src/time\timer%20event.js
-function onEvent(){
-  for(var i = 0; i < arrBullets.length; i++){
-    arrBullets[i].setVisible(false);
-  }
-
-}
-function destroy(bullet, enemy){
-  bullet.disableBody(true, true);
-  enemy.disableBody(true, true);
 }
 
 
@@ -45,21 +24,7 @@ class Head extends Phaser.GameObjects.Sprite {
   }
   //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
   //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
-  fire(x, y, enemy) {
-    this.addBullet = this.scene.physics.add.sprite(this.x, this.y, 'bullet').setDepth(2);
-    //this.addBullet.setDepth(0);10
-    this.scene.physics.moveToObject(this.addBullet, enemy, 400); //suggested by Abraham
-    //this.addBullet.body.collideWorldBounds = true; // sets so that the bullets don't keep going off of the map
-    //this.scene.physics.add.collider(this.addBullet, enemy);
-    //this.addBullet.lifespan=10;
-    arrBullets.push(this.addBullet)
-    //this.scene.time.delayedCall(1000, onEvent, [], this)
-    this.addBullet.setVisible(true);
-    // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
-    //this.scene.physics.add.overlap(this.addBullet, enemy, destroy, null, this);
-    return this.addBullet;
 
-  }
   create(){
 
   }
@@ -68,31 +33,17 @@ class Head extends Phaser.GameObjects.Sprite {
     //let firedUpon = [];
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
-
     let enemyUnits = toTrack;
-
-    //print(enemyUnits.length);
     for(let i = 0; i<enemyUnits.length; i++){
       if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=50){
         let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
-        let bullet = new Bullet(this, this.x, this.y, enemyUnits[i]);
+        let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
         bullet.fire();
-        // for testing when fire is a part of turret
-        /*
-        let newBullet = this.fire(this.x, this.y, enemyUnits[i]);
-        this.scene.physics.add.overlap(newBullet, enemyUnits[i], destroy, null, this);
-        this.scene.time.delayedCall(1000, onEvent, [newBullet], this);*/
-        //let bullet = new Bullet({scene: this, x: this.x, y: this.y, enemy: enemyUnits[i]});
-        // bullet.fire();
-        //bullet.fire(this.x, this.y, enemyUnits[i]);
-        //firedUpon.push(bullet);
       }
     }
   }
-
-
 }
 
 
