@@ -34,10 +34,14 @@ export class Bullet extends Phaser.GameObjects.Sprite {
     //return this.addBullet;
   }
   update(){
-    this.add.overlap(this.addBullet, this.enemy, destroy, null, this)
+    this.add.overlap(this.addBullet, this.enemy, destroy, null, this);
+    if(this.addBullet.x>this.physics.world.bounds.width || this.addBullet.y>this.physics.world.bounds.height || this.addBullet.x<0 || this.addBullet.y<0){
+      this.addBullet.setVisible(false);
+    }
+
   }
 }
 function destroy(){
-  this.addBullet.disableBody(true,true);
+  this.addBullet.setVisible(false);
 }
 
