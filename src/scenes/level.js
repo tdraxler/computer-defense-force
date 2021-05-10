@@ -6,9 +6,9 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
-import {Bullet} from '../components/bullet';
 //import { Bullet } from '../components/bullet';
 import { Explosion } from '../components/explosion';
+import updateHpScore from '../components/hpscoreevent';
 
 // For debugging the cursor position
 // let mousePos = { x: 0, y: 0 };
@@ -134,10 +134,6 @@ export class Level extends Phaser.Scene {
 
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
-
-    // Add HP counter and Score
-    this.hpCount = this.add.text(300, 15, 'HP: ' + this.core.hp, {fontSize: '20px'});
-    this.score = this.add.text(400, 15, 'Score: ' + Player.score, {fontSize: '20px'});
 
     // Add or remove a turret upon click
     this.input.on('pointerup', (pointer) => {
@@ -349,12 +345,15 @@ export class Level extends Phaser.Scene {
 
                 // Increase score
                 Player.score += critter.points;
-                this.score.setText('Score: ' + Player.score);
+                updateHpScore.emit('update-hp-score', this.core.hp);
 
                 // destroy enemy
                 critter.destroy();
                 this.explosion.play();
                 this.testCritters.splice(index, 1);
+                // Play explosion
+                let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
+                newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
                 break;
               }
             }
@@ -367,7 +366,7 @@ export class Level extends Phaser.Scene {
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
-              this.hpCount.setText('HP: ' + this.core.hp);
+              updateHpScore.emit('update-hp-score', this.core.hp);
               console.log(this.core.hp);
               critter.destroy();
               this.explosion.play();

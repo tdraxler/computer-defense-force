@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { CONST, CURRENT_ACTION } from '../constants';
 import Player from '../components/player';
+import updateHpScore from '../components/hpscoreevent';
 
 export class BuildMenu extends Phaser.Scene {
   constructor() {
@@ -57,8 +58,19 @@ export class BuildMenu extends Phaser.Scene {
     this.demolishButton.on('pointerout', () => {
       this.demolishButton.setFrame(2);
     });
+
+    this.hpCount = this.add.text(305, 0, 'HP: ' + 500, {fontSize: '16px'});
+    this.score = this.add.text(275, 15, 'Score: ' + Player.score, {fontSize: '16px'});
+    
+    updateHpScore.on('update-hp-score', this.updateHpScore, this);
   }
 
   update() {
   }
+
+  updateHpScore(hp) {
+    this.hpCount.setText('HP: ' + hp);
+    this.score.setText('Score: ' + Player.score);
+  }
+
 }
