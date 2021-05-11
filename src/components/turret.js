@@ -1,8 +1,6 @@
 import Phaser from 'phaser';
 import '../scenes/level';
 import {Bullet} from './bullet';
-import { CONST } from '../constants';
-
 
 // Since JavaScript doesn't have type checking, we need a way to make sure the
 // construction for the class below has a way to validate parameters
