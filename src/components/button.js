@@ -43,6 +43,9 @@ export class Button extends Phaser.GameObjects.Sprite {
       }
       if (this.buttonConfig) {
         Player.setVal(buttonConfig);
+        if (this.buttonConfig.upgrade) {
+          this.destroy(); // Upgrade buttons should be disabled when clicked
+        }
       }
     });
 
