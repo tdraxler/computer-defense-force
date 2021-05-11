@@ -211,6 +211,15 @@ export class Level extends Phaser.Scene {
     //   this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
     // }
 
+    // making bullet and enemy groups
+    this.gBullets = this.physics.add.group();
+    this.gEnemies = this.physics.add.group();
+
+    //add collider between groups
+    this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
+      console.log('Hit!');
+      bullet.destroy();
+    });
 
     this.testCritters = [];
     this.wave(waveCount);
@@ -247,18 +256,7 @@ export class Level extends Phaser.Scene {
 
     this.pathmap = generatePathMap(this.levelData[Player.level - 1].core_x, this.levelData[Player.level - 1].core_y, this.collidemap);
 
-    // making bullet and enemy groups
-    this.gBullets = this.physics.add.group();
-    this.gEnemies = this.physics.add.group();
 
-    //add collider between groups
-    this.physics.add.overlap(
-      this.gBullets,
-      this.gEnemies,
-      (enemy, bullet)=>{
-        console.log('DEBUGGING: The collider has been called!')
-      }
-    );
 
 
   }

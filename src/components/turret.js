@@ -35,16 +35,17 @@ class Head extends Phaser.GameObjects.Sprite {
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
     let enemyUnits = toTrack;
     for(let i = 0; i<enemyUnits.length; i++){
-      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=50){
+      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=75){
         let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
         let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
-        bullet.fire();
-        //add new turret to bullet group
         if(this.scene.gBullets){
           this.scene.gBullets.add(bullet);
         }
+        bullet.fire();
+        //add new turret to bullet group
+
       }
     }
   }

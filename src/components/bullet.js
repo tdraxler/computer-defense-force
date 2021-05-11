@@ -35,7 +35,7 @@ export class Bullet extends Phaser.GameObjects.Sprite {
     this.scene.physics.moveToObject(this, this.enemy, 400); //suggested by Abraham
     // this.addBullet.setVisible(true);
     // from https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
-    this.scene.physics.add.overlap(this, this.enemy);
+    //this.scene.physics.add.overlap(this, this.enemy);
     //return this.addBullet;
 
   }
