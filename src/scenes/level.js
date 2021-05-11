@@ -211,7 +211,7 @@ export class Level extends Phaser.Scene {
     this.enemyGroup = this.physics.add.group();
     this.bulletGroup = this.physics.add.group();
 
-    this.physics.add.collider(this.enemyGroup, this.bulletGroup, (enemy, bullet) => {
+    this.physics.add.overlap(this.enemyGroup, this.bulletGroup, (enemy, bullet) => {
       console.log('Hit!');
       bullet.destroy();
     });
@@ -269,7 +269,6 @@ export class Level extends Phaser.Scene {
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
       this.enemyGroup.add(newOne);
-      console.log(this.enemyGroup);
       this.testCritters.push(newOne);
     }
   }
