@@ -208,6 +208,13 @@ export class Level extends Phaser.Scene {
     //   this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
     // }
 
+    this.enemyGroup = this.physics.add.group();
+    this.bulletGroup = this.physics.add.group();
+
+    this.physics.add.collider(this.enemyGroup, this.bulletGroup, (enemy, bullet) => {
+      console.log('Hit!');
+      bullet.destroy();
+    });
 
     this.testCritters = [];
     this.wave(waveCount);
@@ -261,6 +268,8 @@ export class Level extends Phaser.Scene {
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
+      this.enemyGroup.add(newOne);
+      console.log(this.enemyGroup);
       this.testCritters.push(newOne);
     }
   }
