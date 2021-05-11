@@ -127,6 +127,7 @@ export class Level extends Phaser.Scene {
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready').setOrigin(0,0);
 
+
     // Set up core for the player to protect
     this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[0]);
     this.targetX = Math.floor(this.levelData[Player.level - 1].core_x);
@@ -147,6 +148,7 @@ export class Level extends Phaser.Scene {
             nearestTile(pointer.worldY),
             'firewall'
           );
+
 
           newTurret.hp = 5;
 
@@ -183,6 +185,7 @@ export class Level extends Phaser.Scene {
       else {
         console.log('No action selected');
       }
+
     });
 
     // Enemy stuff
@@ -242,6 +245,18 @@ export class Level extends Phaser.Scene {
 
     this.pathmap = generatePathMap(this.levelData[Player.level - 1].core_x, this.levelData[Player.level - 1].core_y, this.collidemap);
 
+    // making bullet and enemy groups
+    this.gBullets = this.add.group();
+    this.gEnemies = this.add.group();
+
+    //add collider between groups
+    this.physics.add.collider(
+      this.gBullets,
+      this.gEnemies,
+      (enemy, bullet)=>{
+        console.log('DEBUGGING: The collider has been called!')
+      }
+    )
 
 
   }
@@ -260,6 +275,7 @@ export class Level extends Phaser.Scene {
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
       this.testCritters.push(newOne);
+      this.gEnemies.add(newOne);
     }
   }
 

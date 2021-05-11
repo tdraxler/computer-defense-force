@@ -41,6 +41,10 @@ class Head extends Phaser.GameObjects.Sprite {
         this.setRotation((newAngle + Math.PI/2)-160);
         let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
         bullet.fire();
+        //add new turret to bullet group
+        if(this.scene.gBullets){
+          this.scene.gBullets.add(bullet);
+        }
       }
     }
   }
