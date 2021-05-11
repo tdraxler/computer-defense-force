@@ -104,6 +104,7 @@ export class Level extends Phaser.Scene {
     this.keyAltLeft = this.input.keyboard.addKey('Left');
     this.keyAltRight = this.input.keyboard.addKey('Right');
     this.keyC = this.input.keyboard.addKey('M'); // For debug operations
+    this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
   }
 
   create(){
@@ -454,6 +455,14 @@ export class Level extends Phaser.Scene {
       bgm.stop();
       Player.levelUp();
       this.scene.restart();
+    }
+    if (this.keyU.isDown) {
+      console.log('Switching to upgrade menu');
+      this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
+      this.scene.start(CONST.SCENES.SHOP);
+      this.scene.stop(CONST.SCENES.LEVEL);
+      this.scene.stop(CONST.SCENES.BUILD_MENU);
+      bgm.stop();
     }
   }
 }

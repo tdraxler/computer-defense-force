@@ -10,7 +10,8 @@ class Player {
       'firewall': true,
       'virus-blaster': false,
       'rectifier': false,
-      'psu': true
+      'psu': true,
+      'hardened-core': false
     };
   }
 
@@ -23,7 +24,8 @@ class Player {
       'firewall': true,
       'virus-blaster': false,
       'rectifier': false,
-      'psu': true
+      'psu': true,
+      'hardened-core': false
     };
   }
 
@@ -39,6 +41,9 @@ class Player {
       }
 
       // TODO - other actions
+      if (newVal.upgrade) {
+        this.unlocked[newVal.upgrade] = true;
+      }
     }
   }
 
