@@ -5,16 +5,45 @@ class Player {
     this.score = 0
     this.action = CURRENT_ACTION.NONE;
     this.level = 1;
+    this.chosenTurret = 'firewall';
+    this.unlocked = {
+      'firewall': true,
+      'virus-blaster': false,
+      'rectifier': false,
+      'psu': true
+    };
   }
 
   reset() {
     this.score = 0;
-    this.action = CURRENT_ACTION.BUILD;
+    this.action = CURRENT_ACTION.NONE;
     this.level = 1;
+    this.chosenTurret = 'firewall';
+    this.unlocked = {
+      'firewall': true,
+      'virus-blaster': false,
+      'rectifier': false,
+      'psu': true
+    };
   }
 
   setAction(newAction) {
     this.action = newAction;
+  }
+
+  setVal(newVal) {
+    if (newVal) {
+      // Change turret type
+      if (newVal.turretChoice) {
+        this.chosenTurret = newVal.turretChoice;
+      }
+
+      // TODO - other actions
+    }
+  }
+
+  unlock(ability) {
+    this.unlocked[ability] = true;
   }
 
   levelUp() {
