@@ -18,7 +18,7 @@ export class Bullet extends Phaser.GameObjects.Sprite {
     this.damage = 5;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this).setDepth(1);
-    this.getBody().setCollideWorldBounds(true);
+    this.getBody().setCollideWorldBounds(false);
     this.getBody().setAllowGravity(false);
   }
 

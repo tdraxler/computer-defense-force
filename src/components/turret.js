@@ -45,17 +45,18 @@ class Head extends Phaser.GameObjects.Sprite {
         if(this.scene.gBullets){
           this.scene.gBullets.add(bullet);
         }
-        if(this.delay == 20){
+        if(this.delay >= 10){
           //bullet.play();
           bullet.fire();
           this.delay=0;
         }
-        this.delay++;
+
 
         //add new turret to bullet group
 
       }
     }
+    this.delay++;
   }
 }
 
