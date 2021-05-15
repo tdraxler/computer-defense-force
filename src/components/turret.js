@@ -10,8 +10,6 @@ function validTurretType(buildType) {
   return buildType === 'firewall';
 }
 
-
-
 // Unfortunately, Phaser seems to struggle with child sprites, so for now we
 // a reference to the turret Head in the Turret class instance.
 class Head extends Phaser.GameObjects.Sprite {
@@ -50,10 +48,7 @@ class Head extends Phaser.GameObjects.Sprite {
           bullet.fire();
           this.delay=0;
         }
-
-
         //add new turret to bullet group
-
       }
     }
     this.delay++;

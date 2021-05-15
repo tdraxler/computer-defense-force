@@ -172,7 +172,6 @@ export class Level extends Phaser.Scene {
         else {
           let toDelete = this.turretMap[mapInd]; // Get object ref
           let turretsArrInd = this.turrets.indexOf(toDelete);
-
           // Clean up and destroy it
           this.delTurret.play();
           toDelete.dismantle();
@@ -187,7 +186,6 @@ export class Level extends Phaser.Scene {
       else {
         console.log('No action selected');
       }
-
     });
 
     // Enemy stuff
@@ -358,7 +356,6 @@ export class Level extends Phaser.Scene {
           this.explosion.play();
           this.testCritters.splice(index, 1);
         }
-        //this.testCritters.forEach(critter => {
         if (critter.delay > 0) {
           critter.delay--;
         }
