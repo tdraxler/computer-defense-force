@@ -14,7 +14,7 @@ import updateHpScore from '../components/hpscoreevent';
 // let mousePos = { x: 0, y: 0 };
 
 let bgm;
-let waveCount = 1;
+//let this.waveCount = 1;
 
 const TILE = CONST.T_SIZE;
 const BUILD_AREA_INDEX = 146;
@@ -194,7 +194,7 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-
+    this.waveCount = 1;
     // Add walking animation for enemy sprites
     this.addEnemyAnims();
 
@@ -226,9 +226,9 @@ export class Level extends Phaser.Scene {
       console.log('Destroy has been called');
     });
 
-    this.testCritters = [];
-    this.wave(waveCount);
-    waveCount++; // update the wave count
+    this.lEnemies = [];
+    this.wave(this.waveCount);
+    this.waveCount++; // update the wave count
     // end of enemy stuff
 
     // After enemies are set up, create second layer that will render above everything else
@@ -274,13 +274,19 @@ export class Level extends Phaser.Scene {
       let choice = Math.floor(Math.random() * 6);
       let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage, points: this.eData[en].points});
       newOne.play(this.eneAnims[en]);
-      newOne.delay = Math.floor(Math.random() * 20 * 60); // Number of frames to delay movement
+      // Number of frames to delay movement
+      if (i === 0) {
+        newOne.delay = Math.floor(Math.random() * 10 * 60); 
+      } else {
+        newOne.delay = this.lEnemies[i - 1].delay + Math.floor(Math.random() * 5 * 60);
+      }
+      //newOne.delay = this.lEnemies[i] // Number of frames to delay movement
       newOne.moveX = 0;
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
       this.gEnemies.add(newOne);
-      this.testCritters.push(newOne);
+      this.lEnemies.push(newOne);
 
     }
   }
@@ -322,6 +328,8 @@ export class Level extends Phaser.Scene {
   }
 
   update(){
+    console.log(this.game.loop.actualFps);
+    updateHpScore.emit('update-hp-score', this.core.hp, this.waveCount - 1);
     // Update buildable area indicator
     this.input.activePointer.updateWorldPoint(this.cameras.main);
 
@@ -355,14 +363,13 @@ export class Level extends Phaser.Scene {
 
     // Test critter logic
     if (this.pathmap) {
-      for (let [index, critter] of this.testCritters.entries()) {
+      for (let [index, critter] of this.lEnemies.entries()) {
         if(critter.hp <= 0){
           Player.score += critter.points;
-          updateHpScore.emit('update-hp-score', this.core.hp);
 
           critter.destroy();
           this.explosion.play();
-          this.testCritters.splice(index, 1);
+          this.lEnemies.splice(index, 1);
 
           // Play explosion
           let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
@@ -389,12 +396,11 @@ export class Level extends Phaser.Scene {
 
                 // Increase score
                 Player.score += critter.points;
-                updateHpScore.emit('update-hp-score', this.core.hp);
 
                 // destroy enemy
                 critter.destroy();
                 this.explosion.play();
-                this.testCritters.splice(index, 1);
+                this.lEnemies.splice(index, 1);
                 // Play explosion
                 let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
                 newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
@@ -410,11 +416,10 @@ export class Level extends Phaser.Scene {
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
-              updateHpScore.emit('update-hp-score', this.core.hp);
               console.log(this.core.hp);
               critter.destroy();
               this.explosion.play();
-              this.testCritters.splice(index, 1);
+              this.lEnemies.splice(index, 1);
 
               // Play explosion
               let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
@@ -438,21 +443,23 @@ export class Level extends Phaser.Scene {
       this.scene.start(CONST.SCENES.DEATH);
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
-    } else if (this.core.hp > 0 && waveCount === 11) { // YOU WIN
+      this.scene.stop(CONST.SCENES.BUILD_MENU);
+    } else if (this.core.hp > 0 && this.waveCount === 11) { // YOU WIN
       this.scene.start(CONST.SCENES.VIC);
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
+      this.scene.stop(CONST.SCENES.BUILD_MENU);
     }
 
     // New wave
-    if (this.testCritters.length === 0 && waveCount < 11) {
-      this.wave(waveCount);
-      waveCount++;
+    if (this.lEnemies.length === 0 && this.waveCount < 11) {
+      this.wave(this.waveCount);
+      this.waveCount++;
     }
     //Passes array of critters to Turrets to see when a critter is near a turret
     this.turrets.forEach(turret => {
-      if(this.testCritters.length !== 0){
-        let passArray = this.testCritters;
+      if(this.lEnemies.length !== 0){
+        let passArray = this.lEnemies;
         turret.update(passArray);
         //let bullet = new Bullet(this, passArray)
         //bullet.update(passArray)
