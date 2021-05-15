@@ -10,7 +10,7 @@ class Player {
       'firewall': true,
       'virus-blaster': false,
       'rectifier': false,
-      'psu': true,
+      'psu': false,
       'hardened-core': false
     };
   }

@@ -49,6 +49,9 @@ export class Button extends Phaser.GameObjects.Sprite {
       }
     });
 
+    this.on('pointerover', () => {
+      this.setFrame(this.defaultFrame + 2);
+    });
 
     this.on('pointerout', () => {
       this.setFrame(this.defaultFrame);

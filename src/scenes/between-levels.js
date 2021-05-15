@@ -20,7 +20,7 @@ export class Shop extends Phaser.Scene {
 
   preload() {
     this.load.image('background', 'images/ui/between-levels.png');
-    this.load.spritesheet('upgrade-buttons', 'images/ui/upgrade-buttons.png', { frameWidth: 64, frameHeight: 80 });
+    this.load.spritesheet('upgrade-buttons', 'images/ui/upgrade-buttons.png', { frameWidth: 64, frameHeight: 60 });
 
     this.keyC = this.input.keyboard.addKey('M'); // For debug operations
   }
@@ -31,28 +31,28 @@ export class Shop extends Phaser.Scene {
     // Upgrade buttons
     if (!Player.unlocked['virus-blaster']) {
       this.virusBlasterButton = new Button(
-        this, 48, 200, 'upgrade-buttons', 0, true,
+        this, 48, 168, 'upgrade-buttons', 0, true,
         null, { upgrade: 'virus-blaster' }
       );
     }
 
     if (!Player.unlocked['rectifier']) {
       this.rectifierButton = new Button(
-        this, 128, 200, 'upgrade-buttons', 2, true,
+        this, 128, 168, 'upgrade-buttons', 3, true,
         null, { upgrade: 'rectifier' }
       );
     }
 
     if (!Player.unlocked['psu']) {
       this.psuButton = new Button(
-        this, 208, 200, 'upgrade-buttons', 4, true,
+        this, 208, 168, 'upgrade-buttons', 6, true,
         null, { upgrade: 'psu' }
       );
     }
 
     if (!Player.unlocked['hardened-core']) {
       this.hardenedCoreButton = new Button(
-        this, 288, 200, 'upgrade-buttons', 6, true,
+        this, 288, 168, 'upgrade-buttons', 9, true,
         null, { upgrade: 'hardened-core' }
       );
     }
