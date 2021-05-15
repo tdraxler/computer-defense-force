@@ -14,7 +14,8 @@ import updateHpScore from '../components/hpscoreevent';
 // let mousePos = { x: 0, y: 0 };
 
 let bgm;
-//let this.waveCount = 1;
+const MIN_DELAY = 5;
+const MAX_DELAY = 10 * 60;
 
 const TILE = CONST.T_SIZE;
 const BUILD_AREA_INDEX = 146;
@@ -275,11 +276,7 @@ export class Level extends Phaser.Scene {
       let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage, points: this.eData[en].points});
       newOne.play(this.eneAnims[en]);
       // Number of frames to delay movement
-      if (i === 0) {
-        newOne.delay = Math.floor(Math.random() * 10 * 60); 
-      } else {
-        newOne.delay = this.lEnemies[i - 1].delay + Math.floor(Math.random() * 5 * 60);
-      }
+      newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
       //newOne.delay = this.lEnemies[i] // Number of frames to delay movement
       newOne.moveX = 0;
       newOne.moveY = 0;
