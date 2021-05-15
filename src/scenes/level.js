@@ -6,7 +6,7 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
-//import { Bullet } from '../components/bullet';
+import { Bullet } from '../components/bullet';
 import { Explosion } from '../components/explosion';
 import updateHpScore from '../components/hpscoreevent';
 
@@ -133,6 +133,7 @@ export class Level extends Phaser.Scene {
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready', 1).setOrigin(0,0);
 
+
     // Set up core for the player to protect
     this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[0]);
     this.targetX = Math.floor(this.levelData[Player.level - 1].core_x);
@@ -155,6 +156,7 @@ export class Level extends Phaser.Scene {
             Player.chosenTurret
           );
 
+
           newTurret.hp = 5;
 
           this.turrets.push(newTurret);
@@ -175,7 +177,6 @@ export class Level extends Phaser.Scene {
         else {
           let toDelete = this.turretMap[mapInd]; // Get object ref
           let turretsArrInd = this.turrets.indexOf(toDelete);
-
           // Clean up and destroy it
           this.delTurret.play();
           toDelete.dismantle();
@@ -212,6 +213,18 @@ export class Level extends Phaser.Scene {
     //   // delay each virus walk start
     //   this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
     // }
+
+    // making bullet and enemy groups
+    this.gBullets = this.physics.add.group();
+    //this.gBullets.delay(Math.floor(30));
+    this.gEnemies = this.physics.add.group();
+
+    //add collider between groups
+    this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
+      enemy.hp -= bullet.damage;
+      bullet.destroy();
+      console.log('Destroy has been called');
+    });
 
     this.testCritters = [];
     this.wave(waveCount);
@@ -250,6 +263,7 @@ export class Level extends Phaser.Scene {
 
 
 
+
   }
 
   wave(waveCount) {
@@ -265,7 +279,9 @@ export class Level extends Phaser.Scene {
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
+      this.gEnemies.add(newOne);
       this.testCritters.push(newOne);
+
     }
   }
 
@@ -340,7 +356,11 @@ export class Level extends Phaser.Scene {
     // Test critter logic
     if (this.pathmap) {
       for (let [index, critter] of this.testCritters.entries()) {
-      //this.testCritters.forEach(critter => {
+        if(critter.hp<=0){
+          critter.destroy();
+          this.explosion.play();
+          this.testCritters.splice(index, 1);
+        }
         if (critter.delay > 0) {
           critter.delay--;
         }
