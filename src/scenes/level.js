@@ -213,10 +213,12 @@ export class Level extends Phaser.Scene {
 
     // making bullet and enemy groups
     this.gBullets = this.physics.add.group();
+    //this.gBullets.delay(Math.floor(30));
     this.gEnemies = this.physics.add.group();
 
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
+      this.gEnemies.hp =- this.gBullets.damage
       console.log('Hit!');
       bullet.destroy();
     });

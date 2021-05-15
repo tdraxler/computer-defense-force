@@ -40,7 +40,8 @@ class Head extends Phaser.GameObjects.Sprite {
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
         let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
-        bullet.delay(30);
+        //bullet.play(this.)
+        bullet.delay=60;
         if(this.scene.gBullets){
           this.scene.gBullets.add(bullet);
         }
