@@ -44,7 +44,8 @@ class Head extends Phaser.GameObjects.Sprite {
           if(this.scene.gBullets){
             this.scene.gBullets.add(bullet);
           }
-          bullet.play('bullet');
+          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 3 }), frameRate: 10, repeat: -1});
+          bullet.play('fired');
           bullet.fire();
           this.delay=0;
         }
