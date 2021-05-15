@@ -353,7 +353,12 @@ export class Level extends Phaser.Scene {
     // Test critter logic
     if (this.pathmap) {
       for (let [index, critter] of this.testCritters.entries()) {
-      //this.testCritters.forEach(critter => {
+        if(critter.hp<=0){
+          critter.destroy();
+          this.explosion.play();
+          this.testCritters.splice(index, 1);
+        }
+        //this.testCritters.forEach(critter => {
         if (critter.delay > 0) {
           critter.delay--;
         }
