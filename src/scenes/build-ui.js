@@ -32,7 +32,7 @@ export class BuildMenu extends Phaser.Scene {
     );
 
     this.demolishButton = new Button(
-      this, 179, 2, 'buttons', 2, true,
+      this, 179, 2, 'buttons', 3, true,
       CURRENT_ACTION.DEMOLISH, null,
       'url(images/ui/cursors/delete.png), pointer'
     );
@@ -47,21 +47,21 @@ export class BuildMenu extends Phaser.Scene {
 
     if (Player.unlocked['virus-blaster']) {
       this.virusBlasterButton = new Button(
-        this, 1, 144, 'turret-buttons', 2, true,
+        this, 1, 144, 'turret-buttons', 3, true,
         null, { turretChoice: 'virus-blaster'}
       );
     }
 
     if (Player.unlocked['rectifier']) {
       this.rectifierButton = new Button(
-        this, 1, 165, 'turret-buttons', 4, true,
+        this, 1, 165, 'turret-buttons', 6, true,
         null, { turretChoice: 'rectifier'}
       );
     }
 
     if (Player.unlocked['psu']) {
       this.psuButton = new Button(
-        this, 1, 186, 'turret-buttons', 6, true,
+        this, 1, 186, 'turret-buttons', 9, true,
         null, { turretChoice: 'psu'}
       );
     }

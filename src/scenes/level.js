@@ -83,9 +83,13 @@ export class Level extends Phaser.Scene {
     // Valid build location sprite (drawn on tilemap)
     this.load.spritesheet('build-ready', 'images/valid-build.png', { frameWidth: 16, frameHeight: 16 });
 
-    // Load core for the player to protect (TODO - change to spritesheet)
+    // Load player structures/turrets
     this.load.image('core', 'images/player-sprites/core.png');
+    this.load.image('hardened-core', 'images/player-sprites/hardened-core.png');
     this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet('virus-blaster', 'images/player-sprites/virus-blaster.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet('rectifier', 'images/player-sprites/rectifier.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet('psu', 'images/player-sprites/psu.png', { frameWidth: 16, frameHeight: 24 });
 
     //**************************
     this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});//, {frameHeight: 20, frameWidth: 20});
@@ -104,6 +108,7 @@ export class Level extends Phaser.Scene {
     this.keyAltLeft = this.input.keyboard.addKey('Left');
     this.keyAltRight = this.input.keyboard.addKey('Right');
     this.keyC = this.input.keyboard.addKey('M'); // For debug operations
+    this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
   }
 
   create(){
@@ -148,7 +153,7 @@ export class Level extends Phaser.Scene {
             this,
             nearestTile(pointer.worldX) + TILE / 2,
             nearestTile(pointer.worldY),
-            'firewall'
+            Player.chosenTurret
           );
 
 
@@ -465,6 +470,14 @@ export class Level extends Phaser.Scene {
       bgm.stop();
       Player.levelUp();
       this.scene.restart();
+    }
+    if (this.keyU.isDown) {
+      console.log('Switching to upgrade menu');
+      this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
+      this.scene.start(CONST.SCENES.SHOP);
+      this.scene.stop(CONST.SCENES.LEVEL);
+      this.scene.stop(CONST.SCENES.BUILD_MENU);
+      bgm.stop();
     }
   }
 }
