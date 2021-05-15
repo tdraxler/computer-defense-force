@@ -356,10 +356,17 @@ export class Level extends Phaser.Scene {
     // Test critter logic
     if (this.pathmap) {
       for (let [index, critter] of this.testCritters.entries()) {
-        if(critter.hp<=0){
+        if(critter.hp <= 0){
+          Player.score += critter.points;
+          updateHpScore.emit('update-hp-score', this.core.hp);
+
           critter.destroy();
           this.explosion.play();
           this.testCritters.splice(index, 1);
+
+          // Play explosion
+          let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
+          newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
         }
         if (critter.delay > 0) {
           critter.delay--;
