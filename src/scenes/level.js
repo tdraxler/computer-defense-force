@@ -6,7 +6,7 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
-//import { Bullet } from '../components/bullet';
+import { Bullet } from '../components/bullet';
 import { Explosion } from '../components/explosion';
 import updateHpScore from '../components/hpscoreevent';
 
@@ -218,9 +218,9 @@ export class Level extends Phaser.Scene {
 
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
-      this.gEnemies.hp =- this.gBullets.damage;
-      console.log('Hit!');
+      enemy.hp -= bullet.damage;
       bullet.destroy();
+      console.log('Destroy has been called');
     });
 
     this.testCritters = [];
