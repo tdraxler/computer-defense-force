@@ -83,9 +83,13 @@ export class Level extends Phaser.Scene {
     // Valid build location sprite (drawn on tilemap)
     this.load.spritesheet('build-ready', 'images/valid-build.png', { frameWidth: 16, frameHeight: 16 });
 
-    // Load core for the player to protect (TODO - change to spritesheet)
+    // Load player structures/turrets
     this.load.image('core', 'images/player-sprites/core.png');
+    this.load.image('hardened-core', 'images/player-sprites/hardened-core.png');
     this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet('virus-blaster', 'images/player-sprites/virus-blaster.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet('rectifier', 'images/player-sprites/rectifier.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet('psu', 'images/player-sprites/psu.png', { frameWidth: 16, frameHeight: 24 });
 
     //**************************
     this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});//, {frameHeight: 20, frameWidth: 20});
@@ -148,7 +152,7 @@ export class Level extends Phaser.Scene {
             this,
             nearestTile(pointer.worldX) + TILE / 2,
             nearestTile(pointer.worldY),
-            'firewall'
+            Player.chosenTurret
           );
 
           newTurret.hp = 5;

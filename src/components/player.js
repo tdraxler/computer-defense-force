@@ -13,6 +13,7 @@ class Player {
       'psu': false,
       'hardened-core': false
     };
+    this.money = 5000;
   }
 
   reset() {
@@ -27,6 +28,7 @@ class Player {
       'psu': true,
       'hardened-core': false
     };
+    this.money = 5000;
   }
 
   setAction(newAction) {
