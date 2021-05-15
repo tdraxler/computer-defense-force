@@ -18,6 +18,7 @@ class Head extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, headType) {
     super(scene, x, y, headType, 1);
     this.scene.add.existing(this).setDepth(3);
+    this.delay = 0;
 
   }
   preload(){
@@ -41,11 +42,16 @@ class Head extends Phaser.GameObjects.Sprite {
         this.setRotation((newAngle + Math.PI/2)-160);
         let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
         //bullet.play(this.)
-        bullet.delay=60;
         if(this.scene.gBullets){
           this.scene.gBullets.add(bullet);
         }
-        bullet.fire();
+        if(this.delay == 20){
+          //bullet.play();
+          bullet.fire();
+          this.delay=0;
+        }
+        this.delay++;
+
         //add new turret to bullet group
 
       }
