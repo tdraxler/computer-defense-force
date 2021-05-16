@@ -31,7 +31,7 @@ export class Bullet extends Phaser.GameObjects.Sprite {
     this.setDepth(2);
   }
   fire() {
-    this.scene.physics.moveToObject(this, this.enemy, 200); //suggested by Abraham
+    this.scene.physics.moveToObject(this, this.enemy, 400); //suggested by Abraham
   }
   update(){
     console.log('bullet update called');
