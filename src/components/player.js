@@ -13,7 +13,7 @@ class Player {
       'psu': false,
       'hardened-core': false
     };
-    this.money = 5000;
+    this.viruscoins = 5000;
     this.coreHP = 0;
   }
 
@@ -29,7 +29,7 @@ class Player {
       'psu': true,
       'hardened-core': false
     };
-    this.money = 5000;
+    this.viruscoins = 5000;
     this.coreHP = 0;
   }
 

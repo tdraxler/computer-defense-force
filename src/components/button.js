@@ -57,4 +57,8 @@ export class Button extends Phaser.GameObjects.Sprite {
       this.setFrame(this.defaultFrame);
     });
   }
+
+  update() {
+    console.log('It\'s working!!');
+  }
 }

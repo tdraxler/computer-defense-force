@@ -5,6 +5,7 @@
 import Phaser from 'phaser';
 import Player from '../components/player';
 import { Button } from '../components/button';
+import { Coin } from '../components/coin';
 import { CONST } from '../constants';
 
 export class Shop extends Phaser.Scene {
@@ -22,11 +23,27 @@ export class Shop extends Phaser.Scene {
     this.load.image('background', 'images/ui/between-levels.png');
     this.load.spritesheet('upgrade-buttons', 'images/ui/upgrade-buttons.png', { frameWidth: 64, frameHeight: 60 });
 
+    this.load.spritesheet('coin', 'images/ui/coin.png', {frameWidth: 16, frameHeight: 16});
+
     this.keyC = this.input.keyboard.addKey('M'); // For debug operations
   }
 
   create() {
     this.background = this.add.sprite(0, 0, 'background').setOrigin(0,0);
+
+    this.anims.create({
+      key: 'coin-anim',
+      frameRate: 15,
+      frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 5 }),
+      repeat: -1
+    });
+
+    this.anims.create({ // Played as a coin disappears
+      key: 'coin-anim-final',
+      frameRate: 40,
+      frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 5 }),
+      repeat: 3
+    });
 
     // Upgrade buttons
     if (!Player.unlocked['virus-blaster']) {
@@ -56,6 +73,14 @@ export class Shop extends Phaser.Scene {
         null, { upgrade: 'hardened-core' }
       );
     }
+
+
+    // Text
+    this.add.text(310, 140, `${Player.viruscoins}`, { fontFamily: ['press_start', 'sans-serif'], fontSize: 8, color: '#ffffff', fontSmooth: 'never'});
+    this.add.sprite(290, 136, 'coin').setOrigin(0, 0).play('coin-anim');
+
+    // this.testCoin = new Coin({scene: this, x: 100, y: 200, staticKey: 'coin', animKey: 'coin-anim-final'});
+    // this.testCoin.launchUp();
   }
 
   update() {
