@@ -229,7 +229,7 @@ export class Level extends Phaser.Scene {
       bullet.destroy();
     });
 
-    this.lEnemies = [];
+    this.levelEnemies = [];
     this.wave(this.waveCount);
     this.waveCount++; // update the wave count
     // end of enemy stuff
@@ -290,14 +290,13 @@ export class Level extends Phaser.Scene {
       newOne.play(this.eneAnims[en]);
       // Number of frames to delay movement
       newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
-      //newOne.delay = this.lEnemies[i] // Number of frames to delay movement
       newOne.moveX = 0;
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
 
       this.gEnemies.add(newOne);
-      this.lEnemies.push(newOne);
+      this.levelEnemies.push(newOne);
     }
   }
 
@@ -371,13 +370,13 @@ export class Level extends Phaser.Scene {
 
     // Test critter logic
     if (this.pathmap) {
-      for (let [index, critter] of this.lEnemies.entries()) {
+      for (let [index, critter] of this.levelEnemies.entries()) {
         if(critter.hp <= 0){
           Player.score += critter.points;
 
           critter.destroy();
           this.explosion.play();
-          this.lEnemies.splice(index, 1);
+          this.levelEnemies.splice(index, 1);
 
           // Play explosion
           let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
@@ -408,7 +407,7 @@ export class Level extends Phaser.Scene {
                 // destroy enemy
                 critter.destroy();
                 this.explosion.play();
-                this.lEnemies.splice(index, 1);
+                this.levelEnemies.splice(index, 1);
                 // Play explosion
                 let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
                 newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
@@ -426,7 +425,7 @@ export class Level extends Phaser.Scene {
               this.core.hp -= critter.damage;
               critter.destroy();
               this.explosion.play();
-              this.lEnemies.splice(index, 1);
+              this.levelEnemies.splice(index, 1);
 
               // Play explosion
               let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
@@ -464,14 +463,14 @@ export class Level extends Phaser.Scene {
     }
 
     // New wave
-    if (this.lEnemies.length === 0 && this.waveCount < 11) {
+    if (this.levelEnemies.length === 0 && this.waveCount < 11) {
       this.wave(this.waveCount);
       this.waveCount++;
     }
     //Passes array of critters to Turrets to see when a critter is near a turret
     this.turrets.forEach(turret => {
-      if(this.lEnemies.length !== 0){
-        let passArray = this.lEnemies;
+      if(this.levelEnemies.length !== 0){
+        let passArray = this.levelEnemies;
         turret.update(passArray);
         //let bullet = new Bullet(this, passArray)
         //bullet.update(passArray)
