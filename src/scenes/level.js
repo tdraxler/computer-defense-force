@@ -66,7 +66,8 @@ export class Level extends Phaser.Scene {
     this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
     this.load.audio('build-turret', ['sound/sfx/make_turret.mp3']);
-    this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']); 
+    this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']);
+    this.load.audio('firewallSfx', ['sound/sfx/Laser_Shoot.mp3']);
     // Load enemy sprites
     this.load.spritesheet(this.eData[4].name, this.eData[4].source, { frameWidth: this.eData[4].width, frameHeight: this.eData[4].height, endFrame: 10 }); // Rootkit
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 }); // Virus
@@ -121,6 +122,7 @@ export class Level extends Phaser.Scene {
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
     this.buildSfx = this.sound.add('build-turret', { loop: false, volume: 0.25 });
     this.delTurret = this.sound.add('delete-turret', { loop: false, volume: 0.25 });
+    this.firewallSfx = this.sound.add('firewallSfx', { loop: false, volume: 0.25 });
 
     // Map and tiles setup
     this.tilemap = this.make.tilemap({ key: this.levelData[Player.level - 1].map });
@@ -325,7 +327,6 @@ export class Level extends Phaser.Scene {
   }
 
   update(){
-    console.log(this.game.loop.actualFps);
     updateHpScore.emit('update-hp-score', this.core.hp, this.waveCount - 1);
     // Update buildable area indicator
     this.input.activePointer.updateWorldPoint(this.cameras.main);
