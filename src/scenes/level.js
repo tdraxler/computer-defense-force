@@ -134,7 +134,9 @@ export class Level extends Phaser.Scene {
 
 
     // Set up core for the player to protect
-    this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[0]);
+    let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
+    this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[whichCore]);
+    Player.coreHP = this.core.hp;
     this.targetX = Math.floor(this.levelData[Player.level - 1].core_x);
     this.targetY = Math.floor(this.levelData[Player.level - 1].core_y);
 
@@ -267,7 +269,6 @@ export class Level extends Phaser.Scene {
       newOne.dirVector = {x: 0, y: 0};
       this.gEnemies.add(newOne);
       this.testCritters.push(newOne);
-
     }
   }
 
