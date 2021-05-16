@@ -35,7 +35,6 @@ export class Bullet extends Phaser.GameObjects.Sprite {
   }
   update(){
     console.log('bullet update called');
-    // this.add.overlap(this, this.enemy, destroy, null, this);
     if(this.x>this.scene.physics.world.bounds.width || this.y>this.scene.physics.world.bounds.height || this.x<0 || this.y<0){
       this.destroy();
       console.log('bullet destroy called');

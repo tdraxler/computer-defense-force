@@ -278,7 +278,7 @@ export class Level extends Phaser.Scene {
 
       this.gEnemies.add(newOne);
       this.testCritters.push(newOne);
-      newOne.setBodySize(15, 15, true);
+      //newOne.setBodySize(15, 15, true);
 
     }
   }

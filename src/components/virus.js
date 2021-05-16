@@ -14,6 +14,8 @@ export class Virus extends Phaser.Physics.Arcade.Sprite {
     this.hp = config.hp;
     this.damage = config.damage;
     this.points = config.points;
+    this.scene.physics.add.existing(this);
+    this.setBodySize(15, 15, true);
 
   }
 }
