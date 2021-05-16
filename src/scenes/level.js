@@ -91,7 +91,7 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('psu', 'images/player-sprites/psu.png', { frameWidth: 16, frameHeight: 24 });
 
     //**************************
-    this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});//, {frameHeight: 20, frameWidth: 20});
+    this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});
     //**************************
     // Explosion
     this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
@@ -207,11 +207,11 @@ export class Level extends Phaser.Scene {
     this.gBullets = this.physics.add.group();
     this.gEnemies = this.physics.add.group();
 
+
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
       enemy.hp -= bullet.damage;
       bullet.destroy();
-      console.log('Destroy has been called');
     });
 
     this.testCritters = [];
@@ -267,6 +267,7 @@ export class Level extends Phaser.Scene {
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
+
       this.gEnemies.add(newOne);
       this.testCritters.push(newOne);
     }
