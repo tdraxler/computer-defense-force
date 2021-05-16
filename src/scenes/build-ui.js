@@ -72,7 +72,7 @@ export class BuildMenu extends Phaser.Scene {
 
     this.hpCount = this.add.text(305, 0, 'HP: ' + 0, {fontSize: '16px'});
     this.score = this.add.text(275, 15, 'Score: ' + Player.score, {fontSize: '16px'});
-    this.wave = this.add.text(40, 0, 'Wave: ' + 1, {fontSize: '16px'});
+    this.wave = this.add.text(30, 0, 'Wave: ' + 1, {fontSize: '16px'});
     
     updateHpScore.on('update-hp-score', this.updateHpScore, this);
   }

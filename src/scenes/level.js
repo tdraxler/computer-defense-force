@@ -413,7 +413,6 @@ export class Level extends Phaser.Scene {
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
-              console.log(this.core.hp);
               critter.destroy();
               this.explosion.play();
               this.lEnemies.splice(index, 1);
@@ -442,7 +441,12 @@ export class Level extends Phaser.Scene {
       this.scene.stop(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.BUILD_MENU);
     } else if (this.core.hp > 0 && this.waveCount === 11) { // YOU WIN
-      this.scene.start(CONST.SCENES.VIC);
+      if (Player.level === 3) {
+        this.scene.start(CONST.SCENES.VIC);
+      } else {
+        Player.levelUp();
+        this.scene.start(CONST.SCENES.SHOP);
+      }
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.BUILD_MENU);
