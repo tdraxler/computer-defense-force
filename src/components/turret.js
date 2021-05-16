@@ -50,6 +50,7 @@ class Head extends Phaser.GameObjects.Sprite {
           bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 3 }), frameRate: 10, repeat: -1});
           bullet.play('fired');
           bullet.fire();
+          this.scene.firewallSfx.play();
           this.delay=0;
         }
         //add new turret to bullet group
