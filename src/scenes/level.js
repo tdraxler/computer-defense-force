@@ -276,8 +276,6 @@ export class Level extends Phaser.Scene {
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
 
-      //.physics.add.setBodySize(5,5, true);
-
       this.gEnemies.add(newOne);
       this.testCritters.push(newOne);
       newOne.setBodySize(15, 15, true);

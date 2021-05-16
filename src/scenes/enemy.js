@@ -11,9 +11,6 @@ export class FirstEnemy extends Phaser.Scene {
 
     this.walk = walk.bind(this);
     this.onCompleteHandler = onCompleteHandler.bind(this);
-    //this.setBodySize(1,1, true);
-    //this.setOffset(5,5);
-
   }
 
   preload() {
