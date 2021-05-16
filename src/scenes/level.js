@@ -197,7 +197,7 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-    this.waveCount = 1;
+    this.waveCount = 0;
     // Add walking animation for enemy sprites
     this.addEnemyAnims();
 
@@ -327,7 +327,7 @@ export class Level extends Phaser.Scene {
   }
 
   update(){
-    updateHpScore.emit('update-hp-score', this.core.hp, this.waveCount - 1);
+    updateHpScore.emit('update-hp-score', this.core.hp, this.waveCount);
     // Update buildable area indicator
     this.input.activePointer.updateWorldPoint(this.cameras.main);
 
