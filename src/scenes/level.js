@@ -275,7 +275,18 @@ export class Level extends Phaser.Scene {
     for (let i = 0; i < waveCount + 2; i++) {
       let en = Math.floor(Math.random() * (max - min) + min); // choose any of the 5 possible enemies
       let choice = Math.floor(Math.random() * 6);
-      let newOne = new Virus({scene: this, x: possibles[choice].x * TILE + TILE / 2, y: possibles[choice].y * TILE + TILE / 2, hp: this.eData[en].hp, damage: this.eData[en].damage, points: this.eData[en].points});
+      let newOne = new Virus(
+        {
+          scene: this, 
+          x: possibles[choice].x * TILE + TILE / 2, 
+          y: possibles[choice].y * TILE + TILE / 2, 
+          hp: this.eData[en].hp, 
+          damage: this.eData[en].damage, 
+          points: this.eData[en].points,
+          hitX: this.eData[en].hitX,
+          hitY: this.eData[en].hitY
+        }
+      );
       newOne.play(this.eneAnims[en]);
       // Number of frames to delay movement
       newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
