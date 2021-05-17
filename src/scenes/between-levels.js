@@ -6,20 +6,23 @@ import Phaser from 'phaser';
 import Player from '../components/player';
 import { Button } from '../components/button';
 import { Coin } from '../components/coin';
-import { CONST } from '../constants';
-
+import { CONST, FONT_CONFIG_SMALL } from '../constants';
 class PriceLabel {
-  constructor(scene, x, y, value=200) {
-    this.coin = new Coin({scene: scene, x: x, y: y, staticKey: 'coin', animKey: 'coin-anim-final'});
+  constructor(scene, x, y, name, value=200) {
+    this.scene = scene;
+    this.coin = new Coin({scene: this.scene, x, y, staticKey: 'coin', animKey: 'coin-anim-final'});
     this.label = scene.add.text(
-      x + 12, y + 4,
+      x + 12, y - 2,
       `${value}`,
-      { 
-        fontFamily: ['press_start', 'sans-serif'],
-        fontSize: 8, 
-        color: '#ffffff'
-      }
+      FONT_CONFIG_SMALL
     );
+    this.name = name;
+    this.active = true;
+  }
+  getRid() {
+    this.coin.launchUp();
+    this.label.destroy();
+    this.active = false;
   }
 }
 
@@ -31,6 +34,16 @@ export class Shop extends Phaser.Scene {
   }
 
   init() {
+    // let element = document.createElement('style');
+    // document.head.appendChild(element);
+    // let sheet = element.sheet;
+    // let styles = `@font-face {
+    //   font-family: 'press_start';
+    //   src: url('fonts/PressStart2P-Regular.ttf');
+    //   font-weight: 400;
+    //   font-weight: normal;
+    // }`;
+    // sheet.insertRule(styles, 0);
 
   }
 
@@ -89,20 +102,16 @@ export class Shop extends Phaser.Scene {
       );
     }
 
-    this.coins = {
-      'virus-blaster': new PriceLabel(this, 60, 215),
-      'rectifier': new PriceLabel(this, 140, 215),
-      'psu': new PriceLabel(this, 220, 215),
-      'hardened-core': new PriceLabel(this, 300, 215)
-    };
-
-
+    
     // Text
-    this.add.text(310, 140, `${Player.viruscoins}`, { fontFamily: ['press_start', 'sans-serif'], fontSize: 8, color: '#ffffff', fontSmooth: 'never'});
     this.add.sprite(290, 136, 'coin').setOrigin(0, 0).play('coin-anim');
-
-    // this.testCoin = new Coin({scene: this, x: 100, y: 200, staticKey: 'coin', animKey: 'coin-anim-final'});
-    // this.testCoin.launchUp();
+    this.add.text(310, 140, `${Player.viruscoins}`, FONT_CONFIG_SMALL);
+    this.priceLabels = [
+      new PriceLabel(this, 60, 215, 'virus-blaster'),
+      new PriceLabel(this, 140, 215, 'rectifier'),
+      new PriceLabel(this, 220, 215, 'psu'),
+      new PriceLabel(this, 300, 215, 'hardened-core')
+    ];
   }
 
   update() {
@@ -111,5 +120,12 @@ export class Shop extends Phaser.Scene {
       this.scene.start(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.SHOP);
     }
+
+    // If a thing has been unlocked, remove the label for it.
+    this.priceLabels.forEach((label) => {
+      if (label.active && Player.unlocked[label.name]) {
+        label.getRid();
+      }
+    });
   }
 }

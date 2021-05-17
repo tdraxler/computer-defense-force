@@ -13,10 +13,13 @@ export class Coin extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.add.existing(this);
 
     this.animKey = config.animKey;
+    console.log(this.animKey);
     
   }
 
   launchUp() {
+    console.log(this.animKey);
+
     this.play(this.animKey);
     this.setVelocityY(-80);
     this.once('animationcomplete', () => {
