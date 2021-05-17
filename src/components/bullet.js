@@ -33,12 +33,13 @@ export class Bullet extends Phaser.GameObjects.Sprite {
   fire() {
     this.scene.physics.moveToObject(this, this.enemy, 400); //suggested by Abraham
   }
+
   update(){
-    console.log('bullet update called');
-    if(this.x>this.scene.physics.world.bounds.width || this.y>this.scene.physics.world.bounds.height || this.x<0 || this.y<0){
+    if(this.x>this.scene.physics.world.bounds.height || this.y>this.scene.physics.world.bounds.width || this.x<0 || this.y<0){
       this.destroy();
       console.log('bullet destroy called');
     }
+
 
   }
 }

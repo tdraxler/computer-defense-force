@@ -48,14 +48,23 @@ class Head extends Phaser.GameObjects.Sprite {
             this.scene.gBullets.add(bullet);
           }
           bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 3 }), frameRate: 10, repeat: -1});
+          bullet.setCollideWorldBounds(true);
+          bullet.body.onWorldBounds = true;
+          bullet.body.world.on('worldbounds', function(body){
+            if(body.gameObject === this){
+              bullet.destroy()
+            }
+          })
           bullet.play('fired');
           bullet.fire();
+          bullet.update();
           this.scene.firewallSfx.play();
           this.delay=0;
         }
         //add new turret to bullet group
       }
     }
+
     this.delay++;
   }
 }
