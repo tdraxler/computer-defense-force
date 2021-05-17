@@ -23,3 +23,15 @@ export const CURRENT_ACTION = {
 export const LIMITS = {
   LEVELS: 3
 };
+
+export const FONT_CONFIG_SMALL = {
+  fontFamily: ['press_start'],
+  fontSize: 8, 
+  color: '#ffffff',
+  shadow: {
+    color: '#444444',
+    fill: true,
+    offsetX: 1,
+    offsetY: 1
+  }
+}

@@ -6,7 +6,6 @@ import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import { generatePathMap, nextDir } from '../components/pathfinding';
-import { Bullet } from '../components/bullet';
 import { Explosion } from '../components/explosion';
 import updateHpScore from '../components/hpscoreevent';
 
@@ -138,7 +137,9 @@ export class Level extends Phaser.Scene {
 
 
     // Set up core for the player to protect
-    this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[0]);
+    let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
+    this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[whichCore]);
+    Player.coreHP = this.core.hp;
     this.targetX = Math.floor(this.levelData[Player.level - 1].core_x);
     this.targetY = Math.floor(this.levelData[Player.level - 1].core_y);
 
@@ -158,9 +159,6 @@ export class Level extends Phaser.Scene {
             nearestTile(pointer.worldY),
             Player.chosenTurret
           );
-
-
-          newTurret.hp = 5;
 
           this.turrets.push(newTurret);
           this.buildSfx.play();
@@ -208,18 +206,8 @@ export class Level extends Phaser.Scene {
       repeat: 0
     });
 
-    // this.viruses = [];
-    // // create viruses and have them do their path
-    // for(let i = 0; i < 4; i++) {
-    //   this.viruses.push(new Virus({scene: this, x: this.game.config.width - 10, y: this.game.config.height + 50}));
-    //   this.viruses[i].play('walking');
-    //   // delay each virus walk start
-    //   this.timer = this.time.delayedCall(i * 5000, walk, [this.viruses[i]], this);
-    // }
-
     // making bullet and enemy groups
     this.gBullets = this.physics.add.group();
-    //this.gBullets.delay(Math.floor(30));
     this.gEnemies = this.physics.add.group();
 
 
@@ -354,19 +342,6 @@ export class Level extends Phaser.Scene {
     this.buildReady.x = (TILE * Math.floor(this.input.activePointer.worldX / TILE));
     this.buildReady.y = (TILE * Math.floor(this.input.activePointer.worldY / TILE));
 
-    // Debugging - Prints the cursor position. Will be useful later
-    // if (mousePos.x != this.input.x && mousePos.y != this.input.y) {
-    //   mousePos.x = this.input.x
-    //   mousePos.y = this.input.y;
-
-    //   // this.input.pointer.updateWorldPoint(this.cameras.main);
-    //   this.input.activePointer.updateWorldPoint(this.cameras.main);
-
-    //   console.log(`x: ${mousePos.x}, y: ${mousePos.y}`)
-    //   console.log(`x: ${this.input.activePointer.worldX}, y: ${this.input.activePointer.worldY}`)
-    // }
-
-
 
     // Test critter logic
     if (this.pathmap) {
@@ -472,8 +447,6 @@ export class Level extends Phaser.Scene {
       if(this.levelEnemies.length !== 0){
         let passArray = this.levelEnemies;
         turret.update(passArray);
-        //let bullet = new Bullet(this, passArray)
-        //bullet.update(passArray)
       }
     });
 
