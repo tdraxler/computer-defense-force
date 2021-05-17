@@ -106,12 +106,16 @@ export class Shop extends Phaser.Scene {
     // Text
     this.add.sprite(290, 136, 'coin').setOrigin(0, 0).play('coin-anim');
     this.add.text(310, 140, `${Player.viruscoins}`, FONT_CONFIG_SMALL);
-    this.priceLabels = [
-      new PriceLabel(this, 60, 215, 'virus-blaster'),
-      new PriceLabel(this, 140, 215, 'rectifier'),
-      new PriceLabel(this, 220, 215, 'psu'),
-      new PriceLabel(this, 300, 215, 'hardened-core')
-    ];
+    this.priceLabels = [];
+    if (!Player.unlocked['virus-blaster'])
+      this.priceLabels.push(new PriceLabel(this, 60, 215, 'virus-blaster'));
+    if (!Player.unlocked['virus-blaster'])
+      this.priceLabels.push(new PriceLabel(this, 140, 215, 'rectifier'));
+    if (!Player.unlocked['virus-blaster'])
+      this.priceLabels.push(new PriceLabel(this, 220, 215, 'psu'));
+    if (!Player.unlocked['virus-blaster'])
+      this.priceLabels.push(new PriceLabel(this, 300, 215, 'hardened-core'));
+
   }
 
   update() {

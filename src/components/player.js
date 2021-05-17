@@ -8,6 +8,7 @@ class Player {
     this.chosenTurret = 'firewall';
     this.unlocked = {
       'firewall': true,
+      'charger': true,
       'virus-blaster': false,
       'rectifier': false,
       'psu': false,
@@ -24,6 +25,7 @@ class Player {
     this.chosenTurret = 'firewall';
     this.unlocked = {
       'firewall': true,
+      'charger': true,
       'virus-blaster': false,
       'rectifier': false,
       'psu': true,

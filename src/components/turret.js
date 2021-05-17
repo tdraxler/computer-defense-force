@@ -7,10 +7,12 @@ import { CONST } from '../constants';
 // construction for the class below has a way to validate parameters
 function validTurretType(buildType) {
   return buildType === 'firewall' ||
+         buildType === 'charger' ||
          buildType === 'rectifier' ||
          buildType === 'virus-blaster' ||
          buildType === 'psu';
 }
+
 
 // Unfortunately, Phaser seems to struggle with child sprites, so for now we
 // a reference to the turret Head in the Turret class instance.
@@ -84,15 +86,20 @@ export class Turret extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this).setDepth(1);
     this.getBody().setCollideWorldBounds(true);
     this.getBody().setAllowGravity(false);
+
+    // Set depth so that turrets closer to the top of the map render first
     this.setDepth(2 * Math.floor(this.y / CONST.T_SIZE));
 
     // Add head to the turret
-    if (buildType != 'psu') {
+    if (buildType != 'psu' && buildType != 'charger') {
       this.head = new Head(this.scene, x, y, buildType, this.depth);
     }
     this.hp = 5;
 
-    // Set depth so that turrets closer to the top of the map render first
+    // TODO - clean up animation code
+    if (buildType == 'psu' || buildType == 'charger') {
+      this.play(`${buildType}-anim`);
+    }    
   }
   preload(){
   }

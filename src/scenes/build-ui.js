@@ -45,23 +45,30 @@ export class BuildMenu extends Phaser.Scene {
       );
     }
 
+    if (Player.unlocked['charger']) {
+      this.fireWallButton = new Button(
+        this, 1, 144, 'turret-buttons', 12, true,
+        null, { turretChoice: 'charger'}
+      );
+    }
+
     if (Player.unlocked['virus-blaster']) {
       this.virusBlasterButton = new Button(
-        this, 1, 144, 'turret-buttons', 3, true,
+        this, 1, 165, 'turret-buttons', 3, true,
         null, { turretChoice: 'virus-blaster'}
       );
     }
 
     if (Player.unlocked['rectifier']) {
       this.rectifierButton = new Button(
-        this, 1, 165, 'turret-buttons', 6, true,
+        this, 1, 186, 'turret-buttons', 6, true,
         null, { turretChoice: 'rectifier'}
       );
     }
 
     if (Player.unlocked['psu']) {
       this.psuButton = new Button(
-        this, 1, 186, 'turret-buttons', 9, true,
+        this, 1, 207, 'turret-buttons', 9, true,
         null, { turretChoice: 'psu'}
       );
     }

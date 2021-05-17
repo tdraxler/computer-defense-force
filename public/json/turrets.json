@@ -10,6 +10,16 @@
     "printedname": "Firewall"
   },
   {
+    "name": "charger",
+    "hp": 5,
+    "damange": 0,
+    "ep": 0.1,
+    "source": "images/player-sprites/charger.png",
+    "width": 16,
+    "height": 24,
+    "printedname": "Charger"
+  },
+  {
     "name": "virus-blaster",
     "hp": 15,
     "damage": 5,
