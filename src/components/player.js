@@ -2,7 +2,8 @@ import { CURRENT_ACTION, LIMITS } from '../constants';
 
 class Player {
   constructor() {
-    this.score = 0
+    this.score = 0;
+    this.energy = 1000;
     this.action = CURRENT_ACTION.NONE;
     this.level = 1;
     this.chosenTurret = 'firewall';
@@ -13,11 +14,19 @@ class Player {
       'psu': false,
       'hardened-core': false
     };
-    this.money = 5000;
+    this.unlockCosts = {
+      'firewall': 0,
+      'virus-blaster': 0,
+      'rectifier': 0,
+      'psu': 0,
+      'hardened-core': 0
+    };
+    this.money = 100;
   }
 
   reset() {
     this.score = 0;
+    this.energy = 1000;
     this.action = CURRENT_ACTION.NONE;
     this.level = 1;
     this.chosenTurret = 'firewall';
@@ -27,6 +36,13 @@ class Player {
       'rectifier': false,
       'psu': true,
       'hardened-core': false
+    };
+    this.unlockCosts = {
+      'firewall': 0,
+      'virus-blaster': 0,
+      'rectifier': 0,
+      'psu': 0,
+      'hardened-core': 0
     };
     this.money = 5000;
   }
@@ -51,6 +67,8 @@ class Player {
 
   unlock(ability) {
     this.unlocked[ability] = true;
+    this.money -= this.unlockCosts[ability];
+    console.log(this.money);
   }
 
   levelUp() {

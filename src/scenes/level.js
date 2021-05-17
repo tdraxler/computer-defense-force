@@ -56,6 +56,16 @@ export class Level extends Phaser.Scene {
     request.send(null);
     this.coreData = JSON.parse(request.responseText);
 
+    // Get Turret data from JSON file
+    request.open('GET', 'json/turrets.json', false);
+    request.send(null);
+    this.turretData = JSON.parse(request.responseText);
+    // Add turret unlock costs to Player
+    Player.unlockCosts['firewall'] = this.turretData[0];
+    Player.unlockCosts['virus-blaster'] = this.turretData[0];
+    Player.unlockCosts['rectifier'] = this.turretData[0];
+    Player.unlockCosts['psu'] = this.turretData[0];
+
     let lev = Player.level - 1; // Current level index
     console.log(lev);
 
@@ -152,22 +162,28 @@ export class Level extends Phaser.Scene {
 
       if (Player.action == CURRENT_ACTION.BUILD && buildArea == BUILD_AREA_INDEX) {
         if (this.turretMap[mapInd] == null) {
-          let newTurret = new Turret(
-            this,
-            nearestTile(pointer.worldX) + TILE / 2,
-            nearestTile(pointer.worldY),
-            Player.chosenTurret
-          );
+          for (let i = 0; i < this.turretData.length; i++) {
+            if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost <= Player.energy) {
+              let newTurret = new Turret(
+                this,
+                nearestTile(pointer.worldX) + TILE / 2,
+                nearestTile(pointer.worldY),
+                Player.chosenTurret
+              );
+      
+              Player.energy -= this.turretData[i].buildCost;
+              console.log(Player.energy);
 
-
-          newTurret.hp = 5;
-
-          this.turrets.push(newTurret);
-          this.buildSfx.play();
-
-          //sets turret to look at newest enemy on map, delete now works as well
-          this.turretMap[mapInd] = newTurret;
-
+              this.turrets.push(newTurret);
+              this.buildSfx.play();
+    
+              //sets turret to look at newest enemy on map, delete now works as well
+              this.turretMap[mapInd] = newTurret;
+            } else if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost > Player.energy) {
+              console.log('Not enough energy!');
+              console.log(Player.energy);
+            }
+          }
         }
         else {
           console.log('occupied - can\'t build');
@@ -178,6 +194,12 @@ export class Level extends Phaser.Scene {
           console.log('unoccupied space - nothing to delete');
         }
         else {
+          for(let i = 0; i < this.turretData.length; i++) {
+            if (Player.chosenTurret === this.turretData[i].name) {
+              Player.energy += Math.floor(this.turretData[i].buildCost / 2);
+            }
+          }
+          console.log(Player.energy);
           let toDelete = this.turretMap[mapInd]; // Get object ref
           let turretsArrInd = this.turrets.indexOf(toDelete);
           // Clean up and destroy it
@@ -373,6 +395,7 @@ export class Level extends Phaser.Scene {
       for (let [index, critter] of this.levelEnemies.entries()) {
         if(critter.hp <= 0){
           Player.score += critter.points;
+          Player.money += critter.points;
 
           critter.destroy();
           this.explosion.play();
@@ -456,6 +479,7 @@ export class Level extends Phaser.Scene {
       } else {
         Player.levelUp();
         this.scene.start(CONST.SCENES.SHOP);
+        //this.scene.start(CONST.SCENES.VIC);
       }
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
