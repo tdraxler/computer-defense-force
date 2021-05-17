@@ -70,8 +70,13 @@ export class BuildMenu extends Phaser.Scene {
     this.buildBarLeft.setInteractive();
 
 
+<<<<<<< HEAD
     this.hpCount = this.add.text(305, 0, `HP: ${Player.coreHP}`, {fontSize: '16px'});
+=======
+    this.hpCount = this.add.text(305, 0, 'HP: ' + 0, {fontSize: '16px'});
+>>>>>>> b4647dc70250fc9f3e75c4fdd23cd077f97a0181
     this.score = this.add.text(275, 15, 'Score: ' + Player.score, {fontSize: '16px'});
+    this.wave = this.add.text(30, 0, 'Wave: ' + 1, {fontSize: '16px'});
     
     updateHpScore.on('update-hp-score', this.updateHpScore, this);
   }
@@ -79,9 +84,10 @@ export class BuildMenu extends Phaser.Scene {
   update() {
   }
 
-  updateHpScore(hp) {
+  updateHpScore(hp, wave) {
     this.hpCount.setText('HP: ' + hp);
     this.score.setText('Score: ' + Player.score);
+    this.wave.setText('Wave: ' + wave);
   }
 
 }

@@ -7,7 +7,9 @@
     "points": 5,
     "source": "images/spyware_v2.png",
     "width": 50,
-    "height": 50
+    "height": 50,
+    "hitX": 5,
+    "hitY": 5
   },
   {
     "name": "worm",
@@ -17,7 +19,9 @@
     "points": 15,
     "source": "images/worm.png",
     "width": 50,
-    "height": 25
+    "height": 25,
+    "hitX": 10,
+    "hitY": 10
   },
   {
     "name": "trojan",
@@ -27,7 +31,9 @@
     "points": 25,
     "source": "images/trojan-horse.png",
     "width": 50,
-    "height": 50
+    "height": 50,
+    "hitX": 15,
+    "hitY": 15
   },
   {
     "name": "virus",
@@ -37,16 +43,20 @@
     "points": 40,
     "source": "images/virus_v2.png",
     "width": 50,
-    "height": 50
+    "height": 50,
+    "hitX": 20,
+    "hitY": 20
   },
   {
     "name": "rootkit",
-    "hp": 25,
+    "hp": 100,
     "damage": 75,
     "speed": 1,
     "points": 70,
     "source": "images/rootkit.png",
     "width": 50,
-    "height": 50
+    "height": 50,
+    "hitX": 25,
+    "hitY": 25
   }
 ]
