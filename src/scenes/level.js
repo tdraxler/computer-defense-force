@@ -60,11 +60,6 @@ export class Level extends Phaser.Scene {
     request.open('GET', 'json/turrets.json', false);
     request.send(null);
     this.turretData = JSON.parse(request.responseText);
-    // Add turret unlock costs to Player
-    Player.unlockCosts['firewall'] = this.turretData[0];
-    Player.unlockCosts['virus-blaster'] = this.turretData[0];
-    Player.unlockCosts['rectifier'] = this.turretData[0];
-    Player.unlockCosts['psu'] = this.turretData[0];
 
     let lev = Player.level - 1; // Current level index
     console.log(lev);
@@ -146,6 +141,12 @@ export class Level extends Phaser.Scene {
     // Valid build location (drawn on tilemap)
     this.buildReady = this.add.sprite(0, 0, 'build-ready', 1).setOrigin(0,0);
 
+    // Add turret unlock costs to Player
+    Player.unlockCosts['firewall'] = this.turretData[0]['unlockCost'];
+    console.log(Player.unlockCosts['firewall']);
+    Player.unlockCosts['virus-blaster'] = this.turretData[1]['unlockCost'];
+    Player.unlockCosts['rectifier'] = this.turretData[2]['unlockCost'];
+    Player.unlockCosts['psu'] = this.turretData[3]['unlockCost'];
 
     // Set up core for the player to protect
     this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[0]);
@@ -219,7 +220,7 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-    this.waveCount = 0;
+    this.waveCount = 8;
     // Add walking animation for enemy sprites
     this.addEnemyAnims();
 

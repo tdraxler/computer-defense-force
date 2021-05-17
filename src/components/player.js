@@ -21,7 +21,7 @@ class Player {
       'psu': 0,
       'hardened-core': 0
     };
-    this.money = 100;
+    this.money = 500;
   }
 
   reset() {
