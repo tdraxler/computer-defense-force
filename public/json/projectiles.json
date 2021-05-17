@@ -3,6 +3,8 @@
     "type": "bullet",
     "speed": 400,
     "damage":1,
-    "source": "images/bullet_5px.png"
+    "source": "images/bullet_5px.png",
+    "width": 5,
+    "height": 5
   }
 ]
