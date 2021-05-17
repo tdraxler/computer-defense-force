@@ -6,6 +6,7 @@ import {TitleScene} from './scenes/title';
 import {Tutorial} from './scenes/tutorial';
 import {Death} from './scenes/death';
 import {Victory} from './scenes/victory';
+import {Shop} from './scenes/between-levels';
 // eslint-disable-next-line
 import {FirstEnemy} from './scenes/enemy';
 
@@ -28,7 +29,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu, Tutorial, Level, FirstEnemy, Death, Victory, BuildMenu
+    TitleScene, Menu, Tutorial, Level, FirstEnemy, Death, Victory, BuildMenu, Shop
   ]
 };
 

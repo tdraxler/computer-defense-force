@@ -8,6 +8,7 @@ export const CONST = {
     ENEMY:      'ENEMY',
     DEATH:      'DEATH',
     VIC:        'VIC',
+    SHOP:       'SHOP',
     BULLET:     'BULLET'
   },
   T_SIZE: 16

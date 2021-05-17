@@ -14,9 +14,11 @@ export class FirstEnemy extends Phaser.Scene {
   }
 
   preload() {
+
   }
 
   create() {
+
     this.explosion = this.sound.add('explosion', { loop: false, volume: 0.25 });
 
     // Add walking animation for sprite

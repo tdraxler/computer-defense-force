@@ -1,16 +1,15 @@
 import Phaser from 'phaser';
 import '../scenes/level';
 import {Bullet} from './bullet';
-import { CONST } from '../constants';
-
 
 // Since JavaScript doesn't have type checking, we need a way to make sure the
 // construction for the class below has a way to validate parameters
 function validTurretType(buildType) {
-  return buildType === 'firewall';
+  return buildType === 'firewall' ||
+         buildType === 'rectifier' ||
+         buildType === 'virus-blaster' ||
+         buildType === 'psu';
 }
-
-
 
 // Unfortunately, Phaser seems to struggle with child sprites, so for now we
 // a reference to the turret Head in the Turret class instance.
@@ -18,6 +17,9 @@ class Head extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, headType) {
     super(scene, x, y, headType, 1);
     this.scene.add.existing(this).setDepth(3);
+    this.delay = 0;
+
+    this.turretType = headType;
 
   }
   preload(){
@@ -33,16 +35,28 @@ class Head extends Phaser.GameObjects.Sprite {
     //let firedUpon = [];
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
+
     let enemyUnits = toTrack;
     for(let i = 0; i<enemyUnits.length; i++){
-      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=50){
+      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=75){
         let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
-        let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
-        bullet.fire();
+        if(this.delay >= 10){
+          let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
+          if(this.scene.gBullets){
+            this.scene.gBullets.add(bullet);
+          }
+          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 3 }), frameRate: 10, repeat: -1});
+          bullet.play('fired');
+          bullet.fire();
+          this.scene.firewallSfx.play();
+          this.delay=0;
+        }
+        //add new turret to bullet group
       }
     }
+    this.delay++;
   }
 }
 
@@ -72,18 +86,24 @@ export class Turret extends Phaser.GameObjects.Sprite {
     this.getBody().setAllowGravity(false);
 
     // Add head to the turret
-    this.head = new Head(this.scene, x, y, buildType);
+    if (buildType != 'psu') {
+      this.head = new Head(this.scene, x, y, buildType);
+    }
     // this.add.Sprite(new Head(this.scene, x, y, buildType))
   }
   preload(){
   }
 
   update(toTrack) {
-    this.head.update(toTrack);
+    if (this.head) {
+      this.head.update(toTrack);
+    }
   }
 
   dismantle() {
-    this.head.destroy();
-    this.head = null;
+    if (this.head) {
+      this.head.destroy();
+      this.head = null;
+    }
   }
 }

@@ -32,7 +32,7 @@ export class BuildMenu extends Phaser.Scene {
     );
 
     this.demolishButton = new Button(
-      this, 179, 2, 'buttons', 2, true,
+      this, 179, 2, 'buttons', 3, true,
       CURRENT_ACTION.DEMOLISH, null,
       'url(images/ui/cursors/delete.png), pointer'
     );
@@ -47,21 +47,21 @@ export class BuildMenu extends Phaser.Scene {
 
     if (Player.unlocked['virus-blaster']) {
       this.virusBlasterButton = new Button(
-        this, 1, 144, 'turret-buttons', 2, true,
+        this, 1, 144, 'turret-buttons', 3, true,
         null, { turretChoice: 'virus-blaster'}
       );
     }
 
     if (Player.unlocked['rectifier']) {
       this.rectifierButton = new Button(
-        this, 1, 165, 'turret-buttons', 4, true,
+        this, 1, 165, 'turret-buttons', 6, true,
         null, { turretChoice: 'rectifier'}
       );
     }
 
     if (Player.unlocked['psu']) {
       this.psuButton = new Button(
-        this, 1, 186, 'turret-buttons', 6, true,
+        this, 1, 186, 'turret-buttons', 9, true,
         null, { turretChoice: 'psu'}
       );
     }
@@ -70,8 +70,9 @@ export class BuildMenu extends Phaser.Scene {
     this.buildBarLeft.setInteractive();
 
 
-    this.hpCount = this.add.text(305, 0, 'HP: ' + 500, {fontSize: '16px'});
+    this.hpCount = this.add.text(305, 0, 'HP: ' + 0, {fontSize: '16px'});
     this.score = this.add.text(275, 15, 'Score: ' + Player.score, {fontSize: '16px'});
+    this.wave = this.add.text(30, 0, 'Wave: ' + 1, {fontSize: '16px'});
     
     updateHpScore.on('update-hp-score', this.updateHpScore, this);
   }
@@ -79,9 +80,10 @@ export class BuildMenu extends Phaser.Scene {
   update() {
   }
 
-  updateHpScore(hp) {
+  updateHpScore(hp, wave) {
     this.hpCount.setText('HP: ' + hp);
     this.score.setText('Score: ' + Player.score);
+    this.wave.setText('Wave: ' + wave);
   }
 
 }

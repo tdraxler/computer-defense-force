@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 
-export class Virus extends Phaser.GameObjects.Sprite {
+export class Virus extends Phaser.Physics.Arcade.Sprite {
   // TODO - Make this useful
 
   constructor(config) {
@@ -14,5 +14,8 @@ export class Virus extends Phaser.GameObjects.Sprite {
     this.hp = config.hp;
     this.damage = config.damage;
     this.points = config.points;
+    this.scene.physics.add.existing(this);
+    this.setBodySize(config.hitX, config.hitY, true);
+
   }
 }
