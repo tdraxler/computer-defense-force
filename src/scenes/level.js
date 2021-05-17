@@ -56,6 +56,10 @@ export class Level extends Phaser.Scene {
     request.send(null);
     this.coreData = JSON.parse(request.responseText);
 
+    request.open('GET', 'json/projectiles.json', false);
+    request.send(null);
+    this.projectileData = JSON.parse(request.responseText);
+
     let lev = Player.level - 1; // Current level index
     console.log(lev);
 
