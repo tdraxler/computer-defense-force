@@ -8,6 +8,21 @@ import { Button } from '../components/button';
 import { Coin } from '../components/coin';
 import { CONST } from '../constants';
 
+class PriceLabel {
+  constructor(scene, x, y, value=200) {
+    this.coin = new Coin({scene: scene, x: x, y: y, staticKey: 'coin', animKey: 'coin-anim-final'});
+    this.label = scene.add.text(
+      x + 12, y + 4,
+      `${value}`,
+      { 
+        fontFamily: ['press_start', 'sans-serif'],
+        fontSize: 8, 
+        color: '#ffffff'
+      }
+    );
+  }
+}
+
 export class Shop extends Phaser.Scene {
   constructor() {
     super({
@@ -73,6 +88,13 @@ export class Shop extends Phaser.Scene {
         null, { upgrade: 'hardened-core' }
       );
     }
+
+    this.coins = {
+      'virus-blaster': new PriceLabel(this, 60, 215),
+      'rectifier': new PriceLabel(this, 140, 215),
+      'psu': new PriceLabel(this, 220, 215),
+      'hardened-core': new PriceLabel(this, 300, 215)
+    };
 
 
     // Text
