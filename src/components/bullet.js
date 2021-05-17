@@ -20,6 +20,7 @@ export class Bullet extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this).setDepth(1);
     this.getBody().setCollideWorldBounds(false);
     this.getBody().setAllowGravity(false);
+
   }
 
   preload()
@@ -37,7 +38,6 @@ export class Bullet extends Phaser.GameObjects.Sprite {
   update(){
     if(this.x>this.scene.physics.world.bounds.height || this.y>this.scene.physics.world.bounds.width || this.x<0 || this.y<0){
       this.destroy();
-      console.log('bullet destroy called');
     }
 
 

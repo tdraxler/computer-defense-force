@@ -23,6 +23,18 @@ class Head extends Phaser.GameObjects.Sprite {
     this.turretType = headType;
   }
 
+  bulletType(turretType){
+    switch(turretType){
+    case 'rectifier':
+      return 'laser-bolt';
+    case 'virus-blaster':
+      return 'plasma-cannonball';
+    case 'firewall':
+    default:
+      return 'bullet';
+    }
+  }
+
   preload(){
   }
   //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
@@ -35,6 +47,7 @@ class Head extends Phaser.GameObjects.Sprite {
     //let firedUpon = [];
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
+    let bulletType = this.bulletType(this.turretType);
 
     let enemyUnits = toTrack;
     for(let i = 0; i<enemyUnits.length; i++){
@@ -47,14 +60,14 @@ class Head extends Phaser.GameObjects.Sprite {
           if(this.scene.gBullets){
             this.scene.gBullets.add(bullet);
           }
-          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 3 }), frameRate: 10, repeat: -1});
-          bullet.setCollideWorldBounds(true);
+          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(bulletType, {start: 0, end: 3 }), frameRate: 10, repeat: -1});
+          /*bullet.setCollideWorldBounds(true);
           bullet.body.onWorldBounds = true;
           bullet.body.world.on('worldbounds', function(body){
             if(body.gameObject === this){
               bullet.destroy()
             }
-          })
+          })*/
           bullet.play('fired');
           bullet.fire();
           bullet.update();

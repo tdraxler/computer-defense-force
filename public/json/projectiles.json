@@ -8,7 +8,7 @@
     "height": 5
   },
   {
-    "type": "laser bolt",
+    "type": "laser-bolt",
     "speed": 600,
     "damage":10,
     "source": "images/laser_bolt.png",
@@ -16,7 +16,7 @@
     "height": 5
   },
   {
-    "type": "plasma cannonball",
+    "type": "plasma-cannonball",
     "speed": 200,
     "damage":25,
     "source": "images/plasma_cannonball.png",
