@@ -28,3 +28,12 @@ developing this project.
 
 ### explosion.js
 - https://phaser.discourse.group/t/phaser-3-destroy-after-animation/1259/5 (make a sprite disappear after animation)
+
+## Fonts
+
+https://fonts.google.com/specimen/Press+Start+2P
+Custom font
+
+Code for the custom font:
+https://phaser.io/examples/v3/view/game-objects/text/custom-webfont
+https://stackoverflow.com/questions/51217147/how-to-use-a-local-font-in-phaser-3

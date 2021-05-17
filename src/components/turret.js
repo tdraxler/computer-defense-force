@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import '../scenes/level';
 import {Bullet} from './bullet';
+import { CONST } from '../constants';
 
 // Since JavaScript doesn't have type checking, we need a way to make sure the
 // construction for the class below has a way to validate parameters
@@ -14,21 +15,20 @@ function validTurretType(buildType) {
 // Unfortunately, Phaser seems to struggle with child sprites, so for now we
 // a reference to the turret Head in the Turret class instance.
 class Head extends Phaser.GameObjects.Sprite {
-  constructor(scene, x, y, headType) {
+  constructor(scene, x, y, headType, bodyDepth=0) {
     super(scene, x, y, headType, 1);
-    this.scene.add.existing(this).setDepth(3);
+    this.scene.add.existing(this).setDepth(bodyDepth + 1);
     this.delay = 0;
 
     this.turretType = headType;
-
   }
+
   preload(){
   }
   //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
   //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
 
   create(){
-
   }
 
   update(toTrack) {
@@ -93,12 +93,15 @@ export class Turret extends Phaser.GameObjects.Sprite {
     this.scene.physics.add.existing(this).setDepth(1);
     this.getBody().setCollideWorldBounds(true);
     this.getBody().setAllowGravity(false);
+    this.setDepth(2 * Math.floor(this.y / CONST.T_SIZE));
 
     // Add head to the turret
     if (buildType != 'psu') {
-      this.head = new Head(this.scene, x, y, buildType);
+      this.head = new Head(this.scene, x, y, buildType, this.depth);
     }
-    // this.add.Sprite(new Head(this.scene, x, y, buildType))
+    this.hp = 5;
+
+    // Set depth so that turrets closer to the top of the map render first
   }
   preload(){
   }
