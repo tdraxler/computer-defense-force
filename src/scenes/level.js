@@ -173,7 +173,6 @@ export class Level extends Phaser.Scene {
               );
       
               Player.energy -= this.turretData[i].buildCost;
-              console.log(Player.energy);
 
               this.turrets.push(newTurret);
               this.buildSfx.play();
@@ -182,7 +181,6 @@ export class Level extends Phaser.Scene {
               this.turretMap[mapInd] = newTurret;
             } else if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost > Player.energy) {
               console.log('Not enough energy!');
-              console.log(Player.energy);
             }
           }
         }
