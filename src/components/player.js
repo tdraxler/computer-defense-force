@@ -64,7 +64,6 @@ class Player {
       if (newVal.upgrade) {
         this.unlocked[newVal.upgrade] = true;
         this.viruscoins -= this.unlockCosts[newVal.upgrade];
-        console.log(this.money);
       }
     }
   }

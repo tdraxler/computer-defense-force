@@ -142,7 +142,6 @@ export class Level extends Phaser.Scene {
 
     // Add turret unlock costs to Player
     Player.unlockCosts['firewall'] = this.turretData[0]['unlockCost'];
-    console.log(Player.unlockCosts['firewall']);
     Player.unlockCosts['virus-blaster'] = this.turretData[1]['unlockCost'];
     Player.unlockCosts['rectifier'] = this.turretData[2]['unlockCost'];
     Player.unlockCosts['psu'] = this.turretData[3]['unlockCost'];
@@ -221,7 +220,7 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-    this.waveCount = 8;
+    this.waveCount = 0;
     // Add walking animation for enemy sprites
     this.addEnemyAnims();
 
