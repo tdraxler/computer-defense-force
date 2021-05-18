@@ -100,6 +100,7 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('virus-blaster', 'images/player-sprites/virus-blaster.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('rectifier', 'images/player-sprites/rectifier.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('psu', 'images/player-sprites/psu.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.spritesheet('charger', 'images/player-sprites/charger.png', { frameWidth: 16, frameHeight: 24 });
 
     //**************************
     this.load.spritesheet(this.projectileData[0].type, this.projectileData[0].source, {frameHeight: this.projectileData[0].height, frameWidth: this.projectileData[0].width});
@@ -175,7 +176,7 @@ export class Level extends Phaser.Scene {
                 this,
                 nearestTile(pointer.worldX) + TILE / 2,
                 nearestTile(pointer.worldY),
-                Player.chosenTurret
+                this.turretData[i]
               );
 
               Player.energy -= this.turretData[i].buildCost;
@@ -233,6 +234,25 @@ export class Level extends Phaser.Scene {
       frameRate: 30,
       frames: this.anims.generateFrameNumbers('explosion-frames', { start: 14, end: 27 }),
       repeat: 0
+    });
+
+    // TEMPORARY - charger/psu animations
+    this.anims.create({
+      key: 'psu-anim',
+      frameRate: 15,
+      frames: this.anims.generateFrameNumbers('psu', { start: 0, end: 3 }),
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'charger-anim',
+      frameRate: 15,
+      frames: this.anims.generateFrameNumbers('charger', { start: 0, end: 3 }),
+      repeat: -1
+    });
+
+    this.anims.create({
+
     });
 
     // making bullet and enemy groups
