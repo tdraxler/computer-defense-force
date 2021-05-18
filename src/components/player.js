@@ -68,10 +68,6 @@ class Player {
     }
   }
 
-  unlock(ability) {
-    this.unlocked[ability] = true;
-  }
-
   levelUp() {
     this.level++;
     if (this.level > LIMITS.LEVELS) {
