@@ -12,6 +12,18 @@
     "unlockCost": 0
   },
   {
+    "name": "charger",
+    "hp": 5,
+    "damange": 0,
+    "ep": 1,
+    "source": "images/player-sprites/charger.png",
+    "width": 16,
+    "height": 24,
+    "printedname": "Charger",
+    "buildCost": 200,
+    "unlockCost": 0
+  },
+  {
     "name": "virus-blaster",
     "hp": 15,
     "damage": 5,
@@ -39,7 +51,7 @@
     "name": "psu",
     "hp": 5,
     "damage": 0,
-    "ep": 0.33,
+    "ep": 3,
     "source": "",
     "width": 16,
     "height": 24,

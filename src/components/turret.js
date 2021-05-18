@@ -2,15 +2,18 @@ import Phaser from 'phaser';
 import '../scenes/level';
 import {Bullet} from './bullet';
 import { CONST } from '../constants';
+import Player from './player';
 
 // Since JavaScript doesn't have type checking, we need a way to make sure the
 // construction for the class below has a way to validate parameters
 function validTurretType(buildType) {
   return buildType === 'firewall' ||
+         buildType === 'charger' ||
          buildType === 'rectifier' ||
          buildType === 'virus-blaster' ||
          buildType === 'psu';
 }
+
 
 // Unfortunately, Phaser seems to struggle with child sprites, so for now we
 // a reference to the turret Head in the Turret class instance.
@@ -70,29 +73,43 @@ export class Turret extends Phaser.GameObjects.Sprite {
   constructor(
     scene,
     x, y,
-    buildType  // Should be a string here
+    config  // Should be a string here
   ) {
+    let name = config.name;
 
-    if (!validTurretType(buildType)) {
-      buildType = 'firewall'; // default turret
+    if (!validTurretType(config.name)) {
+      name = 'firewall'; // default turret
     }
-
-    super(scene, x, y, buildType, 0);
+    
+    super(scene, x, y, name, 0);
 
     // Add object to the scene
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this).setDepth(1);
     this.getBody().setCollideWorldBounds(true);
     this.getBody().setAllowGravity(false);
+
+    // Set depth so that turrets closer to the top of the map render first
     this.setDepth(2 * Math.floor(this.y / CONST.T_SIZE));
 
     // Add head to the turret
-    if (buildType != 'psu') {
-      this.head = new Head(this.scene, x, y, buildType, this.depth);
+    if (name != 'psu' && name != 'charger') {
+      this.head = new Head(this.scene, x, y, name, this.depth);
     }
     this.hp = 5;
 
-    // Set depth so that turrets closer to the top of the map render first
+    // TODO - clean up animation code
+    if (name == 'psu' || name == 'charger') {
+      this.play(`${name}-anim`);
+    }
+
+    this.ep = 0;
+    this.frameCounter = 0;
+
+    // Add energy modifier, if thing will produce energy
+    if (config.ep) {
+      this.ep = config.ep;
+    }
   }
   preload(){
   }
@@ -100,6 +117,11 @@ export class Turret extends Phaser.GameObjects.Sprite {
   update(toTrack) {
     if (this.head) {
       this.head.update(toTrack);
+    }
+    this.frameCounter++;
+    if (this.frameCounter >= 10) {
+      this.frameCounter = 0;
+      Player.energy += this.ep;
     }
   }
 
