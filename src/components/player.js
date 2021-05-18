@@ -17,6 +17,7 @@ class Player {
     };
     this.unlockCosts = {
       'firewall': 0,
+      'charger': 0,
       'virus-blaster': 0,
       'rectifier': 0,
       'psu': 0,
@@ -42,6 +43,7 @@ class Player {
     };
     this.unlockCosts = {
       'firewall': 0,
+      'charger': 0,
       'virus-blaster': 0,
       'rectifier': 0,
       'psu': 0,

@@ -170,7 +170,7 @@ export class Level extends Phaser.Scene {
                 this,
                 nearestTile(pointer.worldX) + TILE / 2,
                 nearestTile(pointer.worldY),
-                Player.chosenTurret
+                this.turretData[i]
               );
       
               Player.energy -= this.turretData[i].buildCost;
