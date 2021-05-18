@@ -7,7 +7,9 @@
     "source": "images/player-sprites/firewall.png",
     "width": 16,
     "height": 24,
-    "printedname": "Firewall"
+    "printedname": "Firewall",
+    "buildCost": 200,
+    "unlockCost": 0
   },
   {
     "name": "charger",
@@ -28,7 +30,8 @@
     "width": 16,
     "height": 24,
     "printedname": "Virus Blaster",
-    "cost": 400
+    "buildCost": 300,
+    "unlockCost": 400
   },
   {
     "name": "rectifier",
@@ -39,7 +42,8 @@
     "width": 16,
     "height": 24,
     "printedname": "Rectifier",
-    "cost": 600
+    "buildCost": 500,
+    "unlockCost": 1000
   },
   {
     "name": "psu",
@@ -50,6 +54,7 @@
     "width": 16,
     "height": 24,
     "printedname": "PSU",
-    "cost": 200
+    "buildCost": 200,
+    "unlockCost": 200
   }
 ]

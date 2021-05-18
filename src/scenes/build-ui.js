@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { CONST, CURRENT_ACTION } from '../constants';
+import { CONST, CURRENT_ACTION, FONT_CONFIG_SMALL } from '../constants';
 import Player from '../components/player';
 import { Button } from '../components/button';
 import updateHpScore from '../components/hpscoreevent';
@@ -77,9 +77,11 @@ export class BuildMenu extends Phaser.Scene {
     this.buildBarLeft.setInteractive();
 
 
-    this.hpCount = this.add.text(305, 0, 'HP: ' + 0, {fontSize: '16px'});
-    this.score = this.add.text(275, 15, 'Score: ' + Player.score, {fontSize: '16px'});
-    this.wave = this.add.text(30, 0, 'Wave: ' + 1, {fontSize: '16px'});
+    this.hpCount = this.add.text(305, 5, 'HP: ' + 0, FONT_CONFIG_SMALL);
+    this.score = this.add.text(285, 15, 'Score: ' + Player.score, FONT_CONFIG_SMALL);
+    this.wave = this.add.text(25, 5, 'Wave: ' + 1, FONT_CONFIG_SMALL);
+    this.money = this.add.text(25, 15, 'Coins: ' + Player.viruscoins, FONT_CONFIG_SMALL);
+    this.energy = this.add.text(25, 25, 'Energy: ' + Player.energy, FONT_CONFIG_SMALL)
     
     updateHpScore.on('update-hp-score', this.updateHpScore, this);
   }
@@ -91,6 +93,8 @@ export class BuildMenu extends Phaser.Scene {
     this.hpCount.setText('HP: ' + hp);
     this.score.setText('Score: ' + Player.score);
     this.wave.setText('Wave: ' + wave);
+    this.money.setText('Coins: ' + Player.viruscoins);
+    this.energy.setText('Energy: ' + Player.energy);
   }
 
 }

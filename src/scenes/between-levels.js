@@ -57,6 +57,12 @@ export class Shop extends Phaser.Scene {
   }
 
   create() {
+    // Get Turret data from JSON file
+    const request = new XMLHttpRequest();
+    request.open('GET', 'json/turrets.json', false);
+    request.send(null);
+    this.turretData = JSON.parse(request.responseText);
+
     this.background = this.add.sprite(0, 0, 'background').setOrigin(0,0);
 
     this.anims.create({
@@ -74,21 +80,21 @@ export class Shop extends Phaser.Scene {
     });
 
     // Upgrade buttons
-    if (!Player.unlocked['virus-blaster']) {
+    if (!Player.unlocked['virus-blaster'] && Player.viruscoins > this.turretData[1].unlockCost) {
       this.virusBlasterButton = new Button(
         this, 48, 168, 'upgrade-buttons', 0, true,
         null, { upgrade: 'virus-blaster' }
       );
     }
 
-    if (!Player.unlocked['rectifier']) {
+    if (!Player.unlocked['rectifier'] && Player.viruscoins > this.turretData[2].unlockCost) {
       this.rectifierButton = new Button(
         this, 128, 168, 'upgrade-buttons', 3, true,
         null, { upgrade: 'rectifier' }
       );
     }
 
-    if (!Player.unlocked['psu']) {
+    if (!Player.unlocked['psu'] && Player.viruscoins > this.turretData[3].unlockCost) {
       this.psuButton = new Button(
         this, 208, 168, 'upgrade-buttons', 6, true,
         null, { upgrade: 'psu' }
@@ -119,6 +125,7 @@ export class Shop extends Phaser.Scene {
   }
 
   update() {
+    this.coins.setText(`${Player.viruscoins}`, FONT_CONFIG_SMALL);
     if (this.keyC.isDown) { // Debug - restarts the scene
       console.log('Restart level!');
       this.scene.start(CONST.SCENES.LEVEL);

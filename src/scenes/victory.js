@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
+import Player from '../components/player';
 //import {start} from '../';
 
 
@@ -39,12 +40,15 @@ export class Victory extends Phaser.Scene {
     playAgainButton.on('pointerup', ()=>{
       playAgainButton.alpha=1;
       vBgm.stop();
-      this.scene.start(CONST.SCENES.DEATH);
+      Player.reset();
+      this.scene.start(CONST.SCENES.LEVEL);
     })
 
   }
   //the rotation of the rectangle
   update(){
     this.add.text(100, 145, 'WE ARE SAVED!!').setFontFamily('Sans-Serif').setFontSize(25);
+    this.add.text(90, 175, 'HERE IS YOUR SCORE:').setFontFamily('Sans-Serif').setFontSize(20);
+    this.add.text(180, 195, Player.score).setFontFamily('Sans-Serif').setFontSize(25);
   }
 }
