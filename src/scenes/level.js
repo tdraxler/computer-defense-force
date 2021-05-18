@@ -218,7 +218,7 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-    this.waveCount = 0;
+    this.waveCount = 9;
     // Add walking animation for enemy sprites
     this.addEnemyAnims();
 
@@ -241,6 +241,7 @@ export class Level extends Phaser.Scene {
     });
 
     this.levelEnemies = [];
+    this.rootkits = [];
     this.wave(this.waveCount);
     this.waveCount++; // update the wave count
     // end of enemy stuff
@@ -282,32 +283,55 @@ export class Level extends Phaser.Scene {
 
   wave(waveCount) {
     const min = Player.level - 1; 
-    const max = min + 3;
-    for (let i = 0; i < waveCount + 2; i++) {
-      let en = Math.floor(Math.random() * (max - min) + min); // choose any of the 5 possible enemies
-      let choice = Math.floor(Math.random() * 6);
-      let newOne = new Virus(
-        {
-          scene: this, 
-          x: possibles[choice].x * TILE + TILE / 2, 
-          y: possibles[choice].y * TILE + TILE / 2, 
-          hp: this.eData[en].hp, 
-          damage: this.eData[en].damage, 
-          points: this.eData[en].points,
-          hitX: this.eData[en].hitX,
-          hitY: this.eData[en].hitY
-        }
-      );
-      newOne.play(this.eneAnims[en]);
-      // Number of frames to delay movement
-      newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
-      newOne.moveX = 0;
-      newOne.moveY = 0;
-      newOne.moveVal = -1;
-      newOne.dirVector = {x: 0, y: 0};
+    const max = min + 2;
+    if (Player.level === 3 && waveCount === 9) {
+      for (let i = 0; i < 5; i++) {
+        let newOne = new Virus(
+          {
+            scene: this, 
+            x: possibles[3] * TILE + TILE / 2, 
+            y: possibles[3] * TILE + TILE / 2, 
+            hp: this.eData[4].hp, 
+            damage: this.eData[4].damage, 
+            points: this.eData[4].points,
+            hitX: this.eData[4].hitX,
+            hitY: this.eData[4].hitY
+          }
+        );
 
-      this.gEnemies.add(newOne);
-      this.levelEnemies.push(newOne);
+        newOne.play(this.eneAnims[4]);
+        //newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
+        this.gEnemies.add(newOne);
+        this.rootkits.push(newOne);
+        this.timer = this.time.delayedCall(i * 5000, this.walk, [this.rootkits[i], this.targetX, this.targetY], this);
+      }
+    } else {
+      for (let i = 0; i < waveCount + 2; i++) {
+        let en = Math.floor(Math.random() * (max - min) + min); // choose any of the 5 possible enemies
+        let choice = Math.floor(Math.random() * 6);
+        let newOne = new Virus(
+          {
+            scene: this, 
+            x: possibles[choice].x * TILE + TILE / 2, 
+            y: possibles[choice].y * TILE + TILE / 2, 
+            hp: this.eData[en].hp, 
+            damage: this.eData[en].damage, 
+            points: this.eData[en].points,
+            hitX: this.eData[en].hitX,
+            hitY: this.eData[en].hitY
+          }
+        );
+        newOne.play(this.eneAnims[en]);
+        // Number of frames to delay movement
+        newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
+        newOne.moveX = 0;
+        newOne.moveY = 0;
+        newOne.moveVal = -1;
+        newOne.dirVector = {x: 0, y: 0};
+  
+        this.gEnemies.add(newOne);
+        this.levelEnemies.push(newOne);
+      }
     }
   }
 
@@ -365,6 +389,23 @@ export class Level extends Phaser.Scene {
     this.buildReady.x = (TILE * Math.floor(this.input.activePointer.worldX / TILE));
     this.buildReady.y = (TILE * Math.floor(this.input.activePointer.worldY / TILE));
 
+
+    if (this.rootkits.length > 0) {
+      for (let [index, root] of this.rootkits.entries()) {
+        if (Math.floor(root.x / TILE) == this.targetX && Math.floor(root.y / TILE) == this.targetY) {
+          // cause damage and disappear
+          this.core.hp -= root.damage;
+          root.destroy();
+          this.explosion.play();
+          this.levelEnemies.splice(index, 1);
+
+          // Play explosion
+          let newOne = new Explosion({scene: this, x: root.x, y: root.y, animKey: 'explosion-frames'});
+          newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
+          break;
+        }
+      }
+    }
 
     // Test critter logic
     if (this.pathmap) {
@@ -463,7 +504,7 @@ export class Level extends Phaser.Scene {
     }
 
     // New wave
-    if (this.levelEnemies.length === 0 && this.waveCount < 11) {
+    if (this.levelEnemies.length === 0 && this.rootkits.length === 0 && this.waveCount < 11) {
       this.wave(this.waveCount);
       this.waveCount++;
     }

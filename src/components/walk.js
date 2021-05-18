@@ -5,34 +5,23 @@ export function walk(enemy) {
   this.timeline = this.tweens.createTimeline();
 
   let positions = [
-    {x: this.game.config.width - 10, y: 25,}, 
-    {x: 10, y: 25}, 
-    {x: 10, y: this.game.config.height - 10}, 
-    {x: this.game.config.width - 50, y: this.game.config.height - 15}, 
-    {x: this.game.config.width - 50, y: this.game.config.height - 200}, 
-    {x: this.game.config.width - 120, y: this.game.config.height - 200}, 
-    {x: this.game.config.width - 120, y: this.game.config.height - 100}, 
-    {x: this.game.config.width / 2, y: this.game.config.height - 100}, 
-    {x: this.game.config.width / 2, y: this.game.config.height / 2}
+    {x: this.game.config.width + 50, y: this.game.config.height + 200}, 
+    {x: this.game.config.width + 50, y: this.game.config.height + 130}, 
+    {x: this.game.config.width + 190, y: this.game.config.height + 130}, 
+    {x: this.game.config.width + 190, y: this.game.config.height - 100}, 
+    {x: this.game.config.width + 70, y: this.game.config.height - 100}, 
+    {x: this.game.config.width + 70, y: this.game.config.height + 20}, 
+    {x: this.game.config.width - 90, y: this.game.config.height + 20}, 
+    {x: this.game.config.width - 90, y: this.game.config.height - 120}
   ];
 
   for (let i = 0; i < positions.length; i++) {
-    if (i === 8) {
-      this.timeline.add({
-        targets: enemy,
-        duration: 5000,
-        x: positions[i].x,
-        y: positions[i].y,
-        onComplete: this.onCompleteHandler
-      });
-    } else {
-      this.timeline.add({
-        targets: enemy,
-        duration: 5000,
-        x: positions[i].x,
-        y: positions[i].y
-      });
-    }
+    this.timeline.add({
+      targets: enemy,
+      duration: 2000,
+      x: positions[i].x,
+      y: positions[i].y
+    });
   }
 
   this.timeline.play();
