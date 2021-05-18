@@ -7,7 +7,7 @@ export class Core extends Phaser.GameObjects.Sprite {
   }
 
   constructor(scene, x, y, coreConfig) {
-    super(scene, x, y, 'core');
+    super(scene, x, y, coreConfig.name);
 
     console.log(coreConfig);
     // Add object to the scene
@@ -17,6 +17,7 @@ export class Core extends Phaser.GameObjects.Sprite {
     this.getBody().setAllowGravity(false);
 
     this.hp = coreConfig.hp;
+    console.log(this.hp);
   }
 
   update() {

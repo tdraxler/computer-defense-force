@@ -1,9 +1,16 @@
 * {
-    font-family: sans-serif; 
-   }
+  font-family: sans-serif; 
+}
+
+@font-face {
+  font-family: 'press_start';
+  src: url('fonts/PressStart2P-Regular.ttf');
+  font-weight: 400;
+  font-weight: normal;
+}
    
-   #game {
-     height: 600px;
-     width: 800px;
-     border: none;
-   }
+#game {
+  height: 600px;
+  width: 800px;
+  border: none;
+}

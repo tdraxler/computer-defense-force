@@ -21,7 +21,8 @@ class Player {
       'psu': 0,
       'hardened-core': 0
     };
-    this.money = 500;
+    this.viruscoins = 5000;
+    this.coreHP = 0;
   }
 
   reset() {
@@ -44,7 +45,8 @@ class Player {
       'psu': 0,
       'hardened-core': 0
     };
-    this.money = 5000;
+    this.viruscoins = 5000;
+    this.coreHP = 0;
   }
 
   setAction(newAction) {
@@ -61,14 +63,14 @@ class Player {
       // TODO - other actions
       if (newVal.upgrade) {
         this.unlocked[newVal.upgrade] = true;
+        this.viruscoins -= this.unlockCosts[newVal.upgrade];
+        console.log(this.money);
       }
     }
   }
 
   unlock(ability) {
     this.unlocked[ability] = true;
-    this.money -= this.unlockCosts[ability];
-    console.log(this.money);
   }
 
   levelUp() {
