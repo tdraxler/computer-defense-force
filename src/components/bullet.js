@@ -33,9 +33,13 @@ export class Bullet extends Phaser.GameObjects.Sprite {
   }
   fire() {
     this.scene.physics.moveToObject(this, this.enemy, 400); //suggested by Abraham
+
   }
 
   update(){
+    let newAngle = Phaser.Math.Angle.Between(this.x, this.y, this.enemy.x, this.enemy.y);
+    this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
+    this.setRotation((newAngle + Math.PI/2)-160);
     if(this.x>this.scene.physics.world.bounds.height || this.y>this.scene.physics.world.bounds.width || this.x<0 || this.y<0){
       this.destroy();
     }

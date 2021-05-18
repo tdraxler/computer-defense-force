@@ -12,15 +12,15 @@
     "speed": 600,
     "damage":10,
     "source": "images/laser_bolt.png",
-    "width": 7,
-    "height": 5
+    "width": 5,
+    "height": 7
   },
   {
     "type": "plasma-cannonball",
     "speed": 200,
     "damage":25,
     "source": "images/plasma_cannonball.png",
-    "width": 10,
-    "height": 5
+    "width": 5,
+    "height": 10
   }
 ]
