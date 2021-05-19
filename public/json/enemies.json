@@ -49,7 +49,7 @@
   },
   {
     "name": "rootkit",
-    "hp": 100,
+    "hp": 20,
     "damage": 75,
     "speed": 1,
     "points": 70,
