@@ -26,15 +26,20 @@ class Head extends Phaser.GameObjects.Sprite {
     this.turretType = headType;
   }
 
+  //html request adapted from level.js. Returns the JSON object with bullet information
   bulletType(turretType){
+    const request = new XMLHttpRequest();
+    request.open('GET', 'json/projectiles.json', false);
+    request.send(null);
+    let projObject = JSON.parse(request.responseText);
     switch(turretType){
     case 'rectifier':
-      return 'laser-bolt';
+      return projObject[1];
     case 'virus-blaster':
-      return 'plasma-cannonball';
+      return projObject[2];
     case 'firewall':
     default:
-      return 'bullet';
+      return projObject[0];
     }
   }
 
@@ -50,7 +55,8 @@ class Head extends Phaser.GameObjects.Sprite {
     //let firedUpon = [];
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
-    let bulletType = this.bulletType(this.turretType);
+    //determine projectile type based on turret value.
+    let projType = this.bulletType(this.turretType);
 
     let enemyUnits = toTrack;
     for(let i = 0; i<enemyUnits.length; i++){
@@ -59,13 +65,13 @@ class Head extends Phaser.GameObjects.Sprite {
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
         if(this.delay >= 10){
-          let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
-          //bullet.setOrigin(this.x, this.y)
+          let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i], projType);
           if(this.scene.gBullets){
             this.scene.gBullets.add(bullet);
           }
-          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(bulletType, {start: 0, end: 3 }), frameRate: 10, repeat: -1});
-          /*bullet.setCollideWorldBounds(true);
+          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(projType.type, {start: projType.start, end: projType.end }), frameRate: 10, repeat: -1});
+          /* ----- STILL WORKING ON FUNCTIONALITY -----
+          bullet.setCollideWorldBounds(true);
           bullet.body.onWorldBounds = true;
           bullet.body.world.on('worldbounds', function(body){
             if(body.gameObject === this){
@@ -78,7 +84,6 @@ class Head extends Phaser.GameObjects.Sprite {
           this.scene.firewallSfx.play();
           this.delay=0;
         }
-        //add new turret to bullet group
       }
     }
 

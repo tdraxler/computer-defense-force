@@ -263,7 +263,7 @@ export class Level extends Phaser.Scene {
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
       enemy.hp -= bullet.damage;
-      console.log(bullet)
+      console.log(bullet.damage);
       bullet.destroy();
     });
 
