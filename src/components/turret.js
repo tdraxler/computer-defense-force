@@ -44,10 +44,6 @@ class Head extends Phaser.GameObjects.Sprite {
   }
 
   preload(){
-    /*const request = new XMLHttpRequest();
-    request.open('GET', 'json/projectiles.json', false);
-    request.send(null);
-    this.projObject = JSON.parse(request.responseText);*/
   }
   //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
   //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
@@ -56,7 +52,6 @@ class Head extends Phaser.GameObjects.Sprite {
   }
 
   update(toTrack) {
-    //let firedUpon = [];
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
     //determine projectile type based on turret value.
@@ -78,6 +73,7 @@ class Head extends Phaser.GameObjects.Sprite {
           bullet.setCollideWorldBounds(true);
           bullet.body.onWorldBounds = true;
           bullet.body.world.on('worldbounds', function(body){
+            console.log('DESTROY CALLED')
             bullet.destroy()
           });
           bullet.play('fired');
