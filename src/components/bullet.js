@@ -20,6 +20,7 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.add.existing(this).setDepth(1);
     this.getBody().setCollideWorldBounds(false);
     this.getBody().setAllowGravity(false);
+    this.setBodySize(5, 5, true)
 
   }
 

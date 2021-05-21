@@ -20,9 +20,10 @@ export class Tutorial extends Phaser.Scene {
   }
   //must include create
   create(){
-    this.add.image(0,0,'imgTitle').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
-    testRec = this.add.sprite(200, 150, 'testRec').setOrigin(0).setDepth(2);
-    let nextButton = this.add.image(150,200,'startButton').setOrigin(0).setDepth(1);
+    this.add.image(0,0,'tutorial').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
+    this.add.image(55,10,'tutorial-title').setOrigin(0).setDepth(3);
+
+    let nextButton = this.add.image(150,250,'startButton').setOrigin(0).setDepth(1);
     nextButton.setInteractive();
     nextButton.on('pointerover',()=>{
       nextButton.alpha=.7;
@@ -37,7 +38,6 @@ export class Tutorial extends Phaser.Scene {
   }
   //the rotation of the rectangle
   update(){
-    testRec.rotation += 0.007;
-    this.add.text(10, 10, 'HOW TO PLAY').setFontFamily('Sans-Serif').setFontSize(30);
+    //this.add.text(10, 10, 'HOW TO PLAY').setFontFamily('Sans-Serif').setFontSize(30);
   }
 }

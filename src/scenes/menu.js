@@ -43,7 +43,7 @@ export class Menu extends Phaser.Scene {
     startButton.on('pointerup', ()=>{
       startButton.alpha=1;
       mBgm.stop();
-      this.scene.start(CONST.SCENES.LEVEL);
+      this.scene.start(CONST.SCENES.TUTORIAL);
     })
 
   }
