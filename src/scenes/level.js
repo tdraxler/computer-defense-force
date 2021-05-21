@@ -219,7 +219,7 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-    this.waveCount = 0;
+    this.waveCount = 9;
     // Add walking animation for enemy sprites
     this.addEnemyAnims();
 
@@ -291,10 +291,6 @@ export class Level extends Phaser.Scene {
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
       //console.log('this got triggered');
       //this.physics.moveToObject(this.rootkits[0], this.core, 200);
-      this.rootkits[0].moveX = 0;
-      this.rootkits[0].moveY = 0;
-      this.rootkits[0].moveVal = -1;
-      this.rootkits[0].dirVector = {x: 0, y: 0};
       this.levelEnemies.push(this.rootkits[0]);
     });
 
@@ -318,6 +314,10 @@ export class Level extends Phaser.Scene {
       );
 
       newOne.play(this.eneAnims[4]);
+      newOne.moveX = 0;
+      newOne.moveY = 0;
+      newOne.moveVal = -1;
+      newOne.dirVector = {x: 0, y: 0};
       //newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
       this.gEnemies.add(newOne);
       this.rootkits.push(newOne);
