@@ -25,7 +25,6 @@ class Head extends Phaser.GameObjects.Sprite {
 
     this.turretType = headType;
   }
-
   //html request adapted from level.js. Returns the JSON object with bullet information
   bulletType(turretType){
     const request = new XMLHttpRequest();
