@@ -42,7 +42,6 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     this.setRotation((newAngle + Math.PI/2));
     if(this.x>800 || this.y>800 || this.x<0 || this.y<0){
       this.destroy();
-      console.log('DESTROY has been called!');
     }
 
 

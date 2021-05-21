@@ -172,11 +172,13 @@ export class Level extends Phaser.Scene {
         if (this.turretMap[mapInd] == null) {
           for (let i = 0; i < this.turretData.length; i++) {
             if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost <= Player.energy) {
+              let projectile = this.projectileData.find(x => x.type === this.turretData[i].projectile)
               let newTurret = new Turret(
                 this,
                 nearestTile(pointer.worldX) + TILE / 2,
                 nearestTile(pointer.worldY),
-                this.turretData[i]
+                this.turretData[i],
+                projectile
               );
 
               Player.energy -= this.turretData[i].buildCost;
