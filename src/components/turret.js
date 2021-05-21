@@ -44,6 +44,10 @@ class Head extends Phaser.GameObjects.Sprite {
   }
 
   preload(){
+    /*const request = new XMLHttpRequest();
+    request.open('GET', 'json/projectiles.json', false);
+    request.send(null);
+    this.projObject = JSON.parse(request.responseText);*/
   }
   //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
   //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
@@ -70,14 +74,13 @@ class Head extends Phaser.GameObjects.Sprite {
             this.scene.gBullets.add(bullet);
           }
           bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(projType.type, {start: projType.start, end: projType.end }), frameRate: 10, repeat: -1});
-          /* ----- STILL WORKING ON FUNCTIONALITY -----
+          //bullet destroy on world bounds https://phaser.io/examples/v3/view/physics/arcade/world-bounds-event
           bullet.setCollideWorldBounds(true);
           bullet.body.onWorldBounds = true;
           bullet.body.world.on('worldbounds', function(body){
-            if(body.gameObject === this){
-              bullet.destroy()
-            }
-          })*/
+            console.log('DEBUGGING: destroy called in Turret')
+            bullet.destroy()
+          });
           bullet.play('fired');
           bullet.fire();
           bullet.update();

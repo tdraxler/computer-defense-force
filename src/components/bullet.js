@@ -4,7 +4,7 @@ import {CONST} from '../constants';
 
 //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
 
-export class Bullet extends Phaser.GameObjects.Sprite {
+export class Bullet extends Phaser.Physics.Arcade.Sprite {
 
   getBody() {
     return this.body;
@@ -42,6 +42,7 @@ export class Bullet extends Phaser.GameObjects.Sprite {
     this.setRotation((newAngle + Math.PI/2));
     if(this.x>800 || this.y>800 || this.x<0 || this.y<0){
       this.destroy();
+      console.log('DESTROY has been called!');
     }
 
 

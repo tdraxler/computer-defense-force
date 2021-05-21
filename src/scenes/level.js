@@ -268,7 +268,6 @@ export class Level extends Phaser.Scene {
     });
 
 
-
     this.levelEnemies = [];
     this.wave(this.waveCount);
     this.waveCount++; // update the wave count
