@@ -78,7 +78,6 @@ class Head extends Phaser.GameObjects.Sprite {
           bullet.setCollideWorldBounds(true);
           bullet.body.onWorldBounds = true;
           bullet.body.world.on('worldbounds', function(body){
-            console.log('DEBUGGING: destroy called in Turret')
             bullet.destroy()
           });
           bullet.play('fired');
