@@ -55,6 +55,10 @@ export class Level extends Phaser.Scene {
     request.send(null);
     this.coreData = JSON.parse(request.responseText);
 
+    request.open('GET', 'json/projectiles.json', false);
+    request.send(null);
+    this.projectileData = JSON.parse(request.responseText);
+
     // Get Turret data from JSON file
     request.open('GET', 'json/turrets.json', false);
     request.send(null);
@@ -99,7 +103,9 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('charger', 'images/player-sprites/charger.png', { frameWidth: 16, frameHeight: 24 });
 
     //**************************
-    this.load.spritesheet('bullet', './images/bullet_5px.png', {frameHeight: 5, frameWidth: 5});
+    this.load.spritesheet(this.projectileData[0].type, this.projectileData[0].source, {frameHeight: this.projectileData[0].height, frameWidth: this.projectileData[0].width});
+    this.load.spritesheet(this.projectileData[1].type, this.projectileData[1].source, {frameHeight: this.projectileData[1].height, frameWidth: this.projectileData[1].width});
+    this.load.spritesheet(this.projectileData[2].type, this.projectileData[2].source, {frameHeight: this.projectileData[2].height, frameWidth: this.projectileData[2].width});
     //**************************
     // Explosion
     this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
@@ -166,18 +172,20 @@ export class Level extends Phaser.Scene {
         if (this.turretMap[mapInd] == null) {
           for (let i = 0; i < this.turretData.length; i++) {
             if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost <= Player.energy) {
+              let projectile = this.projectileData.find(x => x.type === this.turretData[i].projectile)
               let newTurret = new Turret(
                 this,
                 nearestTile(pointer.worldX) + TILE / 2,
                 nearestTile(pointer.worldY),
-                this.turretData[i]
+                this.turretData[i],
+                projectile
               );
-      
+
               Player.energy -= this.turretData[i].buildCost;
 
               this.turrets.push(newTurret);
               this.buildSfx.play();
-    
+
               //sets turret to look at newest enemy on map, delete now works as well
               this.turretMap[mapInd] = newTurret;
             } else if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost > Player.energy) {
@@ -259,6 +267,7 @@ export class Level extends Phaser.Scene {
       enemy.hp -= bullet.damage;
       bullet.destroy();
     });
+
 
     this.levelEnemies = [];
     this.wave(this.waveCount);

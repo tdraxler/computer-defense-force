@@ -9,7 +9,8 @@
     "height": 24,
     "printedname": "Firewall",
     "buildCost": 200,
-    "unlockCost": 0
+    "unlockCost": 0,
+    "projectile": "bullet"
   },
   {
     "name": "charger",
@@ -33,7 +34,8 @@
     "height": 24,
     "printedname": "Virus Blaster",
     "buildCost": 300,
-    "unlockCost": 400
+    "unlockCost": 400,
+    "projectile": "plasma-cannonball"
   },
   {
     "name": "rectifier",
@@ -45,7 +47,8 @@
     "height": 24,
     "printedname": "Rectifier",
     "buildCost": 500,
-    "unlockCost": 1000
+    "unlockCost": 1000,
+    "projectile": "laser-bolt"
   },
   {
     "name": "psu",
