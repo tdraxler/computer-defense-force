@@ -34,11 +34,11 @@ class Head extends Phaser.GameObjects.Sprite {
   create(){
   }
 
-  update(toTrack, projObject) {
+  update(toTrack, projectileStats) {
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
     //determine projectile type based on turret value.
-    let theProjectile = projObject
+    let theProjectile = projectileStats
     let enemyUnits = toTrack;
     for(let i = 0; i<enemyUnits.length; i++){
       if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=75){
@@ -81,7 +81,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
     scene,
     x, y,
     config,
-    projObject  // Should be a string here
+    projectileStats  // Should be a string here
   ) {
     let name = config.name;
 
@@ -90,7 +90,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
     }
     
     super(scene, x, y, name, 0);
-    this.projObject = projObject;
+    this.projObject = projectileStats;
     // Add object to the scene
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this).setDepth(1);

@@ -40,11 +40,6 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
     let newAngle = Phaser.Math.Angle.Between(this.x, this.y, this.enemy.x, this.enemy.y);
     this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
     this.setRotation((newAngle + Math.PI/2));
-    if(this.x>800 || this.y>800 || this.x<0 || this.y<0){
-      this.destroy();
-    }
-
-
   }
 }
 
