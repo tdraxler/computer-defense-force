@@ -2,18 +2,16 @@ import Phaser from 'phaser';
 import { CONST } from '../constants';
 //import {start} from '../';
 
-let testRec;
-
-export class Tutorial extends Phaser.Scene {
+export class Tutorial3 extends Phaser.Scene {
   constructor() {
     super({
-      key:CONST.SCENES.TUTORIAL
+      key:CONST.SCENES.TUTORIAL3
     });
   }
   //data from others scenes gets passed in here
   init(data){
     console.log(data);
-    console.log('I am now the  tutorial scene, I got data from the menu scene!')
+    console.log('I am now the menu scene, I got data from the title scene!')
   }
   preload(){
 
@@ -34,7 +32,7 @@ export class Tutorial extends Phaser.Scene {
     })
     nextButton.on('pointerup', ()=>{
       nextButton.alpha=1;
-      this.scene.start(CONST.SCENES.TUTORIAL2);
+      this.scene.start(CONST.SCENES.LEVEL);
     })
   }
   //the rotation of the rectangle

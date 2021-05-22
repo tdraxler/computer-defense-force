@@ -4,10 +4,10 @@ import { CONST } from '../constants';
 
 let testRec;
 
-export class Tutorial extends Phaser.Scene {
+export class Tutorial2 extends Phaser.Scene {
   constructor() {
     super({
-      key:CONST.SCENES.TUTORIAL
+      key:CONST.SCENES.TUTORIAL2
     });
   }
   //data from others scenes gets passed in here
@@ -34,7 +34,7 @@ export class Tutorial extends Phaser.Scene {
     })
     nextButton.on('pointerup', ()=>{
       nextButton.alpha=1;
-      this.scene.start(CONST.SCENES.TUTORIAL2);
+      this.scene.start(CONST.SCENES.TUTORIAL3);
     })
   }
   //the rotation of the rectangle

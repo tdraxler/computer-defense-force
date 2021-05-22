@@ -4,6 +4,8 @@ import {BuildMenu} from './scenes/build-ui';
 import {Menu} from './scenes/menu';
 import {TitleScene} from './scenes/title';
 import {Tutorial} from './scenes/tutorial';
+import {Tutorial2} from './scenes/tutorial-2';
+import {Tutorial3} from './scenes/tutorial-3';
 import {Death} from './scenes/death';
 import {Victory} from './scenes/victory';
 import {Shop} from './scenes/between-levels';
@@ -31,7 +33,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu, Tutorial, Level, FirstEnemy, Death, Victory, BuildMenu, Shop
+    TitleScene, Menu, Tutorial, Tutorial2, Tutorial3, Level, FirstEnemy, Death, Victory, BuildMenu, Shop
   ]
 };
 
