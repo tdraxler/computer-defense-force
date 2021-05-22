@@ -25,6 +25,8 @@ let config = {
   physics: {
     default: 'arcade',
     arcade: {
+      /* Uncomment the line below if you want to see the collision boxes */
+      // debug: true,
       gravity: { y: 0 }
     }
   },

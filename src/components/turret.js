@@ -34,31 +34,37 @@ class Head extends Phaser.GameObjects.Sprite {
   create(){
   }
 
-  update(toTrack) {
-    //let firedUpon = [];
+  update(toTrack, projectileStats) {
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
-
+    //determine projectile type based on turret value.
+    let theProjectile = projectileStats
     let enemyUnits = toTrack;
     for(let i = 0; i<enemyUnits.length; i++){
       if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=75){
         let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
         this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
         this.setRotation((newAngle + Math.PI/2)-160);
-        if(this.delay >= 10){
-          let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i]);
+        if(this.delay >= theProjectile.rate){
+          let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i], theProjectile);
           if(this.scene.gBullets){
             this.scene.gBullets.add(bullet);
           }
-          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers('bullet', {start: 0, end: 3 }), frameRate: 10, repeat: -1});
+          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(theProjectile.type, {start: theProjectile.start, end: theProjectile.end }), frameRate: 10, repeat: -1});
+          //bullet destroy on world bounds https://phaser.io/examples/v3/view/physics/arcade/world-bounds-event
+          bullet.setCollideWorldBounds(true);
+          bullet.body.onWorldBounds = true;
+          bullet.body.world.on('worldbounds', function(body){
+            body.gameObject.destroy();
+          });
           bullet.play('fired');
           bullet.fire();
           this.scene.firewallSfx.play();
           this.delay=0;
         }
-        //add new turret to bullet group
       }
     }
+
     this.delay++;
   }
 }
@@ -73,7 +79,8 @@ export class Turret extends Phaser.GameObjects.Sprite {
   constructor(
     scene,
     x, y,
-    config  // Should be a string here
+    config,
+    projectileStats  // Should be a string here
   ) {
     let name = config.name;
 
@@ -82,7 +89,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
     }
     
     super(scene, x, y, name, 0);
-
+    this.projObject = projectileStats;
     // Add object to the scene
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this).setDepth(1);
@@ -116,7 +123,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
 
   update(toTrack) {
     if (this.head) {
-      this.head.update(toTrack);
+      this.head.update(toTrack, this.projObject);
     }
     this.frameCounter++;
     if (this.frameCounter >= 10) {
