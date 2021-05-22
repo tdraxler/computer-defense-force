@@ -11,10 +11,10 @@ export class Bullet extends Phaser.Physics.Arcade.Sprite {
   }
 
   constructor(scene, x, y, enemy, bulType) {
-    super(scene, x, y, bulType);
+    super(scene, x, y, bulType.type);
     this.enemy = enemy;
     this.x = x;
-    this.y=y;
+    this.y = y;
     this.damage = bulType.damage;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this).setDepth(1);

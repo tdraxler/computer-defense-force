@@ -324,7 +324,9 @@ export class Level extends Phaser.Scene {
           damage: this.eData[en].damage, 
           points: this.eData[en].points,
           hitX: this.eData[en].hitX,
-          hitY: this.eData[en].hitY
+          hitY: this.eData[en].hitY,
+          width: this.eData[en].width,
+          height: this.eData[en].height,
         }
       );
       newOne.play(this.eneAnims[en]);
