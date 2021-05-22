@@ -115,11 +115,11 @@ export class Shop extends Phaser.Scene {
     this.priceLabels = [];
     if (!Player.unlocked['virus-blaster'])
       this.priceLabels.push(new PriceLabel(this, 60, 215, 'virus-blaster'));
-    if (!Player.unlocked['virus-blaster'])
+    if (!Player.unlocked['rectifier'])
       this.priceLabels.push(new PriceLabel(this, 140, 215, 'rectifier'));
-    if (!Player.unlocked['virus-blaster'])
+    if (!Player.unlocked['psu'])
       this.priceLabels.push(new PriceLabel(this, 220, 215, 'psu'));
-    if (!Player.unlocked['virus-blaster'])
+    if (!Player.unlocked['hardened-core'])
       this.priceLabels.push(new PriceLabel(this, 300, 215, 'hardened-core'));
 
   }
