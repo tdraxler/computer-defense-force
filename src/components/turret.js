@@ -55,11 +55,10 @@ class Head extends Phaser.GameObjects.Sprite {
           bullet.setCollideWorldBounds(true);
           bullet.body.onWorldBounds = true;
           bullet.body.world.on('worldbounds', function(body){
-            body.gameObject.destroy()
+            body.gameObject.destroy();
           });
           bullet.play('fired');
           bullet.fire();
-          bullet.update(bullet);
           this.scene.firewallSfx.play();
           this.delay=0;
         }
