@@ -14,6 +14,11 @@ export const CONST = {
   T_SIZE: 16
 };
 
+export const MAP_CONSTANTS = {
+  T_SIZE: 16,
+  BUILD_AREA_INDEX: 146
+}
+
 export const CURRENT_ACTION = {
   BUILD:    'BUILD',
   DEMOLISH: 'DEMOLISH',

@@ -1,12 +1,12 @@
 import Phaser from 'phaser';
-import { CONST, CURRENT_ACTION } from '../constants';
+import { buildPreview, setUpBuildSystem } from '../components/buildPreview';
+import { CONST, MAP_CONSTANTS } from '../constants';
 import { Core } from '../components/core';
-import { Turret } from '../components/turret';
+import { Explosion } from '../components/explosion';
+import { generatePathMap, nextDir } from '../components/pathfinding';
 import Player from '../components/player';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
-import { generatePathMap, nextDir } from '../components/pathfinding';
-import { Explosion } from '../components/explosion';
 import updateHpScore from '../components/hpscoreevent';
 
 // For debugging the cursor position
@@ -16,14 +16,9 @@ let bgm;
 const MIN_DELAY = 5;
 const MAX_DELAY = 10 * 60;
 
-const TILE = CONST.T_SIZE;
-const BUILD_AREA_INDEX = 146;
+const TILE = MAP_CONSTANTS.T_SIZE;
+
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
-
-
-const nearestTile = (num) => {
-  return (TILE * Math.floor(num / TILE));
-}
 
 const nearestIndex = (num) => {
   return (Math.floor(num / TILE));
@@ -141,11 +136,7 @@ export class Level extends Phaser.Scene {
     this.tilemap.createLayer('base', tileset);
     this.tilemap.createLayer('above1', tileset);
 
-    // Cursor
-    this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
 
-    // Valid build location (drawn on tilemap)
-    this.buildReady = this.add.sprite(0, 0, 'build-ready', 1).setOrigin(0,0);
 
     // Add turret unlock costs to Player
     Player.unlockCosts['firewall'] = this.turretData[0]['unlockCost'];
@@ -163,68 +154,7 @@ export class Level extends Phaser.Scene {
     this.turrets = [];
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
 
-    // Add or remove a turret upon click
-    this.input.on('pointerup', (pointer) => {
-      let mapInd = (nearestIndex(pointer.worldY) * this.tilemap.width + nearestIndex(pointer.worldX));
-      let buildArea = this.collidemap.layer.data[Math.floor(this.input.activePointer.worldY / TILE)][Math.floor(this.input.activePointer.worldX / TILE)].index;
-
-      if (Player.action == CURRENT_ACTION.BUILD && buildArea == BUILD_AREA_INDEX) {
-        if (this.turretMap[mapInd] == null) {
-          for (let i = 0; i < this.turretData.length; i++) {
-            if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost <= Player.energy) {
-              let projectile = this.projectileData.find(x => x.type === this.turretData[i].projectile)
-              let newTurret = new Turret(
-                this,
-                nearestTile(pointer.worldX) + TILE / 2,
-                nearestTile(pointer.worldY),
-                this.turretData[i],
-                projectile
-              );
-
-              Player.energy -= this.turretData[i].buildCost;
-
-              this.turrets.push(newTurret);
-              this.buildSfx.play();
-
-              //sets turret to look at newest enemy on map, delete now works as well
-              this.turretMap[mapInd] = newTurret;
-            } else if (Player.chosenTurret === this.turretData[i].name && this.turretData[i].buildCost > Player.energy) {
-              console.log('Not enough energy!');
-            }
-          }
-        }
-        else {
-          console.log('occupied - can\'t build');
-        }
-      }
-      else if (Player.action == CURRENT_ACTION.DEMOLISH) {
-        if (this.turretMap[mapInd] == null) {
-          console.log('unoccupied space - nothing to delete');
-        }
-        else {
-          for(let i = 0; i < this.turretData.length; i++) {
-            if (Player.chosenTurret === this.turretData[i].name) {
-              Player.energy += Math.floor(this.turretData[i].buildCost / 2);
-            }
-          }
-          console.log(Player.energy);
-          let toDelete = this.turretMap[mapInd]; // Get object ref
-          let turretsArrInd = this.turrets.indexOf(toDelete);
-          // Clean up and destroy it
-          this.delTurret.play();
-          toDelete.dismantle();
-          toDelete.destroy();
-
-          // Remove all references to it.
-          this.turrets.splice(turretsArrInd, 1);
-          console.log(this.turrets.length);
-          this.turretMap[mapInd] = null;
-        }
-      }
-      else {
-        console.log('No action selected');
-      }
-    });
+    setUpBuildSystem(this);
 
     // Enemy stuff
     this.waveCount = 0;
@@ -380,22 +310,9 @@ export class Level extends Phaser.Scene {
 
   update(){
     updateHpScore.emit('update-hp-score', this.core.hp, this.waveCount);
+
     // Update buildable area indicator
-    this.input.activePointer.updateWorldPoint(this.cameras.main);
-
-    // Change sprite index if cursor position is a valid area to build in.
-    // let mapInd = this.collidemap.layer.data[Math.floor(this.input.activePointer.worldY / TILE)][Math.floor(this.input.activePointer.worldX / TILE)].index;
-    let mapInd = this.collidemap.getTileAt(Math.floor(this.input.activePointer.worldX / TILE), Math.floor(this.input.activePointer.worldY / TILE));
-
-    if (mapInd && mapInd.index == BUILD_AREA_INDEX) {  // 'B' (buildable) block
-      this.buildReady.setFrame(0);
-    }
-    else {
-      this.buildReady.setFrame(1);
-    }
-    this.buildReady.x = (TILE * Math.floor(this.input.activePointer.worldX / TILE));
-    this.buildReady.y = (TILE * Math.floor(this.input.activePointer.worldY / TILE));
-
+    buildPreview(this);
 
     // Test critter logic
     if (this.pathmap) {
