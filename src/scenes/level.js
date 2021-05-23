@@ -315,7 +315,7 @@ export class Level extends Phaser.Scene {
     const max = min + 2;
     let en;
     let choice;
-    for (let i = 0; i < waveCount + 2; i++) {
+    for (let i = 0; i < waveCount + 8; i++) {
       // Rootkit specific
       if (Player.level === 3 && waveCount === 9) {
         en = 4;
