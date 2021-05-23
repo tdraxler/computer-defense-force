@@ -312,57 +312,47 @@ export class Level extends Phaser.Scene {
   wave(waveCount) {
     const min = Player.level - 1;
     const max = min + 2;
-    if (Player.level === 3 && waveCount === 9) {
+    let en;
+    let choice;
+    for (let i = 0; i < waveCount + 2; i++) {
+      // Rootkit specific
+      if (Player.level === 3 && waveCount === 9) {
+        en = 4;
+        choice = 3;
+      } else {
+        en = Math.floor(Math.random() * (max - min) + min);
+        // choose any of the 5 possible enemies
+        choice = Math.floor(Math.random() * 6);
+      }
+
       let newOne = new Virus(
         {
-          scene: this,
-          x: possibles[3] * TILE + TILE / 2,
-          y: possibles[3] * TILE + TILE / 2,
-          hp: this.eData[4].hp,
-          damage: this.eData[4].damage,
-          points: this.eData[4].points,
-          hitX: this.eData[4].hitX,
-          hitY: this.eData[4].hitY,
-          width: this.eData[4].width,
-          height: this.eData[4].height
+          scene: this, 
+          x: possibles[choice].x * TILE + TILE / 2, 
+          y: possibles[choice].y * TILE + TILE / 2, 
+          hp: this.eData[en].hp, 
+          damage: this.eData[en].damage, 
+          points: this.eData[en].points,
+          hitX: this.eData[en].hitX,
+          hitY: this.eData[en].hitY,
+          width: this.eData[en].width,
+          height: this.eData[en].height
         }
       );
-
-      newOne.play(this.eneAnims[4]);
+      newOne.play(this.eneAnims[en]);
       newOne.moveX = 0;
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
+
       this.gEnemies.add(newOne);
-      this.rootkits.push(newOne);
-      this.timer = this.time.delayedCall(5000, this.walk, [this.rootkits[0]], this);
-    } else {
-      for (let i = 0; i < waveCount + 2; i++) {
-        let en = Math.floor(Math.random() * (max - min) + min); // choose any of the 5 possible enemies
-        let choice = Math.floor(Math.random() * 6);
-        let newOne = new Virus(
-          {
-            scene: this, 
-            x: possibles[choice].x * TILE + TILE / 2, 
-            y: possibles[choice].y * TILE + TILE / 2, 
-            hp: this.eData[en].hp, 
-            damage: this.eData[en].damage, 
-            points: this.eData[en].points,
-            hitX: this.eData[en].hitX,
-            hitY: this.eData[en].hitY,
-            width: this.eData[en].width,
-            height: this.eData[en].height
-          }
-        );
-        newOne.play(this.eneAnims[en]);
+      if (Player.level === 3 && waveCount === 9) {
+        this.rootkits.push(newOne);
+        this.timer = this.time.delayedCall(3000, this.walk, [this.rootkits[0]], this);
+        break;
+      } else {
         // Number of frames to delay movement
         newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
-        newOne.moveX = 0;
-        newOne.moveY = 0;
-        newOne.moveVal = -1;
-        newOne.dirVector = {x: 0, y: 0};
-  
-        this.gEnemies.add(newOne);
         this.levelEnemies.push(newOne);
       }
     }
@@ -460,36 +450,6 @@ export class Level extends Phaser.Scene {
           critter.delay--;
         }
         else {
-          // Check to see if Turret is in same tile as enemy, in which case delete both
-          for (let [turretIndex, turret] of this.turrets.entries()) {
-            if (Math.floor(turret.x / TILE) == Math.floor(critter.x / TILE) && Math.floor(turret.y / TILE) == Math.floor(critter.y / TILE)) {
-              turret.hp -= critter.damage;
-              if (turret.hp <= 0) {
-                // Clean up and destroy it
-                turret.dismantle();
-                turret.destroy();
-
-                // Remove all references to it.
-                this.turrets.splice(turretIndex, 1);
-                console.log(this.turrets.length);
-                let mapInd = (nearestIndex(turret.y) * this.tilemap.width + nearestIndex(turret.x));
-                this.turretMap[mapInd] = null;
-
-                // Increase score
-                Player.score += critter.points;
-
-                // destroy enemy
-                critter.destroy();
-                this.explosion.play();
-                this.levelEnemies.splice(index, 1);
-                // Play explosion
-                let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
-                newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
-                break;
-              }
-            }
-          }
-
           // Move it!
           if (critter.moveVal <= 0) {
             // Figure out direction to move in
