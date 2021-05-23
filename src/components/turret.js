@@ -59,7 +59,13 @@ class Head extends Phaser.GameObjects.Sprite {
           });
           bullet.play('fired');
           bullet.fire();
-          this.scene.firewallSfx.play();
+          if (this.turretType === 'firewall') {
+            this.scene.firewallSfx.play();
+          } else if (this.turretType === 'virus-blaster') {
+            this.scene.virusBlasterSfx.play();
+          } else if (this.turretType === 'rectifier') {
+            this.scene.rectifierSfx.play();
+          }
           this.delay=0;
         }
       }
