@@ -14,12 +14,15 @@ const nearestIndex = (num) => {
 }
 
 // Add or remove a turret upon click
+// Should be placed in Level.create()
 export function setUpBuildSystem(scene) {
   // Cursor
   scene.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
 
   // Valid build location (drawn on tilemap)
-  scene.buildReady = scene.add.sprite(0, 0, 'build-ready', 1).setOrigin(0,0);
+  scene.buildReady = scene.add.sprite(0, 0, 'build-ready', 1).setOrigin(0, 0);
+  scene.turretPreview = scene.add.sprite(0, 0, 'firewall', 2).setOrigin(0, 0); // Placeholder texture. Gets changed
+  scene.turretPreview.setAlpha(0.5);
 
   scene.input.on('pointerup', (pointer) => {
     let mapInd = (nearestIndex(pointer.worldY) * scene.tilemap.width + nearestIndex(pointer.worldX));
@@ -102,4 +105,9 @@ export function buildPreview(scene) {
   }
   scene.buildReady.x = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldX / MAP_CONSTANTS.T_SIZE));
   scene.buildReady.y = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldY / MAP_CONSTANTS.T_SIZE));
+  scene.turretPreview.x = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldX / MAP_CONSTANTS.T_SIZE));
+  scene.turretPreview.y = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldY / MAP_CONSTANTS.T_SIZE)) - 8;
+  if (scene.turretPreview.texture.key != Player.chosenTurret) {
+    scene.turretPreview.setTexture(Player.chosenTurret);
+  }
 }

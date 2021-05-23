@@ -1,9 +1,7 @@
 import Phaser from 'phaser'
 
-
+// Handles enemies that try to attack the core.
 export class Virus extends Phaser.Physics.Arcade.Sprite {
-  // TODO - Make this useful
-
   constructor(config) {
     super(config.scene, config.x, config.y);
 
