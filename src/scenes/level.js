@@ -345,7 +345,9 @@ export class Level extends Phaser.Scene {
             damage: this.eData[en].damage, 
             points: this.eData[en].points,
             hitX: this.eData[en].hitX,
-            hitY: this.eData[en].hitY
+            hitY: this.eData[en].hitY,
+            width: this.eData[en].width,
+            height: this.eData[en].height
           }
         );
         newOne.play(this.eneAnims[en]);
@@ -355,7 +357,6 @@ export class Level extends Phaser.Scene {
         newOne.moveY = 0;
         newOne.moveVal = -1;
         newOne.dirVector = {x: 0, y: 0};
-        console.log(newOne);
   
         this.gEnemies.add(newOne);
         this.levelEnemies.push(newOne);

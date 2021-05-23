@@ -124,7 +124,7 @@ export class Shop extends Phaser.Scene {
       this.priceLabels.push(new PriceLabel(this, 300, 215, 'hardened-core'));
 
     // Continue
-    let continueButton = this.add.image(200, 200, 'continueButton').setOrigin(0).setDepth(1);
+    let continueButton = this.add.image(300, 80, 'continueButton').setOrigin(0).setDepth(1);
     continueButton.setInteractive();
     continueButton.on('pointerover', () => {
       continueButton.alpha = 0.7;
