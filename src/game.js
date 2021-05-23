@@ -28,7 +28,7 @@ let config = {
     default: 'arcade',
     arcade: {
       /* Uncomment the line below if you want to see the collision boxes */
-      // debug: true,
+      //debug: true,
       gravity: { y: 0 }
     }
   },

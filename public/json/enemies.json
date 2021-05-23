@@ -8,8 +8,8 @@
     "source": "images/spyware_v2.png",
     "width": 50,
     "height": 50,
-    "hitX": 5,
-    "hitY": 5
+    "hitX": 10,
+    "hitY": 35
   },
   {
     "name": "worm",
@@ -20,7 +20,7 @@
     "source": "images/worm.png",
     "width": 50,
     "height": 25,
-    "hitX": 10,
+    "hitX": 25,
     "hitY": 10
   },
   {
@@ -33,7 +33,7 @@
     "width": 50,
     "height": 50,
     "hitX": 15,
-    "hitY": 15
+    "hitY": 30
   },
   {
     "name": "virus",

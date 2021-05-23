@@ -18,11 +18,19 @@ export class Tutorial3 extends Phaser.Scene {
   }
   //must include create
   create(){
-    this.add.image(0,0,'tutorial').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
-    this.add.image(80,15,'tutorial-title').setOrigin(0).setDepth(3);
-    this.add.image(20,75,'tutorial-text').setOrigin(0).setDepth(3);
+    this.add.image(0,0,'tutorial-back').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
+    this.add.image(80,10,'tutorial-title').setOrigin(0).setDepth(3);
+    this.add.image(25,75,'tutorial-text3').setOrigin(0).setDepth(3);
+    let core = this.add.sprite(175, 200,'psu');
+    let recharge = this.add.sprite(225, 200, 'charger');
 
-    let nextButton = this.add.image(150,250,'next-page').setOrigin(0).setDepth(1);
+    this.anims.create({key:'anim_core', frames: this.anims.generateFrameNumbers('psu', {start: 0, end: 3}),frameRate: 10,repeat: -1});
+    this.anims.create({key:'anim_recharge',frames: this.anims.generateFrameNumbers('charger',{start: 0,end: 3}),frameRate: 10,repeat: -1});
+
+    core.play('anim_core');
+    recharge.play('anim_recharge');
+
+    let nextButton = this.add.image(160,250,'next-page').setOrigin(0).setDepth(1);
     nextButton.setInteractive();
     nextButton.on('pointerover',()=>{
       nextButton.alpha=.7;

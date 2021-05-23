@@ -20,15 +20,15 @@ export class Tutorial2 extends Phaser.Scene {
   }
   //must include create
   create(){
-    this.add.image(0,0,'tutorial').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
-    this.add.image(80,15,'tutorial-title').setOrigin(0).setDepth(3);
-    this.add.image(20,75,'tutorial-text2').setOrigin(0).setDepth(3);
+    this.add.image(0,0,'tutorial-back').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
+    this.add.image(80,10,'tutorial-title').setOrigin(0).setDepth(3);
+    this.add.image(25,75,'tutorial-text2').setOrigin(0).setDepth(3);
 
     this.add.sprite(140, 200, 'still_firewall');
     this.add.sprite(200, 200,'still_virus-blaster');
     this.add.sprite(260, 200,'still_rectifier');
 
-    let nextButton = this.add.image(150,250,'next-page').setOrigin(0).setDepth(1);
+    let nextButton = this.add.image(160,250,'next-page').setOrigin(0).setDepth(1);
     nextButton.setInteractive();
     nextButton.on('pointerover',()=>{
       nextButton.alpha=.7;

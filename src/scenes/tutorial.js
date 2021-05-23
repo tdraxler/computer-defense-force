@@ -20,9 +20,9 @@ export class Tutorial extends Phaser.Scene {
   }
   //must include create
   create(){
-    this.add.image(0,0,'imgTitle').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
-    this.add.image(80,15,'tutorial-title').setOrigin(0).setDepth(3);
-    this.add.image(20,75,'tutorial-text').setOrigin(0).setDepth(3);
+    this.add.image(0,0,'tutorial-back').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
+    this.add.image(80,10,'tutorial-title').setOrigin(0).setDepth(3);
+    this.add.image(25,75,'tutorial-text').setOrigin(0).setDepth(3);
     let virus = this.add.sprite(100, 200, 'virus');
     let spyware = this.add.sprite(150, 200, 'spyware');
     let trojan = this.add.sprite(200, 200, 'trojan');
@@ -42,7 +42,7 @@ export class Tutorial extends Phaser.Scene {
     worm.play('w_move');
     rootKit.play('r_move');
 
-    let nextButton = this.add.image(150,250,'next-page').setOrigin(0).setDepth(1);
+    let nextButton = this.add.image(160,250,'next-page').setOrigin(0).setDepth(1);
     nextButton.setInteractive();
     nextButton.on('pointerover',()=>{
       nextButton.alpha=.7;

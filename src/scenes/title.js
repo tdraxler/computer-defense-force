@@ -28,10 +28,12 @@ export class TitleScene extends Phaser.Scene {
     this.load.image('play-again_vic', './images/playAgain.png');
     this.load.image('play-again_death', './images/playAgainDeath.png');
     this.load.image('tutorial', './images/toturialPage.png');
+    this.load.image('tutorial-back', './images/Tutorial-Background.png');
     this.load.image('tutorial-title', './images/tutorial-title.png');
     this.load.image('next-page', './images/next.png');
     this.load.image('tutorial-text', './images/tutorial-text.png');
     this.load.image('tutorial-text2', './images/tutorial-text2.png');
+    this.load.image('tutorial-text3', './images/tutorial-text3.png');
     
     // TESTING LOADING GAME INFO IN TITLE NOT LEVEL
     // Load config data from JSON
