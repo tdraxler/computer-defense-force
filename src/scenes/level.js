@@ -20,10 +20,6 @@ const TILE = MAP_CONSTANTS.T_SIZE;
 
 const possibles = [{x: 9, y: -2}, {x: 20, y: -2}, {x: 41, y: 13}, {x: 27, y: 31}, {x: 10, y: 31}, {x: -2, y: 14}];
 
-const nearestIndex = (num) => {
-  return (Math.floor(num / TILE));
-}
-
 export class Level extends Phaser.Scene {
   constructor() {
     super({

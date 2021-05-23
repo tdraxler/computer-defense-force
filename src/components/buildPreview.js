@@ -108,6 +108,14 @@ export function buildPreview(scene) {
   scene.turretPreview.x = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldX / MAP_CONSTANTS.T_SIZE));
   scene.turretPreview.y = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldY / MAP_CONSTANTS.T_SIZE)) - 8;
   if (scene.turretPreview.texture.key != Player.chosenTurret) {
-    scene.turretPreview.setTexture(Player.chosenTurret);
+    scene.turretPreview.setTexture(Player.chosenTurret, 2);
+  }
+
+  if (Player.action != CURRENT_ACTION.BUILD && scene.turretPreview.visible) {
+    scene.turretPreview.setVisible(false);
+  }
+
+  if (Player.action == CURRENT_ACTION.BUILD && !scene.turretPreview.visible) {
+    scene.turretPreview.setVisible(true);
   }
 }
