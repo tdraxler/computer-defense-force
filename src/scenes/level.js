@@ -76,6 +76,8 @@ export class Level extends Phaser.Scene {
     this.load.audio('build-turret', ['sound/sfx/make_turret.mp3']);
     this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']);
     this.load.audio('firewallSfx', ['sound/sfx/Laser_Shoot.mp3']);
+    this.load.audio('virusBlasterSfx', ['sound/sfx/virus-blaster.ogg']);
+    this.load.audio('rectifierSfx', ['sound/sfx/rectifier.ogg']);
     // Load enemy sprites
     this.load.spritesheet(this.eData[4].name, this.eData[4].source, { frameWidth: this.eData[4].width, frameHeight: this.eData[4].height, endFrame: 10 }); // Rootkit
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 }); // Virus
@@ -134,6 +136,8 @@ export class Level extends Phaser.Scene {
     this.buildSfx = this.sound.add('build-turret', { loop: false, volume: 0.25 });
     this.delTurret = this.sound.add('delete-turret', { loop: false, volume: 0.25 });
     this.firewallSfx = this.sound.add('firewallSfx', { loop: false, volume: 0.25 });
+    this.virusBlasterSfx = this.sound.add('virusBlasterSfx', { loop: false, volume: 0.25 });
+    this.rectifierSfx = this.sound.add('rectifierSfx', { loop: false, volume: 0.25 });
 
     // Map and tiles setup
     this.tilemap = this.make.tilemap({ key: this.levelData[Player.level - 1].map });
