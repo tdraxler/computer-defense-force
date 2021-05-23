@@ -49,6 +49,7 @@ export class Shop extends Phaser.Scene {
 
   preload() {
     this.load.image('background', 'images/ui/between-levels.png');
+    this.load.image('continueButton', 'images/continue.png');
     this.load.spritesheet('upgrade-buttons', 'images/ui/upgrade-buttons.png', { frameWidth: 64, frameHeight: 60 });
 
     this.load.spritesheet('coin', 'images/ui/coin.png', {frameWidth: 16, frameHeight: 16});
@@ -122,6 +123,20 @@ export class Shop extends Phaser.Scene {
     if (!Player.unlocked['hardened-core'])
       this.priceLabels.push(new PriceLabel(this, 300, 215, 'hardened-core'));
 
+    // Continue
+    let continueButton = this.add.image(200, 200, 'continueButton').setOrigin(0).setDepth(1);
+    continueButton.setInteractive();
+    continueButton.on('pointerover', () => {
+      continueButton.alpha = 0.7;
+    });
+    continueButton.on('pointerout', () => {
+      continueButton.alpha = 1;
+    });
+    continueButton.on('pointerup', () => {
+      continueButton.alpha = 1;
+      this.scene.start(CONST.SCENES.LEVEL);
+      this.scene.stop(CONST.SCENES.SHOP);
+    });
   }
 
   update() {

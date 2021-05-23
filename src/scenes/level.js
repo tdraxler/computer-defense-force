@@ -227,7 +227,7 @@ export class Level extends Phaser.Scene {
     });
 
     // Enemy stuff
-    this.waveCount = 9;
+    this.waveCount = 0;
     // Add walking animation for enemy sprites
     this.addEnemyAnims();
 
@@ -306,21 +306,21 @@ export class Level extends Phaser.Scene {
   }
 
   wave(waveCount) {
-    const min = Player.level - 1; 
+    const min = Player.level - 1;
     const max = min + 2;
     if (Player.level === 3 && waveCount === 9) {
       let newOne = new Virus(
         {
-          scene: this, 
-          x: possibles[3] * TILE + TILE / 2, 
-          y: possibles[3] * TILE + TILE / 2, 
-          hp: this.eData[4].hp, 
-          damage: this.eData[4].damage, 
+          scene: this,
+          x: possibles[3] * TILE + TILE / 2,
+          y: possibles[3] * TILE + TILE / 2,
+          hp: this.eData[4].hp,
+          damage: this.eData[4].damage,
           points: this.eData[4].points,
           hitX: this.eData[4].hitX,
           hitY: this.eData[4].hitY,
-          width: this.eData[en].width,
-          height: this.eData[en].height
+          width: this.eData[4].width,
+          height: this.eData[4].height
         }
       );
 
@@ -329,7 +329,6 @@ export class Level extends Phaser.Scene {
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
-      //newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
       this.gEnemies.add(newOne);
       this.rootkits.push(newOne);
       this.timer = this.time.delayedCall(5000, this.walk, [this.rootkits[0]], this);
@@ -356,6 +355,7 @@ export class Level extends Phaser.Scene {
         newOne.moveY = 0;
         newOne.moveVal = -1;
         newOne.dirVector = {x: 0, y: 0};
+        console.log(newOne);
   
         this.gEnemies.add(newOne);
         this.levelEnemies.push(newOne);
