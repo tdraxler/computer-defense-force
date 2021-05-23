@@ -153,9 +153,10 @@ export class Level extends Phaser.Scene {
 
     // Add turret unlock costs to Player
     Player.unlockCosts['firewall'] = this.turretData[0]['unlockCost'];
-    Player.unlockCosts['virus-blaster'] = this.turretData[1]['unlockCost'];
-    Player.unlockCosts['rectifier'] = this.turretData[2]['unlockCost'];
-    Player.unlockCosts['psu'] = this.turretData[3]['unlockCost'];
+    Player.unlockCosts['charger'] = this.turretData[1]['unlockCost'];
+    Player.unlockCosts['virus-blaster'] = this.turretData[2]['unlockCost'];
+    Player.unlockCosts['rectifier'] = this.turretData[3]['unlockCost'];
+    Player.unlockCosts['psu'] = this.turretData[4]['unlockCost'];
 
     // Set up core for the player to protect
     let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
