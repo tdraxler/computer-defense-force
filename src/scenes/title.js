@@ -31,6 +31,7 @@ export class TitleScene extends Phaser.Scene {
     this.load.image('tutorial-title', './images/tutorial-title.png');
     this.load.image('next-page', './images/next.png');
     this.load.image('tutorial-text', './images/tutorial-text.png');
+    this.load.image('tutorial-text2', './images/tutorial-text2.png');
     
     // TESTING LOADING GAME INFO IN TITLE NOT LEVEL
     // Load config data from JSON
@@ -80,9 +81,9 @@ export class TitleScene extends Phaser.Scene {
     // Load player structures/turrets
     this.load.image('core', 'images/player-sprites/core.png');
     this.load.image('hardened-core', 'images/player-sprites/hardened-core.png');
-    this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
-    this.load.spritesheet('virus-blaster', 'images/player-sprites/virus-blaster.png', { frameWidth: 16, frameHeight: 24 });
-    this.load.spritesheet('rectifier', 'images/player-sprites/rectifier.png', { frameWidth: 16, frameHeight: 24 });
+    this.load.image('still_firewall', 'images/player-sprites/still_firewall.png');
+    this.load.image('still_virus-blaster', 'images/player-sprites/still_virus-blaster.png');
+    this.load.image('still_rectifier', 'images/player-sprites/still_rectifier.png');
     this.load.spritesheet('psu', 'images/player-sprites/psu.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('charger', 'images/player-sprites/charger.png', { frameWidth: 16, frameHeight: 24 });
 
