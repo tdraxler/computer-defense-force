@@ -76,6 +76,8 @@ export class Level extends Phaser.Scene {
     this.load.audio('build-turret', ['sound/sfx/make_turret.mp3']);
     this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']);
     this.load.audio('firewallSfx', ['sound/sfx/Laser_Shoot.mp3']);
+    this.load.audio('virusBlasterSfx', ['sound/sfx/virus-blaster.ogg']);
+    this.load.audio('rectifierSfx', ['sound/sfx/rectifier.ogg']);
     // Load enemy sprites
     this.load.spritesheet(this.eData[4].name, this.eData[4].source, { frameWidth: this.eData[4].width, frameHeight: this.eData[4].height, endFrame: 10 }); // Rootkit
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 }); // Virus
@@ -134,6 +136,8 @@ export class Level extends Phaser.Scene {
     this.buildSfx = this.sound.add('build-turret', { loop: false, volume: 0.25 });
     this.delTurret = this.sound.add('delete-turret', { loop: false, volume: 0.25 });
     this.firewallSfx = this.sound.add('firewallSfx', { loop: false, volume: 0.25 });
+    this.virusBlasterSfx = this.sound.add('virusBlasterSfx', { loop: false, volume: 0.25 });
+    this.rectifierSfx = this.sound.add('rectifierSfx', { loop: false, volume: 0.25 });
 
     // Map and tiles setup
     this.tilemap = this.make.tilemap({ key: this.levelData[Player.level - 1].map });
@@ -149,9 +153,10 @@ export class Level extends Phaser.Scene {
 
     // Add turret unlock costs to Player
     Player.unlockCosts['firewall'] = this.turretData[0]['unlockCost'];
-    Player.unlockCosts['virus-blaster'] = this.turretData[1]['unlockCost'];
-    Player.unlockCosts['rectifier'] = this.turretData[2]['unlockCost'];
-    Player.unlockCosts['psu'] = this.turretData[3]['unlockCost'];
+    Player.unlockCosts['charger'] = this.turretData[1]['unlockCost'];
+    Player.unlockCosts['virus-blaster'] = this.turretData[2]['unlockCost'];
+    Player.unlockCosts['rectifier'] = this.turretData[3]['unlockCost'];
+    Player.unlockCosts['psu'] = this.turretData[4]['unlockCost'];
 
     // Set up core for the player to protect
     let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
@@ -270,6 +275,7 @@ export class Level extends Phaser.Scene {
 
 
     this.levelEnemies = [];
+    this.rootkits = [];
     this.wave(this.waveCount);
     this.waveCount++; // update the wave count
     // end of enemy stuff
@@ -279,15 +285,6 @@ export class Level extends Phaser.Scene {
     this.collidemap = this.tilemap.createLayer('collide', tileset);
     this.collidemap.setVisible(false);
 
-
-    // when event triggered, print GAME OVER on screen
-    this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
-      this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
-      this.scene.start(CONST.SCENES.DEATH);
-      this.scene.stop(CONST.SCENES.LEVEL);
-      this.scene.stop(CONST.SCENES.BUILD_MENU);
-      bgm.stop();
-    });
 
     // Set up camera
     this.physics.world.bounds.width = this.tilemap.widthInPixels;
@@ -305,16 +302,30 @@ export class Level extends Phaser.Scene {
     this.pathmap = generatePathMap(this.levelData[Player.level - 1].core_x, this.levelData[Player.level - 1].core_y, this.collidemap);
 
 
-
+    this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
+      //console.log('this got triggered');
+      //this.physics.moveToObject(this.rootkits[0], this.core, 200);
+      this.levelEnemies.push(this.rootkits[0]);
+    });
 
   }
 
   wave(waveCount) {
-    const min = Player.level - 1; 
-    const max = min + 3;
-    for (let i = 0; i < waveCount + 2; i++) {
-      let en = Math.floor(Math.random() * (max - min) + min); // choose any of the 5 possible enemies
-      let choice = Math.floor(Math.random() * 6);
+    const min = Player.level - 1;
+    const max = min + 2;
+    let en;
+    let choice;
+    for (let i = 0; i < waveCount + 8; i++) {
+      // Rootkit specific
+      if (Player.level === 3 && waveCount === 9) {
+        en = 4;
+        choice = 3;
+      } else {
+        en = Math.floor(Math.random() * (max - min) + min);
+        // choose any of the 5 possible enemies
+        choice = Math.floor(Math.random() * 6);
+      }
+
       let newOne = new Virus(
         {
           scene: this, 
@@ -326,19 +337,25 @@ export class Level extends Phaser.Scene {
           hitX: this.eData[en].hitX,
           hitY: this.eData[en].hitY,
           width: this.eData[en].width,
-          height: this.eData[en].height,
+          height: this.eData[en].height
         }
       );
       newOne.play(this.eneAnims[en]);
-      // Number of frames to delay movement
-      newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
       newOne.moveX = 0;
       newOne.moveY = 0;
       newOne.moveVal = -1;
       newOne.dirVector = {x: 0, y: 0};
 
       this.gEnemies.add(newOne);
-      this.levelEnemies.push(newOne);
+      if (Player.level === 3 && waveCount === 9) {
+        this.rootkits.push(newOne);
+        this.timer = this.time.delayedCall(3000, this.walk, [this.rootkits[0]], this);
+        break;
+      } else {
+        // Number of frames to delay movement
+        newOne.delay = Math.floor(Math.random() * MAX_DELAY) + MIN_DELAY;
+        this.levelEnemies.push(newOne);
+      }
     }
   }
 
@@ -397,6 +414,24 @@ export class Level extends Phaser.Scene {
     this.buildReady.y = (TILE * Math.floor(this.input.activePointer.worldY / TILE));
 
 
+    if (this.rootkits.length > 0) {
+      if(this.rootkits[0].hp <= 0) {
+        Player.score += this.rootkits[0].points;
+        Player.viruscoins += this.rootkits[0].points;
+
+        this.timeline.stop();
+        // Play explosion
+        console.log(this.rootkits[0]);
+        let newOne = new Explosion({scene: this, x: this.rootkits[0]['x'], y: this.rootkits[0]['y'], animKey: 'explosion-frames'});
+
+        this.rootkits[0].destroy();
+        this.explosion.play();
+        this.rootkits.splice(0, 1);
+
+        newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
+      }
+    }
+
     // Test critter logic
     if (this.pathmap) {
       for (let [index, critter] of this.levelEnemies.entries()) {
@@ -416,36 +451,6 @@ export class Level extends Phaser.Scene {
           critter.delay--;
         }
         else {
-          // Check to see if Turret is in same tile as enemy, in which case delete both
-          for (let [turretIndex, turret] of this.turrets.entries()) {
-            if (Math.floor(turret.x / TILE) == Math.floor(critter.x / TILE) && Math.floor(turret.y / TILE) == Math.floor(critter.y / TILE)) {
-              turret.hp -= critter.damage;
-              if (turret.hp <= 0) {
-                // Clean up and destroy it
-                turret.dismantle();
-                turret.destroy();
-
-                // Remove all references to it.
-                this.turrets.splice(turretIndex, 1);
-                console.log(this.turrets.length);
-                let mapInd = (nearestIndex(turret.y) * this.tilemap.width + nearestIndex(turret.x));
-                this.turretMap[mapInd] = null;
-
-                // Increase score
-                Player.score += critter.points;
-
-                // destroy enemy
-                critter.destroy();
-                this.explosion.play();
-                this.levelEnemies.splice(index, 1);
-                // Play explosion
-                let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
-                newOne.explode('explosion-anim'); // Automatically garbage collected after animation completion
-                break;
-              }
-            }
-          }
-
           // Move it!
           if (critter.moveVal <= 0) {
             // Figure out direction to move in
@@ -456,6 +461,9 @@ export class Level extends Phaser.Scene {
               critter.destroy();
               this.explosion.play();
               this.levelEnemies.splice(index, 1);
+              if (this.rootkits.length > 0) {
+                this.rootkits.splice(0, 1);
+              }
 
               // Play explosion
               let newOne = new Explosion({scene: this, x: critter.x, y: critter.y, animKey: 'explosion-frames'});
@@ -486,7 +494,6 @@ export class Level extends Phaser.Scene {
       } else {
         Player.levelUp();
         this.scene.start(CONST.SCENES.SHOP);
-        //this.scene.start(CONST.SCENES.VIC);
       }
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
@@ -494,7 +501,7 @@ export class Level extends Phaser.Scene {
     }
 
     // New wave
-    if (this.levelEnemies.length === 0 && this.waveCount < 11) {
+    if (this.levelEnemies.length === 0 && this.rootkits.length === 0 && this.waveCount < 11) {
       this.wave(this.waveCount);
       this.waveCount++;
     }
@@ -502,6 +509,10 @@ export class Level extends Phaser.Scene {
     this.turrets.forEach(turret => {
       if(this.levelEnemies.length !== 0){
         let passArray = this.levelEnemies;
+        turret.update(passArray);
+      }
+      if(this.rootkits.length !== 0) {
+        let passArray = this.rootkits;
         turret.update(passArray);
       }
     });
