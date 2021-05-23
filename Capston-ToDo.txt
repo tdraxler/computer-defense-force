@@ -1,0 +1,8 @@
+Refine hitbox - Enemy and bullet speed?
+
+Get correct projectile data for damage/speed
+	how to pass that information into Bullet and Turret class from level?
+	
+General game balencing
+
+

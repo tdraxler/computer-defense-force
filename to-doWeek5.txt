@@ -1,0 +1,3 @@
+make turrets fallow closest enemy (or a enemy)
+make turrest fire on enemy
+enemy death upon X hits or explosion

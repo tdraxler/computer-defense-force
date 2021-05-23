@@ -30,16 +30,16 @@ export class Tutorial3 extends Phaser.Scene {
     core.play('anim_core');
     recharge.play('anim_recharge');
 
-    let nextButton = this.add.image(160,250,'next-page').setOrigin(0).setDepth(1);
-    nextButton.setInteractive();
-    nextButton.on('pointerover',()=>{
-      nextButton.alpha=.7;
+    let startButton = this.add.image(150,250,'startButton').setOrigin(0).setDepth(1);
+    startButton.setInteractive();
+    startButton.on('pointerover',()=>{
+      startButton.alpha=.7;
     })
-    nextButton.on('pointerout', ()=>{
-      nextButton.alpha=1;
+    startButton.on('pointerout', ()=>{
+      startButton.alpha=1;
     })
-    nextButton.on('pointerup', ()=>{
-      nextButton.alpha=1;
+    startButton.on('pointerup', ()=>{
+      startButton.alpha=1;
       this.scene.start(CONST.SCENES.LEVEL);
     })
   }

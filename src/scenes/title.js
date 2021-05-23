@@ -17,6 +17,7 @@ export class TitleScene extends Phaser.Scene {
     this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
     this.load.image('imgTitle', './images/TitlePage-Background.png');
     this.load.image('startButton', './images/start.png');
+    this.load.image('tutorialButton', './images/tutorial-button.png');
     this.load.image('title', './images/titlePage-title.png');
     this.load.image('title_back', './images/titleName_background.png');
     this.load.image('victory', './images/victory-letters.png');
