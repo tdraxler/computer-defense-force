@@ -2,6 +2,12 @@ import { CURRENT_ACTION, LIMITS } from '../constants';
 
 class Player {
   constructor() {
+    this.reset();
+  }
+
+  // Called if you want to start a new game and make everything as it should be
+  // for the player
+  reset() {
     this.score = 0;
     this.energy = 1000;
     this.action = CURRENT_ACTION.NONE;
@@ -25,32 +31,8 @@ class Player {
     };
     this.viruscoins = 5000;
     this.coreHP = 0;
-  }
-
-  reset() {
-    this.score = 0;
-    this.energy = 1000;
-    this.action = CURRENT_ACTION.NONE;
-    this.level = 1;
-    this.chosenTurret = 'firewall';
-    this.unlocked = {
-      'firewall': true,
-      'charger': true,
-      'virus-blaster': false,
-      'rectifier': false,
-      'psu': true,
-      'hardened-core': false
-    };
-    this.unlockCosts = {
-      'firewall': 0,
-      'charger': 0,
-      'virus-blaster': 0,
-      'rectifier': 0,
-      'psu': 0,
-      'hardened-core': 0
-    };
-    this.viruscoins = 5000;
-    this.coreHP = 0;
+    this.showAltText = false;
+    this.altText = '';
   }
 
   setAction(newAction) {

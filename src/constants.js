@@ -13,8 +13,14 @@ export const CONST = {
     SHOP:       'SHOP',
     BULLET:     'BULLET'
   },
-  T_SIZE: 16
+  T_SIZE: 16,
+  RECHARGE_DELAY: 10
 };
+
+export const MAP_CONSTANTS = {
+  T_SIZE: 16,
+  BUILD_AREA_INDEX: 146
+}
 
 export const CURRENT_ACTION = {
   BUILD:    'BUILD',
@@ -32,6 +38,18 @@ export const FONT_CONFIG_SMALL = {
   color: '#ffffff',
   shadow: {
     color: '#444444',
+    fill: true,
+    offsetX: 1,
+    offsetY: 1
+  }
+}
+
+export const FONT_CONFIG_MOUSEOVER = {
+  fontFamily: ['m5x7'],
+  fontSize: 16, 
+  color: '#ffffff',
+  shadow: {
+    color: '#333333',
     fill: true,
     offsetX: 1,
     offsetY: 1
