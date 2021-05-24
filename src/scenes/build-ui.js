@@ -11,6 +11,12 @@ export class BuildMenu extends Phaser.Scene {
     });
   }
 
+  init(data) {
+    if (data.turretData) {
+      this.turretData = data.turretData;
+    }
+  }
+
   preload() {
     this.load.image('build-bar-upper', 'images/ui/build-bar1.png');
     this.load.image('build-bar-left', 'images/ui/build-bar2.png');
@@ -41,35 +47,35 @@ export class BuildMenu extends Phaser.Scene {
     if (Player.unlocked['firewall']) {
       this.fireWallButton = new Button(
         this, 1, 123, 'turret-buttons', 0, true,
-        null, { turretChoice: 'firewall'}
+        null, { turretChoice: 'firewall', altText: this.turretData[0].printedname}
       );
     }
 
     if (Player.unlocked['charger']) {
       this.fireWallButton = new Button(
         this, 1, 144, 'turret-buttons', 12, true,
-        null, { turretChoice: 'charger'}
+        null, { turretChoice: 'charger', altText: this.turretData[0].printedname}
       );
     }
 
     if (Player.unlocked['virus-blaster']) {
       this.virusBlasterButton = new Button(
         this, 1, 165, 'turret-buttons', 3, true,
-        null, { turretChoice: 'virus-blaster'}
+        null, { turretChoice: 'virus-blaster', altText: this.turretData[0].printedname}
       );
     }
 
     if (Player.unlocked['rectifier']) {
       this.rectifierButton = new Button(
         this, 1, 186, 'turret-buttons', 6, true,
-        null, { turretChoice: 'rectifier'}
+        null, { turretChoice: 'rectifier', altText: this.turretData[0].printedname}
       );
     }
 
     if (Player.unlocked['psu']) {
       this.psuButton = new Button(
         this, 1, 207, 'turret-buttons', 9, true,
-        null, { turretChoice: 'psu'}
+        null, { turretChoice: 'psu', altText: this.turretData[0].printedname}
       );
     }
 
@@ -84,9 +90,26 @@ export class BuildMenu extends Phaser.Scene {
     this.energy = this.add.text(25, 25, 'Energy: ' + Player.energy, FONT_CONFIG_SMALL)
     
     updateHpScore.on('update-hp-score', this.updateHpScore, this);
+
+    // Mouseover info
+    this.mouseOverInfo = this.add.text(305, 5, Player.altText, FONT_CONFIG_SMALL);
+    this.mouseOverInfo.setVisible(false);
   }
 
   update() {
+    if (Player.showAltText) {
+      if (!this.mouseOverInfo.visible) {
+        this.mouseOverInfo.setText(Player.altText);
+        this.mouseOverInfo.setVisible(true);
+      }
+      // Get cursor position and update mouseover info location to that
+      this.input.activePointer.updateWorldPoint(this.cameras.main);
+      this.mouseOverInfo.setX(this.input.activePointer.worldX + 8);
+      this.mouseOverInfo.setY(this.input.activePointer.worldY + 4);
+    }
+    else if (!Player.showAltText && this.mouseOverInfo.visible) {
+      this.mouseOverInfo.setVisible(false);
+    }
   }
 
   updateHpScore(hp, wave) {

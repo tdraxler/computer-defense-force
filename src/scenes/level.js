@@ -222,7 +222,7 @@ export class Level extends Phaser.Scene {
     );
 
     // Launch Build Menu UI
-    this.scene.launch(CONST.SCENES.BUILD_MENU); 
+    this.scene.launch(CONST.SCENES.BUILD_MENU, { turretData: this.turretData }); 
 
     this.pathmap = generatePathMap(this.levelData[Player.level - 1].core_x, this.levelData[Player.level - 1].core_y, this.collidemap);
 
