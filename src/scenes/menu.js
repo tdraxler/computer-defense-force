@@ -13,8 +13,6 @@ export class Menu extends Phaser.Scene {
 
   //data from others scenes gets passed in here
   init(data){
-    console.log(data);
-    console.log('I am now the menu scene, I got data from the title scene!')
   }
 
   preload(){
