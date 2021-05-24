@@ -3,3 +3,7 @@
 node_modules
 .DS_Store
 public/scripts/*.js
+public/main.js
+to-doWeek5.txt
+TutorialTextRAW.txt
+Capston-ToDo.txt

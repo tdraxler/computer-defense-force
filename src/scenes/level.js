@@ -71,7 +71,7 @@ export class Level extends Phaser.Scene {
     // Music: "A Bit of Hope", from FesliyanStudios.com
     // Background music via https://www.FesliyanStudios.com
     // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/a-bit-of-hope/565
-    this.load.audio('bgm', ['2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
+    this.load.audio('bgm', ['sound/bgm/2020-03-22_-_A_Bit_Of_Hope_-_David_Fesliyan.mp3']);
     this.load.audio('explosion', ['sound/sfx/Explosion.mp3']);
     this.load.audio('build-turret', ['sound/sfx/make_turret.mp3']);
     this.load.audio('delete-turret', ['sound/sfx/delete_turret.wav']);
@@ -111,7 +111,6 @@ export class Level extends Phaser.Scene {
     //**************************
     // Explosion
     this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
-
 
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
