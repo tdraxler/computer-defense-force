@@ -68,6 +68,7 @@ class Head extends Phaser.GameObjects.Sprite {
           }
           this.delay=0;
         }
+        break;
       }
     }
 
