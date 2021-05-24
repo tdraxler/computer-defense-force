@@ -23,7 +23,7 @@ class Player {
       'psu': 0,
       'hardened-core': 0
     };
-    this.viruscoins = 1000;
+    this.viruscoins = 0;
     this.coreHP = 0;
   }
 
