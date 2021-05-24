@@ -9,8 +9,6 @@ import {Tutorial3} from './scenes/tutorial-3';
 import {Death} from './scenes/death';
 import {Victory} from './scenes/victory';
 import {Shop} from './scenes/between-levels';
-// eslint-disable-next-line
-import {FirstEnemy} from './scenes/enemy';
 
 console.log('Game script loaded successfully!');
 
@@ -33,7 +31,7 @@ let config = {
     }
   },
   scene: [
-    TitleScene, Menu, Tutorial, Tutorial2, Tutorial3, Level, FirstEnemy, Death, Victory, BuildMenu, Shop
+    TitleScene, Menu, Tutorial, Tutorial2, Tutorial3, Level, Death, Victory, BuildMenu, Shop
   ]
 };
 

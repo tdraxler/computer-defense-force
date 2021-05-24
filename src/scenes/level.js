@@ -311,7 +311,10 @@ export class Level extends Phaser.Scene {
 
   wave(waveCount) {
     const min = Player.level - 1;
-    const max = min + 2;
+    const max = min + 3;
+    if (Player.level === 3) {
+      max--;
+    }
     let en;
     let choice;
     for (let i = 0; i < waveCount + 8; i++) {

@@ -1,7 +1,7 @@
 [
   {
     "name": "spyware",
-    "hp": 5,
+    "hp": 20,
     "damage": 5,
     "speed": 5,
     "points": 5,
@@ -13,7 +13,7 @@
   },
   {
     "name": "worm",
-    "hp": 10,
+    "hp": 30,
     "damage": 15,
     "speed": 3,
     "points": 15,
@@ -25,7 +25,7 @@
   },
   {
     "name": "trojan",
-    "hp": 15,
+    "hp": 35,
     "damage": 25,
     "speed": 2,
     "points": 25,
@@ -37,7 +37,7 @@
   },
   {
     "name": "virus",
-    "hp": 20,
+    "hp": 55,
     "damage": 45,
     "speed": 4,
     "points": 40,
