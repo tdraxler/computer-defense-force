@@ -8,6 +8,13 @@
   font-weight: 400;
   font-weight: normal;
 }
+
+@font-face {
+  font-family: 'm5x7';
+  src: url('fonts/m5x7.ttf');
+  font-weight: 400;
+  font-weight: normal;
+}
    
 #game {
   height: 600px;

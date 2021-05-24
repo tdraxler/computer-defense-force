@@ -106,7 +106,7 @@ export function buildPreview(scene) {
   scene.buildReady.x = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldX / MAP_CONSTANTS.T_SIZE));
   scene.buildReady.y = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldY / MAP_CONSTANTS.T_SIZE));
   scene.turretPreview.x = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldX / MAP_CONSTANTS.T_SIZE));
-  scene.turretPreview.y = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldY / MAP_CONSTANTS.T_SIZE)) - 8;
+  scene.turretPreview.y = (MAP_CONSTANTS.T_SIZE * Math.floor(scene.input.activePointer.worldY / MAP_CONSTANTS.T_SIZE)) - 12;
   if (scene.turretPreview.texture.key != Player.chosenTurret) {
     scene.turretPreview.setTexture(Player.chosenTurret, 2);
   }

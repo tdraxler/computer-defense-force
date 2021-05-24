@@ -55,6 +55,30 @@ export class Level extends Phaser.Scene {
     request.send(null);
     this.turretData = JSON.parse(request.responseText);
 
+    // Use the turret and projectile data to generate description data
+    this.descData = [];
+
+    this.turretData.forEach(t => {
+      // Calculate DPS, if possible
+      let dps = null;
+      let bullet = null;
+      if (t.projectile) {
+        bullet = this.projectileData.find(x => x.type === t.projectile);
+        dps = bullet.damage;
+        dps = dps * t.rate / 60; // Game runs at 60 FPS
+      }
+
+      this.descData.push({
+        printedname: t.printedname,
+        name: t.name,
+        buildCost: t.buildCost,
+        unlockCost: t.unlockCost,
+        damage: bullet ? bullet.damage : null,
+        ep: t.ep ? t.ep : null,
+        dps: dps
+      });
+    });
+
     let lev = Player.level - 1; // Current level index
     console.log(lev);
 
@@ -143,6 +167,7 @@ export class Level extends Phaser.Scene {
     Player.unlockCosts['virus-blaster'] = this.turretData[2]['unlockCost'];
     Player.unlockCosts['rectifier'] = this.turretData[3]['unlockCost'];
     Player.unlockCosts['psu'] = this.turretData[4]['unlockCost'];
+    Player.unlockCosts['hardened-core'] = 1000; // Perhaps should go in the JSON file...
 
     // Set up core for the player to protect
     let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
@@ -222,7 +247,7 @@ export class Level extends Phaser.Scene {
     );
 
     // Launch Build Menu UI
-    this.scene.launch(CONST.SCENES.BUILD_MENU, { turretData: this.turretData }); 
+    this.scene.launch(CONST.SCENES.BUILD_MENU, { descData: this.descData }); 
 
     this.pathmap = generatePathMap(this.levelData[Player.level - 1].core_x, this.levelData[Player.level - 1].core_y, this.collidemap);
 
@@ -405,7 +430,7 @@ export class Level extends Phaser.Scene {
         this.scene.start(CONST.SCENES.VIC);
       } else {
         Player.levelUp();
-        this.scene.start(CONST.SCENES.SHOP);
+        this.scene.start(CONST.SCENES.SHOP, { descData: this.descData });
       }
       bgm.stop();
       this.scene.stop(CONST.SCENES.LEVEL);
@@ -451,7 +476,7 @@ export class Level extends Phaser.Scene {
     if (this.keyU.isDown) {
       console.log('Switching to upgrade menu');
       this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
-      this.scene.start(CONST.SCENES.SHOP);
+      this.scene.start(CONST.SCENES.SHOP, { descData: this.descData });
       this.scene.stop(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.BUILD_MENU);
       bgm.stop();
