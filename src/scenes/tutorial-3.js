@@ -8,10 +8,7 @@ export class Tutorial3 extends Phaser.Scene {
       key:CONST.SCENES.TUTORIAL3
     });
   }
-  //data from others scenes gets passed in here
   init(data){
-    console.log(data);
-    console.log('I am now the menu scene, I got data from the title scene!')
   }
   preload(){
 
@@ -40,11 +37,10 @@ export class Tutorial3 extends Phaser.Scene {
     })
     startButton.on('pointerup', ()=>{
       startButton.alpha=1;
-      this.scene.start(CONST.SCENES.LEVEL);
+      this.scene.start(CONST.SCENES.MENU);
     })
   }
-  //the rotation of the rectangle
   update(){
-    //this.add.text(10, 10, 'HOW TO PLAY').setFontFamily('Sans-Serif').setFontSize(30);
+
   }
 }

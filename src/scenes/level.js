@@ -112,7 +112,6 @@ export class Level extends Phaser.Scene {
     // Explosion
     this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
 
-
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
     this.keyDown = this.input.keyboard.addKey('S');
@@ -124,8 +123,6 @@ export class Level extends Phaser.Scene {
     this.keyAltRight = this.input.keyboard.addKey('Right');
     this.keyC = this.input.keyboard.addKey('M'); // For debug operations
     this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
-
-    
   }
 
   create(){

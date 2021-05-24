@@ -12,8 +12,6 @@ export class Tutorial2 extends Phaser.Scene {
   }
   //data from others scenes gets passed in here
   init(data){
-    console.log(data);
-    console.log('I am now the  tutorial scene, I got data from the menu scene!')
   }
   preload(){
 
@@ -41,8 +39,7 @@ export class Tutorial2 extends Phaser.Scene {
       this.scene.start(CONST.SCENES.TUTORIAL3);
     })
   }
-  //the rotation of the rectangle
   update(){
-    //this.add.text(10, 10, 'HOW TO PLAY').setFontFamily('Sans-Serif').setFontSize(30);
+
   }
 }
