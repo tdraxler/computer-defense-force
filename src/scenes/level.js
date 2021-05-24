@@ -15,6 +15,7 @@ import updateHpScore from '../components/hpscoreevent';
 let bgm;
 const MIN_DELAY = 5;
 const MAX_DELAY = 10 * 60;
+let Differentials = [3, 2, 1, 0.25]
 
 const TILE = CONST.T_SIZE;
 const BUILD_AREA_INDEX = 146;
@@ -317,7 +318,8 @@ export class Level extends Phaser.Scene {
     }
     let en;
     let choice;
-    for (let i = 0; i < waveCount + 8; i++) {
+    let enemyCount = Player.level * Differentials[Player.level - 1] + Math.ceil((waveCount + 1) * 5 * Differentials[3]);
+    for (let i = 0; i < enemyCount; i++) {
       // Rootkit specific
       if (Player.level === 3 && waveCount === 9) {
         en = 4;
