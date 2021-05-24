@@ -14,6 +14,20 @@ export class BuildMenu extends Phaser.Scene {
   init(data) {
     if (data.turretData) {
       this.turretData = data.turretData;
+
+      // Generate turret descriptions for mouseover text
+      this.turretData.forEach(tData => {
+        let desc = '';
+        desc += `${tData.printedname}\n`; // Add the name of the structure
+        if (tData.damage && tData.damage > 0) // Add amount of damage, if any
+          desc += `Attack: ${String(tData.damage)}\n`;
+        
+        if (tData.ep && tData.ep != 0) // Add amount of energy generated
+          desc += `Charge: ${String(tData.ep)}\n`; 
+
+        desc += `Cost: ${String(tData.buildCost)}\n`;
+        tData.descr = desc;
+      });
     }
   }
 
@@ -47,35 +61,35 @@ export class BuildMenu extends Phaser.Scene {
     if (Player.unlocked['firewall']) {
       this.fireWallButton = new Button(
         this, 1, 123, 'turret-buttons', 0, true,
-        null, { turretChoice: 'firewall', altText: this.turretData[0].printedname}
+        null, { turretChoice: 'firewall', altText: this.turretData.find(x => x.name === 'firewall').descr}
       );
     }
 
     if (Player.unlocked['charger']) {
       this.fireWallButton = new Button(
         this, 1, 144, 'turret-buttons', 12, true,
-        null, { turretChoice: 'charger', altText: this.turretData[0].printedname}
+        null, { turretChoice: 'charger', altText: this.turretData.find(x => x.name === 'charger').descr}
       );
     }
 
     if (Player.unlocked['virus-blaster']) {
       this.virusBlasterButton = new Button(
         this, 1, 165, 'turret-buttons', 3, true,
-        null, { turretChoice: 'virus-blaster', altText: this.turretData[0].printedname}
+        null, { turretChoice: 'virus-blaster', altText: this.turretData.find(x => x.name === 'virus-blaster').descr}
       );
     }
 
     if (Player.unlocked['rectifier']) {
       this.rectifierButton = new Button(
         this, 1, 186, 'turret-buttons', 6, true,
-        null, { turretChoice: 'rectifier', altText: this.turretData[0].printedname}
+        null, { turretChoice: 'rectifier', altText: this.turretData.find(x => x.name === 'rectifier').descr}
       );
     }
 
     if (Player.unlocked['psu']) {
       this.psuButton = new Button(
         this, 1, 207, 'turret-buttons', 9, true,
-        null, { turretChoice: 'psu', altText: this.turretData[0].printedname}
+        null, { turretChoice: 'psu', altText: this.turretData.find(x => x.name === 'psu').descr}
       );
     }
 

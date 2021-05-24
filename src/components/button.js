@@ -51,8 +51,7 @@ export class Button extends Phaser.GameObjects.Sprite {
 
     this.on('pointerover', () => {
       this.setFrame(this.defaultFrame + 2);
-      if (this.buttonConfig.altText) {
-        console.log(this.buttonConfig);
+      if (this.buttonConfig && this.buttonConfig.altText) {
         Player.altText = this.buttonConfig.altText;
         Player.showAltText = true;
       }
@@ -60,7 +59,7 @@ export class Button extends Phaser.GameObjects.Sprite {
 
     this.on('pointerout', () => {
       this.setFrame(this.defaultFrame);
-      if (this.buttonConfig.altText)
+      if (this.buttonConfig && this.buttonConfig.altText)
         Player.showAltText = false;
     });
   }
