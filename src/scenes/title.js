@@ -13,27 +13,26 @@ export class TitleScene extends Phaser.Scene {
 
   }
   preload(){
-    this.load.spritesheet('testRec', './images/testRec.png', {frameHeight: 20, frameWidth: 20});
-    this.load.image('imgTitle', './images/TitlePage-Background.png');
-    this.load.image('startButton', './images/start.png');
-    this.load.image('tutorialButton', './images/tutorial-button.png');
-    this.load.image('title', './images/titlePage-title.png');
-    this.load.image('title_back', './images/titleName_background.png');
-    this.load.image('victory', './images/victory-letters.png');
-    this.load.image('vic_back', './images/vicTitle_background.png');
-    this.load.image('game-over', './images/game-over.png');
-    this.load.image('over-back', './images/over-back.png');
-    this.load.image('gameOver-back', './images/gameOver-background.png');
-    this.load.image('victory-background', './images/VictoryPage-Background.png');
-    this.load.image('play-again_vic', './images/playAgain.png');
-    this.load.image('play-again_death', './images/playAgainDeath.png');
-    this.load.image('tutorial', './images/toturialPage.png');
-    this.load.image('tutorial-back', './images/Tutorial-Background.png');
-    this.load.image('tutorial-title', './images/tutorial-title.png');
-    this.load.image('next-page', './images/next.png');
-    this.load.image('tutorial-text', './images/tutorial-text.png');
-    this.load.image('tutorial-text2', './images/tutorial-text2.png');
-    this.load.image('tutorial-text3', './images/tutorial-text3.png');
+    this.load.image('imgTitle', 'images/start-victory-gameover/TitlePage-Background.png');
+    this.load.image('startButton', 'images/start-victory-gameover/start.png');
+    this.load.image('tutorialButton', 'images/tutorial/tutorial-button.png');
+    this.load.image('title', 'images/start-victory-gameover/titlePage-title.png');
+    this.load.image('title_back', 'images/start-victory-gameover/titleName_background.png');
+    this.load.image('victory', 'images/start-victory-gameover/victory-letters.png');
+    this.load.image('vic_back', 'images/start-victory-gameover/vicTitle_background.png');
+    this.load.image('game-over', 'images/start-victory-gameover/game-over.png');
+    this.load.image('over-back', 'images/start-victory-gameover/over-back.png');
+    this.load.image('gameOver-back', 'images/start-victory-gameover/gameOver-background.png');
+    this.load.image('victory-background', 'images/start-victory-gameover/VictoryPage-Background.png');
+    this.load.image('play-again_vic', 'images/start-victory-gameover/playAgain.png');
+    this.load.image('play-again_death', 'images/start-victory-gameover/playAgainDeath.png');
+    this.load.image('tutorial', 'images/tutorial/toturialPage.png');
+    this.load.image('tutorial-back', 'images/tutorial/Tutorial-Background.png');
+    this.load.image('tutorial-title', 'images/tutorial/tutorial-title.png');
+    this.load.image('next-page', 'images/tutorial/next.png');
+    this.load.image('tutorial-text', 'images/tutorial/tutorial-text.png');
+    this.load.image('tutorial-text2', 'images/tutorial/tutorial-text2.png');
+    this.load.image('tutorial-text3', 'images/tutorial/tutorial-text3.png');
     
     // TESTING LOADING GAME INFO IN TITLE NOT LEVEL
     // Load config data from JSON
