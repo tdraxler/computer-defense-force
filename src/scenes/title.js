@@ -1,7 +1,6 @@
 /* eslint-disable quotes */
 import Phaser from 'phaser';
 import { CONST } from '../constants';
-import Player from '../components/player';
 
 //loading bar is direct adaptation of https://www.youtube.com/watch?v=OS7neDUUhPE
 export class TitleScene extends Phaser.Scene {
@@ -43,27 +42,6 @@ export class TitleScene extends Phaser.Scene {
     request.send(null);
     this.eData = JSON.parse(request.responseText);
 
-    // Load level and core JSON files
-    request.open('GET', 'json/levels.json', false);
-    request.send(null);
-    this.levelData = JSON.parse(request.responseText);
-
-    request.open('GET', 'json/cores.json', false);
-    request.send(null);
-    this.coreData = JSON.parse(request.responseText);
-
-    request.open('GET', 'json/projectiles.json', false);
-    request.send(null);
-    this.projectileData = JSON.parse(request.responseText);
-
-    // Get Turret data from JSON file
-    request.open('GET', 'json/turrets.json', false);
-    request.send(null);
-    this.turretData = JSON.parse(request.responseText);
-
-    let lev = Player.level - 1; // Current level index
-    console.log(lev);
-
     // Load enemy sprites
     this.load.spritesheet(this.eData[4].name, this.eData[4].source, { frameWidth: this.eData[4].width, frameHeight: this.eData[4].height, endFrame: 10 }); // Rootkit
     this.load.spritesheet(this.eData[3].name, this.eData[3].source, { frameWidth: this.eData[3].width, frameHeight: this.eData[3].height, endFrame: 4 }); // Virus
@@ -71,18 +49,7 @@ export class TitleScene extends Phaser.Scene {
     this.load.spritesheet(this.eData[1].name, this.eData[1].source, { frameWidth: this.eData[1].width, frameHeight: this.eData[1].height, endFrame: 4}); // Worm
     this.load.spritesheet(this.eData[0].name, this.eData[0].source, { frameWidth: this.eData[0].width, frameHeight: this.eData[0].height, endFrame:  8}); // Spyware
 
-    // Map & tiles
-    if (this.textures.exists('tiles')) { // Prevents warnings/errors upon reload
-      this.textures.remove('tiles'); // Have to remove from cache or it won't change
-    }
-    this.load.image('tiles', this.levelData[lev].tileset);
-    this.load.tilemapTiledJSON(this.levelData[lev].map);
-
-    // Valid build location sprite (drawn on tilemap)
-    this.load.spritesheet('build-ready', 'images/valid-build.png', { frameWidth: 16, frameHeight: 16 });
-
     // Load player structures/turrets
-    this.load.image('core', 'images/player-sprites/core.png');
     this.load.image('hardened-core', 'images/player-sprites/hardened-core.png');
     this.load.image('still_firewall', 'images/player-sprites/still_firewall.png');
     this.load.image('still_virus-blaster', 'images/player-sprites/still_virus-blaster.png');
@@ -90,11 +57,6 @@ export class TitleScene extends Phaser.Scene {
     this.load.spritesheet('psu', 'images/player-sprites/psu.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('charger', 'images/player-sprites/charger.png', { frameWidth: 16, frameHeight: 24 });
 
-    //**************************
-    this.load.spritesheet(this.projectileData[0].type, this.projectileData[0].source, {frameHeight: this.projectileData[0].height, frameWidth: this.projectileData[0].width});
-    this.load.spritesheet(this.projectileData[1].type, this.projectileData[1].source, {frameHeight: this.projectileData[1].height, frameWidth: this.projectileData[1].width});
-    this.load.spritesheet(this.projectileData[2].type, this.projectileData[2].source, {frameHeight: this.projectileData[2].height, frameWidth: this.projectileData[2].width});
-    //**************************
 
     let loadBar = this.add.graphics({
       fillStyle: {
