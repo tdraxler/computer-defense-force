@@ -13,8 +13,6 @@ export class Menu extends Phaser.Scene {
 
   //data from others scenes gets passed in here
   init(data){
-    console.log(data);
-    console.log('I am now the menu scene, I got data from the title scene!')
   }
 
   preload(){
@@ -32,7 +30,8 @@ export class Menu extends Phaser.Scene {
     this.add.image(55,35,'title').setOrigin(0).setDepth(3);
     this.add.image(55,25,'title_back').setOrigin(0).setDepth(2);
 
-    let startButton = this.add.image(150,200,'startButton').setOrigin(0).setDepth(1)
+    let startButton = this.add.image(200,200,'startButton').setOrigin(0).setDepth(1)
+    let tutorialButton = this.add.image(100,200,'tutorialButton').setOrigin(0).setDepth(1)
     startButton.setInteractive();
     startButton.on('pointerover',()=>{
       startButton.alpha=.7;
@@ -44,6 +43,18 @@ export class Menu extends Phaser.Scene {
       startButton.alpha=1;
       mBgm.stop();
       this.scene.start(CONST.SCENES.LEVEL);
+    })
+    tutorialButton.setInteractive();
+    tutorialButton.on('pointerover',()=>{
+      tutorialButton.alpha=.7;
+    })
+    tutorialButton.on('pointerout', ()=>{
+      tutorialButton.alpha=1;
+    })
+    tutorialButton.on('pointerup', ()=>{
+      tutorialButton.alpha=1;
+      mBgm.stop();
+      this.scene.start(CONST.SCENES.TUTORIAL);
     })
 
   }

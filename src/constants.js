@@ -3,6 +3,8 @@ export const CONST = {
     START:      'START',
     MENU:       'MENU',
     TUTORIAL:   'TUTORIAL',
+    TUTORIAL2:   'TUTORIAL2',
+    TUTORIAL3:   'TUTORIAL3',
     LEVEL:      'LEVEL',
     BUILD_MENU: 'BUILD-MENU',
     ENEMY:      'ENEMY',
