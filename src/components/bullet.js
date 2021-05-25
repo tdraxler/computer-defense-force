@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import '../scenes/level';
-import {CONST} from '../constants';
 
 //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
 
