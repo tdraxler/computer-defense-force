@@ -7,11 +7,11 @@ export class Explosion extends Phaser.GameObjects.Sprite {
   constructor(config) {
     super(config.scene, config.x, config.y, config.animKey);
     config.scene.add.existing(this);
-    
+    this.framesCount = config.framesCount;
   }
 
   explode(animKey) {
-    this.play(animKey, 15, false);
+    this.play(animKey, 15, this.framesCount);
     this.once('animationcomplete', () => {
       this.destroy();
     });
