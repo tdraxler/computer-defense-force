@@ -171,7 +171,7 @@ export class Level extends Phaser.Scene {
     Player.unlockCosts['virus-blaster'] = this.turretData[2]['unlockCost'];
     Player.unlockCosts['rectifier'] = this.turretData[3]['unlockCost'];
     Player.unlockCosts['psu'] = this.turretData[4]['unlockCost'];
-    Player.unlockCosts['hardened-core'] = this.coreData[1]['unlockCost']; // Perhaps should go in the JSON file...
+    Player.unlockCosts['hardened-core'] = this.coreData[1]['unlockCost'];
 
     // Set up core for the player to protect
     let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
