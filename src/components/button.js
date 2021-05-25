@@ -45,16 +45,23 @@ export class Button extends Phaser.GameObjects.Sprite {
         Player.setVal(buttonConfig);
         if (this.buttonConfig.upgrade) {
           this.destroy(); // Upgrade buttons should be disabled when clicked
+          Player.showAltText = false;
         }
       }
     });
 
     this.on('pointerover', () => {
       this.setFrame(this.defaultFrame + 2);
+      if (this.buttonConfig && this.buttonConfig.altText) {
+        Player.altText = this.buttonConfig.altText;
+        Player.showAltText = true;
+      }
     });
 
     this.on('pointerout', () => {
       this.setFrame(this.defaultFrame);
+      if (this.buttonConfig && this.buttonConfig.altText)
+        Player.showAltText = false;
     });
   }
 }

@@ -133,7 +133,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
       this.head.update(toTrack, this.projObject);
     }
     this.frameCounter++;
-    if (this.frameCounter >= 10) {
+    if (this.frameCounter >= CONST.RECHARGE_DELAY) {
       this.frameCounter = 0;
       Player.energy += this.ep;
     }

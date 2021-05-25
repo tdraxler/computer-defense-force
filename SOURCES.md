@@ -37,3 +37,6 @@ Custom font
 Code for the custom font:
 https://phaser.io/examples/v3/view/game-objects/text/custom-webfont
 https://stackoverflow.com/questions/51217147/how-to-use-a-local-font-in-phaser-3
+
+Small font (for mouseover info):
+https://managore.itch.io/m5x7
