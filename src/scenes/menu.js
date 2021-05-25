@@ -12,7 +12,7 @@ export class Menu extends Phaser.Scene {
   }
 
   //data from others scenes gets passed in here
-  init(data){
+  init(){
   }
 
   preload(){
@@ -24,6 +24,7 @@ export class Menu extends Phaser.Scene {
 
   //must include create
   create(){
+    this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
     mBgm = this.sound.add('mBgm', { loop: true, volume: 0.25 });
     mBgm.play();
     this.add.image(0,0,'imgTitle').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
