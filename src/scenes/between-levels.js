@@ -203,7 +203,7 @@ export class Shop extends Phaser.Scene {
       this.psuButton.destroy();
     }
 
-    if (!Player.unlocked['hardened-core'] && Player.viruscoins < 200) {
+    if (!Player.unlocked['hardened-core'] && Player.viruscoins < Player.unlockCosts['hardened-core']) {
       this.hardenedCoreButton.destroy();
     }
 

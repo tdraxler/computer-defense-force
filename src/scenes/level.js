@@ -15,7 +15,7 @@ import updateHpScore from '../components/hpscoreevent';
 let bgm;
 const MIN_DELAY = 5;
 const MAX_DELAY = 10 * 60;
-let Differentials = [3, 2, 1, 0.25]
+let Differentials = [4, 3, 2, 0.25]
 
 const TILE = MAP_CONSTANTS.T_SIZE;
 
@@ -168,7 +168,7 @@ export class Level extends Phaser.Scene {
     Player.unlockCosts['virus-blaster'] = this.turretData[2]['unlockCost'];
     Player.unlockCosts['rectifier'] = this.turretData[3]['unlockCost'];
     Player.unlockCosts['psu'] = this.turretData[4]['unlockCost'];
-    Player.unlockCosts['hardened-core'] = 1000; // Perhaps should go in the JSON file...
+    Player.unlockCosts['hardened-core'] = this.coreData[1]['unlockCost']; // Perhaps should go in the JSON file...
 
     // Set up core for the player to protect
     let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
@@ -254,8 +254,6 @@ export class Level extends Phaser.Scene {
 
 
     this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
-      //console.log('this got triggered');
-      //this.physics.moveToObject(this.rootkits[0], this.core, 200);
       this.levelEnemies.push(this.rootkits[0]);
     });
 
@@ -363,7 +361,6 @@ export class Level extends Phaser.Scene {
 
         this.timeline.stop();
         // Play explosion
-        console.log(this.rootkits[0]);
         let newOne = new Explosion({scene: this, x: this.rootkits[0]['x'], y: this.rootkits[0]['y'], animKey: 'explosion-frames'});
 
         this.rootkits[0].destroy();

@@ -1,7 +1,7 @@
 [
   {
     "name": "spyware",
-    "hp": 20,
+    "hp": 25,
     "damage": 5,
     "speed": 5,
     "points": 5,
@@ -13,7 +13,7 @@
   },
   {
     "name": "worm",
-    "hp": 30,
+    "hp": 35,
     "damage": 15,
     "speed": 3,
     "points": 15,
@@ -25,7 +25,7 @@
   },
   {
     "name": "trojan",
-    "hp": 35,
+    "hp": 40,
     "damage": 25,
     "speed": 2,
     "points": 25,
@@ -37,7 +37,7 @@
   },
   {
     "name": "virus",
-    "hp": 55,
+    "hp": 60,
     "damage": 45,
     "speed": 4,
     "points": 40,
@@ -49,8 +49,8 @@
   },
   {
     "name": "rootkit",
-    "hp": 300,
-    "damage": 75,
+    "hp": 500,
+    "damage": 200,
     "speed": 1,
     "points": 70,
     "source": "images/rootkit.png",

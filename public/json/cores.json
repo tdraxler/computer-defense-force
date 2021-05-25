@@ -4,13 +4,15 @@
     "hp": 500,
     "source": "images/player-sprites/core.png",
     "width": 32,
-    "height": 32
+    "height": 32,
+    "unlockCost": 0
   },
   {
     "name": "hardened-core",
     "hp": 750,
     "source": "images/player-sprites/core.png",
     "width": 32,
-    "height": 32
+    "height": 32,
+    "unlockCost": 1000
   }
 ]

@@ -2,7 +2,7 @@
   {
     "type": "bullet",
     "speed": 400,
-    "damage":2,
+    "damage": 2,
     "source": "images/bullet_5px.png",
     "width": 5,
     "height": 5,
@@ -13,7 +13,7 @@
   {
     "type": "laser-bolt",
     "speed": 600,
-    "damage":10,
+    "damage": 10,
     "source": "images/laser_bolt.png",
     "width": 5,
     "height": 7,
@@ -24,7 +24,7 @@
   {
     "type": "plasma-cannonball",
     "speed": 200,
-    "damage":25,
+    "damage": 20,
     "source": "images/plasma_cannonball.png",
     "width": 5,
     "height": 10,

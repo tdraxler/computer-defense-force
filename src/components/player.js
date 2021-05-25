@@ -29,7 +29,7 @@ class Player {
       'psu': 0,
       'hardened-core': 0
     };
-    this.viruscoins = 5000;
+    this.viruscoins = 0;
     this.coreHP = 0;
     this.showAltText = false;
     this.altText = '';
@@ -56,7 +56,7 @@ class Player {
 
   levelUp() {
     this.level++;
-    this.energy = this.level * 1000;
+    this.energy = this.level * 1000 - 500;
     if (this.level > LIMITS.LEVELS) {
       this.level = 1;
     }
