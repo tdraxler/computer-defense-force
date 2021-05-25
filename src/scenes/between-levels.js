@@ -55,7 +55,7 @@ export class Shop extends Phaser.Scene {
 
   preload() {
     this.load.image('background', 'images/ui/between-levels.png');
-    this.load.image('continueButton', 'images/continue.png');
+    this.load.image('continueButton', 'images/start-victory-gameover/continue.png');
     this.load.spritesheet('upgrade-buttons', 'images/ui/upgrade-buttons.png', { frameWidth: 64, frameHeight: 60 });
 
     this.load.spritesheet('coin', 'images/ui/coin.png', {frameWidth: 16, frameHeight: 16});
@@ -64,6 +64,10 @@ export class Shop extends Phaser.Scene {
   }
 
   create() {
+    this.virusBlasterButton;
+    this.rectifierButton;
+    this.psuButton;
+    this.hardenedCoreButton;
     this.background = this.add.sprite(0, 0, 'background').setOrigin(0,0);
 
     this.anims.create({
@@ -81,21 +85,21 @@ export class Shop extends Phaser.Scene {
     });
 
     // Upgrade buttons
-    if (!Player.unlocked['virus-blaster'] && Player.viruscoins > Player.unlockCosts['virus-blaster']) {
+    if (!Player.unlocked['virus-blaster']) {
       this.virusBlasterButton = new Button(
         this, 48, 168, 'upgrade-buttons', 0, true,
         null, { upgrade: 'virus-blaster', altText: this.descData.find(x => x.name === 'virus-blaster').descr }
       );
     }
 
-    if (!Player.unlocked['rectifier'] && Player.viruscoins > Player.unlockCosts['rectifier']) {
+    if (!Player.unlocked['rectifier']) {
       this.rectifierButton = new Button(
         this, 128, 168, 'upgrade-buttons', 3, true,
         null, { upgrade: 'rectifier', altText: this.descData.find(x => x.name === 'rectifier').descr }
       );
     }
 
-    if (!Player.unlocked['psu'] && Player.viruscoins > Player.unlockCosts['psu']) {
+    if (!Player.unlocked['psu']) {
       this.psuButton = new Button(
         this, 208, 168, 'upgrade-buttons', 6, true,
         null, { upgrade: 'psu', altText: this.descData.find(x => x.name === 'psu').descr }
@@ -185,5 +189,23 @@ export class Shop extends Phaser.Scene {
         label.getRid();
       }
     });
+
+    // Upgrade buttons
+    if (!Player.unlocked['virus-blaster'] && Player.viruscoins < Player.unlockCosts['virus-blaster']) {
+      this.virusBlasterButton.destroy();
+    }
+
+    if (!Player.unlocked['rectifier'] && Player.viruscoins < Player.unlockCosts['rectifier']) {
+      this.rectifierButton.destroy();
+    }
+
+    if (!Player.unlocked['psu'] && Player.viruscoins < Player.unlockCosts['psu']) {
+      this.psuButton.destroy();
+    }
+
+    if (!Player.unlocked['hardened-core'] && Player.viruscoins < Player.unlockCosts['hardened-core']) {
+      this.hardenedCoreButton.destroy();
+    }
+
   }
 }
