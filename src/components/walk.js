@@ -42,5 +42,4 @@ export function onCompleteHandler (tween, targets, custom) {
   targets[0].x = this.game.config.width - 90;
   targets[0].y = this.game.config.height - 90;
   this.events.emit('onCompleteHandler', 1); // <- event emitter
-  console.log('this got triggered');
 }

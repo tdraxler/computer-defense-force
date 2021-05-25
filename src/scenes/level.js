@@ -253,9 +253,12 @@ export class Level extends Phaser.Scene {
     this.pathmap = generatePathMap(this.levelData[Player.level - 1].core_x, this.levelData[Player.level - 1].core_y, this.collidemap);
 
 
-    this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
-      this.levelEnemies.push(this.rootkits[0]);
-    });
+    // Do not remove check, otherwise we end up with Player.level amount of listeners
+    if (Player.level === 3) {
+      this.scene.get(CONST.SCENES.LEVEL).events.on('onCompleteHandler', () => {
+        this.levelEnemies.push(this.rootkits[0]);
+      });
+    }
 
   }
 
