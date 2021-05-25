@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Player from '../components/player';
 import { CONST } from '../constants';
 //import {start} from '../';
 
@@ -38,6 +39,7 @@ export class Death extends Phaser.Scene {
     playAgainButton.on('pointerup', ()=>{
       playAgainButton.alpha=1;
       dBgm.stop();
+      Player.restartLevel();
       this.scene.start(CONST.SCENES.MENU);
     })
 

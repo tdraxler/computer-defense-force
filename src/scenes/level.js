@@ -142,6 +142,9 @@ export class Level extends Phaser.Scene {
   }
 
   create(){
+    // Set starting coin amount for the level
+    Player.levelStartCoin = Player.viruscoins;
+
     // Star BGM
     bgm = this.sound.add('bgm', { loop: true, volume: 0.25 });
     bgm.play();
