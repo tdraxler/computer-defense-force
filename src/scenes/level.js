@@ -127,6 +127,7 @@ export class Level extends Phaser.Scene {
     //**************************
     // Explosion
     this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
+    this.load.spritesheet('explosion-frames-2', 'images/effects/explosion2.png', { frameWidth: 8, frameHeight: 8, endFrame: 13 });
 
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
@@ -196,6 +197,12 @@ export class Level extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers('explosion-frames', { start: 14, end: 27 }),
       repeat: 0
     });
+    this.anims.create({
+      key: 'explosion-anim-2',
+      frameRate: 60,
+      frames: this.anims.generateFrameNumbers('explosion-frames-2', { start: 0, end: 13 }),
+      repeat: 0
+    });
 
     // TEMPORARY - charger/psu animations
     this.anims.create({
@@ -224,7 +231,9 @@ export class Level extends Phaser.Scene {
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
       enemy.hp -= bullet.damage;
+      let explosion = new Explosion({scene: this, x: bullet.x, y: bullet.y, animKey: 'explosion-frames-2', framesCount: 13});
       bullet.destroy();
+      explosion.explode('explosion-anim-2');
     });
 
 
@@ -367,7 +376,7 @@ export class Level extends Phaser.Scene {
 
         this.timeline.stop();
         // Play explosion
-        let newOne = new Explosion({scene: this, x: this.rootkits[0]['x'], y: this.rootkits[0]['y'], animKey: 'explosion-frames'});
+        let newOne = new Explosion({scene: this, x: this.rootkits[0]['x'], y: this.rootkits[0]['y'], animKey: 'explosion-frames', framesCount: 15});
 
         this.rootkits[0].destroy();
         this.explosion.play();
