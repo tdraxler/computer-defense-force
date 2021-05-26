@@ -11,7 +11,8 @@
     "buildCost": 200,
     "unlockCost": 0,
     "projectile": "bullet",
-    "rate": 10
+    "rate": 10,
+    "range": 75
   },
   {
     "name": "charger",
@@ -37,7 +38,8 @@
     "buildCost": 300,
     "unlockCost": 400,
     "projectile": "plasma-cannonball",
-    "rate": 30
+    "rate": 30,
+    "range": 75
   },
   {
     "name": "rectifier",
@@ -51,7 +53,8 @@
     "buildCost": 500,
     "unlockCost": 1000,
     "projectile": "laser-bolt",
-    "rate": 20
+    "rate": 20,
+    "range": 75
   },
   {
     "name": "psu",
