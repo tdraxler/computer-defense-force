@@ -291,7 +291,7 @@ export class Level extends Phaser.Scene {
       } else {
         en = Math.floor(Math.random() * (max - min) + min);
         // choose any of the 5 possible enemies
-        choice = 1;
+        choice = Math.floor(Math.random() * 6);
       }
 
       let newOne = new Virus(
