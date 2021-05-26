@@ -38,6 +38,7 @@ export class Tutorial3 extends Phaser.Scene {
     startButton.on('pointerup', ()=>{
       startButton.alpha=1;
       this.scene.start(CONST.SCENES.MENU);
+      this.events.emit('end-tutorial', 1); // send notice to stop tutorial BGM
     })
   }
   update(){

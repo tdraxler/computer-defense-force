@@ -305,7 +305,8 @@ export class Level extends Phaser.Scene {
           hitX: this.eData[en].hitX,
           hitY: this.eData[en].hitY,
           width: this.eData[en].width,
-          height: this.eData[en].height
+          height: this.eData[en].height,
+          travelRate: this.eData[en].travelRate
         }
       );
       newOne.play(this.eneAnims[en]);
@@ -426,11 +427,11 @@ export class Level extends Phaser.Scene {
             }
 
             critter.dirVector = nextDir(Math.floor(critter.x / TILE), Math.floor(critter.y / TILE), this.pathmap);
-            critter.moveVal = TILE;
+            critter.moveVal = TILE / critter.travelRate;
           }
   
-          critter.x += critter.dirVector.x;
-          critter.y += critter.dirVector.y;
+          critter.x += critter.dirVector.x * critter.travelRate;
+          critter.y += critter.dirVector.y * critter.travelRate;
           critter.moveVal--;
         }
       }
