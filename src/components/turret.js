@@ -34,45 +34,62 @@ class Head extends Phaser.GameObjects.Sprite {
   create(){
   }
 
-  update(toTrack, projectileStats) {
+  update(toTrack, projectileStats, turretStats) {
     //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
     //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
     //determine projectile type based on turret value.
     let theProjectile = projectileStats
     let enemyUnits = toTrack;
-    for(let i = 0; i<enemyUnits.length; i++){
-      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=75){
-        let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
-        this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
-        this.setRotation((newAngle + Math.PI/2)-160);
-        if(this.delay >= theProjectile.rate){
-          let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i], theProjectile);
-          if(this.scene.gBullets){
-            this.scene.gBullets.add(bullet);
+
+    if (this.delay >= 5) { // Delayed so it doesn't look like bullets lag with the turret head
+      for(let i = 0; i<enemyUnits.length; i++){
+        if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y) <= turretStats.range){
+          let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
+          this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
+          this.setRotation((newAngle + Math.PI/2)-160);
+          if(this.delay >= turretStats.rate){
+            let bullet = new Bullet(
+              this.scene, this.x + Math.floor(Math.cos(this.rotation + Math.PI/2) * 8), // offset for better appearance
+              this.y  + Math.floor(Math.sin(this.rotation + Math.PI/2) * 8),
+              enemyUnits[i],
+              theProjectile
+            );
+            if(this.scene.gBullets){
+              this.scene.gBullets.add(bullet);
+            }
+            bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(theProjectile.type, {start: theProjectile.start, end: theProjectile.end }), frameRate: 10, repeat: -1});
+            //bullet destroy on world bounds https://phaser.io/examples/v3/view/physics/arcade/world-bounds-event
+            bullet.setCollideWorldBounds(true);
+            bullet.body.onWorldBounds = true;
+            bullet.body.world.on('worldbounds', function(body){
+              body.gameObject.destroy();
+            });
+            bullet.play('fired');
+            bullet.fire();
+  
+            this.setFrame(3); // Start showing recoil
+            if (this.turretType === 'firewall') {
+              this.scene.firewallSfx.play();
+            } else if (this.turretType === 'virus-blaster') {
+              this.scene.virusBlasterSfx.play();
+            } else if (this.turretType === 'rectifier') {
+              this.scene.rectifierSfx.play();
+            }
+            this.delay=0;
           }
-          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(theProjectile.type, {start: theProjectile.start, end: theProjectile.end }), frameRate: 10, repeat: -1});
-          //bullet destroy on world bounds https://phaser.io/examples/v3/view/physics/arcade/world-bounds-event
-          bullet.setCollideWorldBounds(true);
-          bullet.body.onWorldBounds = true;
-          bullet.body.world.on('worldbounds', function(body){
-            body.gameObject.destroy();
-          });
-          bullet.play('fired');
-          bullet.fire();
-          if (this.turretType === 'firewall') {
-            this.scene.firewallSfx.play();
-          } else if (this.turretType === 'virus-blaster') {
-            this.scene.virusBlasterSfx.play();
-          } else if (this.turretType === 'rectifier') {
-            this.scene.rectifierSfx.play();
-          }
-          this.delay=0;
+          break;
         }
-        break;
       }
     }
 
     this.delay++;
+    if (this.frame.name != 1) {
+      if (this.delay % 3 == 0) {
+        let nextFrame = this.frame.name + 1;
+        if (nextFrame > 5) nextFrame = 1;
+        this.setFrame(nextFrame);
+      }
+    }
   }
 }
 
@@ -119,6 +136,8 @@ export class Turret extends Phaser.GameObjects.Sprite {
 
     this.ep = 0;
     this.frameCounter = 0;
+    this.range = config.range ? config.range : 0;
+    this.rate = config.rate ? config.rate : 1000; // firing rate
 
     // Add energy modifier, if thing will produce energy
     if (config.ep) {
@@ -130,7 +149,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
 
   update(toTrack) {
     if (this.head) {
-      this.head.update(toTrack, this.projObject);
+      this.head.update(toTrack, this.projObject, this);
     }
     this.frameCounter++;
     if (this.frameCounter >= CONST.RECHARGE_DELAY) {
