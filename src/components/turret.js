@@ -40,39 +40,51 @@ class Head extends Phaser.GameObjects.Sprite {
     //determine projectile type based on turret value.
     let theProjectile = projectileStats
     let enemyUnits = toTrack;
-    for(let i = 0; i<enemyUnits.length; i++){
-      if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=75){
-        let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
-        this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
-        this.setRotation((newAngle + Math.PI/2)-160);
-        if(this.delay >= theProjectile.rate){
-          let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i], theProjectile);
-          if(this.scene.gBullets){
-            this.scene.gBullets.add(bullet);
+
+    if (this.delay >= 5) {
+      for(let i = 0; i<enemyUnits.length; i++){
+        if(enemyUnits[i].active && Phaser.Math.Distance.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y)<=75){
+          let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
+          this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
+          this.setRotation((newAngle + Math.PI/2)-160);
+          if(this.delay >= theProjectile.rate){
+            let bullet = new Bullet(this.scene, this.x, this.y, enemyUnits[i], theProjectile);
+            if(this.scene.gBullets){
+              this.scene.gBullets.add(bullet);
+            }
+            bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(theProjectile.type, {start: theProjectile.start, end: theProjectile.end }), frameRate: 10, repeat: -1});
+            //bullet destroy on world bounds https://phaser.io/examples/v3/view/physics/arcade/world-bounds-event
+            bullet.setCollideWorldBounds(true);
+            bullet.body.onWorldBounds = true;
+            bullet.body.world.on('worldbounds', function(body){
+              body.gameObject.destroy();
+            });
+            bullet.play('fired');
+            bullet.fire();
+  
+            this.setFrame(3); // Start showing recoil
+            if (this.turretType === 'firewall') {
+              this.scene.firewallSfx.play();
+            } else if (this.turretType === 'virus-blaster') {
+              this.scene.virusBlasterSfx.play();
+            } else if (this.turretType === 'rectifier') {
+              this.scene.rectifierSfx.play();
+            }
+            this.delay=0;
           }
-          bullet.anims.create({key:'fired', frames: this.anims.generateFrameNumbers(theProjectile.type, {start: theProjectile.start, end: theProjectile.end }), frameRate: 10, repeat: -1});
-          //bullet destroy on world bounds https://phaser.io/examples/v3/view/physics/arcade/world-bounds-event
-          bullet.setCollideWorldBounds(true);
-          bullet.body.onWorldBounds = true;
-          bullet.body.world.on('worldbounds', function(body){
-            body.gameObject.destroy();
-          });
-          bullet.play('fired');
-          bullet.fire();
-          if (this.turretType === 'firewall') {
-            this.scene.firewallSfx.play();
-          } else if (this.turretType === 'virus-blaster') {
-            this.scene.virusBlasterSfx.play();
-          } else if (this.turretType === 'rectifier') {
-            this.scene.rectifierSfx.play();
-          }
-          this.delay=0;
+          break;
         }
-        break;
       }
     }
 
     this.delay++;
+    if (this.frame.name != 1) {
+      if (this.delay % 3 == 0) {
+        let nextFrame = this.frame.name + 1;
+        if (nextFrame > 5) nextFrame = 1;
+        this.setFrame(nextFrame);
+      }
+    }
   }
 }
 
