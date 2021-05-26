@@ -54,6 +54,10 @@ export class Shop extends Phaser.Scene {
   }
 
   preload() {
+    // Music: "8 Bit Menu", from FesliyanStudios.com
+    // Background music via https://www.FesliyanStudios.com
+    // Source:  https://www.fesliyanstudios.com/royalty-free-music/download/8-bit-menu/287
+    this.load.audio('otherBgm', ['sound/bgm/2019-01-02_-_8_Bit_Menu_-_David_Renda_-_FesliyanStudios.com.mp3']);
     this.load.image('background', 'images/ui/between-levels.png');
     this.load.image('continueButton', 'images/start-victory-gameover/continue.png');
     this.load.spritesheet('upgrade-buttons', 'images/ui/upgrade-buttons.png', { frameWidth: 64, frameHeight: 60 });
@@ -64,6 +68,8 @@ export class Shop extends Phaser.Scene {
   }
 
   create() {
+    this.otherBgm = this.sound.add('otherBgm', { loop: true, volume: 0.25 });
+    this.otherBgm.play();
     this.virusBlasterButton;
     this.rectifierButton;
     this.psuButton;
@@ -142,6 +148,7 @@ export class Shop extends Phaser.Scene {
     });
     continueButton.on('pointerup', () => {
       continueButton.alpha = 1;
+      this.otherBgm.stop();
       this.scene.start(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.SHOP);
     });
@@ -179,6 +186,7 @@ export class Shop extends Phaser.Scene {
     this.coins.setText(`${Player.viruscoins}`, FONT_CONFIG_SMALL);
     if (this.keyC.isDown) { // Debug - restarts the scene
       console.log('Restart level!');
+      this.otherBgm.stop();
       this.scene.start(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.SHOP);
     }
