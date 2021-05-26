@@ -7,8 +7,7 @@
     "width": 5,
     "height": 5,
     "start": 0,
-    "end": 3,
-    "rate": 10
+    "end": 3
   },
   {
     "type": "laser-bolt",
@@ -18,8 +17,7 @@
     "width": 5,
     "height": 7,
     "start": 0,
-    "end": 2,
-    "rate": 20
+    "end": 2
   },
   {
     "type": "plasma-cannonball",
@@ -29,7 +27,6 @@
     "width": 5,
     "height": 10,
     "start": 0,
-    "end": 3,
-    "rate": 30
+    "end": 3
   }
 ]
