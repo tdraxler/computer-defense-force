@@ -41,7 +41,7 @@ export class Victory extends Phaser.Scene {
       playAgainButton.alpha=1;
       vBgm.stop();
       Player.reset();
-      this.scene.start(CONST.SCENES.LEVEL);
+      this.scene.start(CONST.SCENES.MENU);
     })
 
   }

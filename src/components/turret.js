@@ -29,7 +29,7 @@ class Head extends Phaser.GameObjects.Sprite {
   preload(){
   }
   //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
-  //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
+  //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3npm
 
   create(){
   }
