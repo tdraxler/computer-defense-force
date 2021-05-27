@@ -15,7 +15,7 @@ import updateHpScore from '../components/hpscoreevent';
 let bgm;
 const MIN_DELAY = 5;
 const MAX_DELAY = 10 * 60;
-let Differentials = [4, 3, 2, 0.25]
+let Differentials = [4, 8, 10, 0.65]
 
 const TILE = MAP_CONSTANTS.T_SIZE;
 
@@ -66,7 +66,7 @@ export class Level extends Phaser.Scene {
       if (t.projectile) {
         bullet = this.projectileData.find(x => x.type === t.projectile);
         dps = bullet.damage;
-        dps = dps * t.rate / 60; // Game runs at 60 FPS
+        dps = dps * 60 / t.delay; // Game runs at 60 FPS
       }
 
       this.descData.push({
@@ -219,10 +219,6 @@ export class Level extends Phaser.Scene {
       repeat: -1
     });
 
-    this.anims.create({
-
-    });
-
     // making bullet and enemy groups
     this.gBullets = this.physics.add.group();
     this.gEnemies = this.physics.add.group();
@@ -276,20 +272,24 @@ export class Level extends Phaser.Scene {
 
   wave(waveCount) {
     const min = Player.level - 1;
-    let max = min + 3;
-    if (Player.level === 3) {
+    let max = min + 2;
+    /*if (Player.level === 3) {
       max--;
-    }
-    let en;
+    }*/
+    let enemyIndex;
     let choice;
     let enemyCount = Player.level * Differentials[Player.level - 1] + Math.ceil((waveCount + 1) * 5 * Differentials[3]);
+    console.log('Enemy count: ' + enemyCount);
     for (let i = 0; i < enemyCount; i++) {
       // Rootkit specific
       if (Player.level === 3 && waveCount === 9) {
-        en = 4;
+        enemyIndex = 4;
         choice = 3;
       } else {
-        en = Math.floor(Math.random() * (max - min) + min);
+        if (waveCount >= 4 && max === min + 2 && Player.level !== 3) {
+          max++;
+        }
+        enemyIndex = Math.floor(Math.random() * (max - min) + min);
         // choose any of the 5 possible enemies
         choice = Math.floor(Math.random() * 6);
       }
@@ -299,17 +299,17 @@ export class Level extends Phaser.Scene {
           scene: this, 
           x: possibles[choice].x * TILE + TILE / 2, 
           y: possibles[choice].y * TILE + TILE / 2, 
-          hp: this.eData[en].hp, 
-          damage: this.eData[en].damage, 
-          points: this.eData[en].points,
-          hitX: this.eData[en].hitX,
-          hitY: this.eData[en].hitY,
-          width: this.eData[en].width,
-          height: this.eData[en].height,
-          travelRate: this.eData[en].travelRate
+          hp: this.eData[enemyIndex].hp, 
+          damage: this.eData[enemyIndex].damage, 
+          points: this.eData[enemyIndex].points,
+          hitX: this.eData[enemyIndex].hitX,
+          hitY: this.eData[enemyIndex].hitY,
+          width: this.eData[enemyIndex].width,
+          height: this.eData[enemyIndex].height,
+          travelRate: this.eData[enemyIndex].travelRate
         }
       );
-      newOne.play(this.eneAnims[en]);
+      newOne.play(this.eneAnims[enemyIndex]);
       newOne.moveX = 0;
       newOne.moveY = 0;
       newOne.moveVal = -1;

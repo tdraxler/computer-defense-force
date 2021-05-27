@@ -11,7 +11,7 @@
     "buildCost": 200,
     "unlockCost": 0,
     "projectile": "bullet",
-    "rate": 10,
+    "delay": 10,
     "range": 75
   },
   {
@@ -38,7 +38,7 @@
     "buildCost": 300,
     "unlockCost": 400,
     "projectile": "plasma-cannonball",
-    "rate": 30,
+    "delay": 30,
     "range": 75
   },
   {
@@ -53,7 +53,7 @@
     "buildCost": 500,
     "unlockCost": 1000,
     "projectile": "laser-bolt",
-    "rate": 20,
+    "delay": 20,
     "range": 75
   },
   {

@@ -41,7 +41,7 @@ class Player {
     if (this.level === 1) {
       this.energy = 1000;
     } else {
-      this.energy = this.level * 1000 - 500;
+      this.energy = this.level * 1000;
     }
   }
 

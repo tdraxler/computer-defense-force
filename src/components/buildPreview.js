@@ -67,7 +67,6 @@ export function setUpBuildSystem(scene) {
             Player.energy += Math.floor(scene.turretData[i].buildCost / 2);
           }
         }
-        console.log(Player.energy);
         let toDelete = scene.turretMap[mapInd]; // Get object ref
         let turretsArrInd = scene.turrets.indexOf(toDelete);
         // Clean up and destroy it
@@ -77,7 +76,6 @@ export function setUpBuildSystem(scene) {
 
         // Remove all references to it.
         scene.turrets.splice(turretsArrInd, 1);
-        console.log(scene.turrets.length);
         scene.turretMap[mapInd] = null;
       }
     }
