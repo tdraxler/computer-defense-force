@@ -23,6 +23,7 @@ export class Victory extends Phaser.Scene {
   }
   //must include create
   create(){
+    this.scene.stop(CONST.SCENES.LEVEL);
     vBgm = this.sound.add('vBgm', { loop: true, volume: 0.25 });
     vBgm.play();
     this.add.image(0,0,'victory-background').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
