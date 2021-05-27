@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import Phaser from 'phaser';
-import { CONST } from '../constants';
+import {CONST, FONT_CONFIG_MOUSEOVER, FONT_CONFIG_SMALL} from '../constants';
 
 //loading bar is direct adaptation of https://www.youtube.com/watch?v=OS7neDUUhPE
 export class TitleScene extends Phaser.Scene {
@@ -10,7 +10,6 @@ export class TitleScene extends Phaser.Scene {
     });
   }
   init(){
-
   }
   preload(){
     this.load.image('imgTitle', 'images/start-victory-gameover/TitlePage-Background.png');
@@ -56,21 +55,19 @@ export class TitleScene extends Phaser.Scene {
     this.load.spritesheet('psu', 'images/player-sprites/psu.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('charger', 'images/player-sprites/charger.png', { frameWidth: 16, frameHeight: 24 });
 
-
     let loadBar = this.add.graphics({
       fillStyle: {
         color: 0x89DDFF
       }
     })
     //create a loading bar https://www.youtube.com/watch?v=OS7neDUUhPE
+    this.add.text(150, 200, 'LOADING').setFontFamily('m5x7').setFontSize(32);
     this.load.on('progress', (percent)=>{
       loadBar.fillRect(0, 250, this.game.renderer.width * percent , 15)
     })
-
   }
   //must include create
   create(){
-    //set origin to middle of screen instead of upper left
     this.scene.start(CONST.SCENES.MENU);
   }
 }
