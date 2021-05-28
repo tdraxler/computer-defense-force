@@ -15,7 +15,7 @@ import updateHpScore from '../components/hpscoreevent';
 let bgm;
 const MIN_DELAY = 5;
 const MAX_DELAY = 10 * 60;
-let Differentials = [4, 8, 10, 0.65]
+let Differentials = [4, 8, 12, 0.65]
 
 const TILE = MAP_CONSTANTS.T_SIZE;
 
