@@ -10,23 +10,23 @@
     "end": 3
   },
   {
-    "type": "laser-bolt",
-    "speed": 600,
-    "damage": 10,
-    "source": "images/laser_bolt.png",
-    "width": 5,
-    "height": 7,
-    "start": 0,
-    "end": 2
-  },
-  {
     "type": "plasma-cannonball",
     "speed": 200,
-    "damage": 20,
+    "damage": 10,
     "source": "images/plasma_cannonball.png",
     "width": 5,
     "height": 10,
     "start": 0,
     "end": 3
+  },
+  {
+    "type": "laser-bolt",
+    "speed": 600,
+    "damage": 30,
+    "source": "images/laser_bolt.png",
+    "width": 5,
+    "height": 7,
+    "start": 0,
+    "end": 2
   }
 ]

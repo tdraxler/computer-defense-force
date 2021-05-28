@@ -47,7 +47,7 @@ class Head extends Phaser.GameObjects.Sprite {
           let newAngle = Phaser.Math.Angle.Between(this.x, this.y, enemyUnits[i].x, enemyUnits[i].y);
           this.angle = (newAngle + Math.PI/2) * Phaser.Math.RAD_TO_DEG;
           this.setRotation((newAngle + Math.PI/2)-160);
-          if(this.delay >= turretStats.rate){
+          if(this.delay >= turretStats.delay){
             let bullet = new Bullet(
               this.scene, this.x + Math.floor(Math.cos(this.rotation + Math.PI/2) * 8), // offset for better appearance
               this.y  + Math.floor(Math.sin(this.rotation + Math.PI/2) * 8),
@@ -137,7 +137,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
     this.ep = 0;
     this.frameCounter = 0;
     this.range = config.range ? config.range : 0;
-    this.rate = config.rate ? config.rate : 1000; // firing rate
+    this.delay = config.delay ? config.delay : 1000; // firing delay
 
     // Add energy modifier, if thing will produce energy
     if (config.ep) {
