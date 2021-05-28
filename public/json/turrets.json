@@ -29,7 +29,7 @@
   {
     "name": "virus-blaster",
     "hp": 15,
-    "damage": 5,
+    "damage": 10,
     "rtf": 2,
     "source": "images/player-sprites/virus-blaster.png",
     "width": 16,
@@ -38,13 +38,13 @@
     "buildCost": 300,
     "unlockCost": 400,
     "projectile": "plasma-cannonball",
-    "delay": 30,
-    "range": 75
+    "delay": 25,
+    "range": 100
   },
   {
     "name": "rectifier",
     "hp": 20,
-    "damage": 20,
+    "damage": 30,
     "rtf": 5,
     "source": "images/player-sprites/rectifier.png",
     "width": 16,
@@ -53,8 +53,8 @@
     "buildCost": 500,
     "unlockCost": 1000,
     "projectile": "laser-bolt",
-    "delay": 20,
-    "range": 75
+    "delay": 60,
+    "range": 125
   },
   {
     "name": "psu",

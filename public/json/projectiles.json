@@ -22,7 +22,7 @@
   {
     "type": "laser-bolt",
     "speed": 600,
-    "damage": 20,
+    "damage": 30,
     "source": "images/laser_bolt.png",
     "width": 5,
     "height": 7,
