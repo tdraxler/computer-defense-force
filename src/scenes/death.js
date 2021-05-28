@@ -22,6 +22,7 @@ export class Death extends Phaser.Scene {
   }
   //must include create
   create(){
+    this.scene.stop(CONST.SCENES.LEVEL);
     dBgm = this.sound.add('dBgm', { loop: true, volume: 0.25 });
     dBgm.play();
     this.add.image(0,0,'gameOver-back').setOrigin(0).setDepth(0); //set origin to middle of screen instead of upper left
