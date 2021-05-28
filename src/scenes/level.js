@@ -273,9 +273,6 @@ export class Level extends Phaser.Scene {
   wave(waveCount) {
     const min = Player.level - 1;
     let max = min + 2;
-    /*if (Player.level === 3) {
-      max--;
-    }*/
     let enemyIndex;
     let choice;
     let enemyCount = Player.level * Differentials[Player.level - 1] + Math.ceil((waveCount + 1) * 5 * Differentials[3]);

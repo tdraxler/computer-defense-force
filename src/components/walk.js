@@ -5,14 +5,14 @@ export function walk(enemy) {
   this.timeline = this.tweens.createTimeline();
 
   let positions = [
-    {x: this.game.config.width + 50, y: this.game.config.height + 200}, 
-    {x: this.game.config.width + 50, y: this.game.config.height + 130}, 
-    {x: this.game.config.width + 190, y: this.game.config.height + 130}, 
-    {x: this.game.config.width + 190, y: this.game.config.height - 170},  
-    {x: this.game.config.width + 80, y: this.game.config.height - 170},
-    {x: this.game.config.width + 80, y: this.game.config.height + 30},
-    {x: this.game.config.width - 20, y: this.game.config.height + 30},
-    {x: this.game.config.width - 90, y: this.game.config.height - 90}
+    {x: this.game.config.width + 50, y: this.game.config.height + 200},  // start
+    {x: this.game.config.width + 50, y: this.game.config.height + 130},  // up
+    {x: this.game.config.width + 190, y: this.game.config.height + 130}, // right
+    {x: this.game.config.width + 190, y: this.game.config.height - 170}, // up
+    {x: this.game.config.width + 80, y: this.game.config.height - 170},  // left
+    {x: this.game.config.width + 80, y: this.game.config.height + 30},   // down
+    {x: this.game.config.width - 20, y: this.game.config.height + 30},   // left
+    {x: this.game.config.width - 90, y: this.game.config.height - 90}    // diagonal left-up
   ];
 
   for (let i = 0; i < positions.length; i++) {
