@@ -276,7 +276,6 @@ export class Level extends Phaser.Scene {
     let enemyIndex;
     let choice;
     let enemyCount = Player.level * Differentials[Player.level - 1] + Math.ceil((waveCount + 1) * 5 * Differentials[3]);
-    console.log('Enemy count: ' + enemyCount);
     for (let i = 0; i < enemyCount; i++) {
       // Rootkit specific
       if (Player.level === 3 && waveCount === 9) {
