@@ -33,7 +33,7 @@ export class Virus extends Phaser.Physics.Arcade.Sprite {
     if (this.showDamage > 0) {
       this.showDamage--;
       if (Math.floor(this.frameCounter / 4) % 2 == 0) {
-        this.setTint(0xff2200);
+        this.setTint(0xffbbbb);
       }
       else {
         this.clearTint();
