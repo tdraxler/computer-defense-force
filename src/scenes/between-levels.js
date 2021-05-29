@@ -159,6 +159,8 @@ export class Shop extends Phaser.Scene {
     this.mouseOverInfo = this.add.text(305, 5, Player.altText, FONT_CONFIG_MOUSEOVER);
     this.mouseOverInfo.setVisible(false);
     Player.showAltText = false;
+
+    this.cameras.main.fadeIn(250, 0, 0, 0);
   }
 
   update() {

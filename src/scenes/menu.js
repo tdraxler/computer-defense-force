@@ -57,7 +57,7 @@ export class Menu extends Phaser.Scene {
       mBgm.stop();
       this.scene.start(CONST.SCENES.TUTORIAL);
     })
-
+    this.cameras.main.fadeIn(250, 0, 0, 0);
   }
   
   //the rotation of the rectangle

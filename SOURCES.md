@@ -5,6 +5,7 @@ developing this project.
 
 ### level.js
 - https://github.com/photonstorm/phaser3-examples/blob/master/public/src/input/cursors/custom%20cursor.js
+- https://blog.ourcade.co/posts/2020/phaser-3-fade-out-scene-transition/ (scene transitions)
 
 ###turret.js
 - https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
