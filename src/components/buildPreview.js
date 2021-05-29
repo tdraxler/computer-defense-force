@@ -2,7 +2,9 @@
 
 // import Phaser from 'phaser';
 import { CURRENT_ACTION, MAP_CONSTANTS } from '../constants';
+import { Explosion } from '../components/explosion';
 import { Turret } from '../components/turret';
+import { TextPopup } from '../components/textPopup';
 import Player from '../components/player';
 
 const nearestTile = (num) => {
@@ -49,7 +51,7 @@ export function setUpBuildSystem(scene) {
             //sets turret to look at newest enemy on map, delete now works as well
             scene.turretMap[mapInd] = newTurret;
           } else if (Player.chosenTurret === scene.turretData[i].name && scene.turretData[i].buildCost > Player.energy) {
-            console.log('Not enough energy!');
+            scene.popups.push(new TextPopup(scene, pointer.worldX, pointer.worldY, 'Not enough energy!'));
           }
         }
       }
@@ -59,7 +61,7 @@ export function setUpBuildSystem(scene) {
     }
     else if (Player.action == CURRENT_ACTION.DEMOLISH) {
       if (scene.turretMap[mapInd] == null) {
-        console.log('unoccupied space - nothing to delete');
+        scene.popups.push(new TextPopup(scene, pointer.worldX, pointer.worldY, 'Nothing to demolish!'));
       }
       else {
         for(let i = 0; i < scene.turretData.length; i++) {
@@ -71,16 +73,21 @@ export function setUpBuildSystem(scene) {
         let turretsArrInd = scene.turrets.indexOf(toDelete);
         // Clean up and destroy it
         scene.delTurret.play();
+        let explosion = new Explosion({scene, x: toDelete.x, y: toDelete.y, animKey: 'explosion-frames-demolish', framesCount: 12});
+        explosion.setDepth(2000);
         toDelete.dismantle();
         toDelete.destroy();
 
         // Remove all references to it.
         scene.turrets.splice(turretsArrInd, 1);
         scene.turretMap[mapInd] = null;
+
+        // Play demolish animation
+        explosion.explode('explosion-anim-demolish');
       }
     }
     else {
-      console.log('No action selected');
+      scene.popups.push(new TextPopup(scene, pointer.worldX, pointer.worldY, 'Can\'t build here!'));
     }
   });
 }
