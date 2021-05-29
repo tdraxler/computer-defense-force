@@ -113,8 +113,9 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('build-ready', 'images/valid-build.png', { frameWidth: 16, frameHeight: 16 });
 
     // Load player structures/turrets
-    this.load.image('core', 'images/player-sprites/core.png');
-    this.load.image('hardened-core', 'images/player-sprites/hardened-core.png');
+    this.load.image('core-frame', 'images/player-sprites/core-frame.png');
+    this.load.spritesheet('core', 'images/player-sprites/core.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('hcore', 'images/player-sprites/hardened-core.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('firewall', 'images/player-sprites/firewall.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('virus-blaster', 'images/player-sprites/virus-blaster.png', { frameWidth: 16, frameHeight: 24 });
     this.load.spritesheet('rectifier', 'images/player-sprites/rectifier.png', { frameWidth: 16, frameHeight: 24 });
@@ -143,6 +144,7 @@ export class Level extends Phaser.Scene {
     this.keyAltRight = this.input.keyboard.addKey('Right');
     this.keyC = this.input.keyboard.addKey('M'); // For debug operations
     this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
+    this.keyX = this.input.keyboard.addKey('X'); // Debug key. Use however you want!
   }
 
   create(){
@@ -180,6 +182,7 @@ export class Level extends Phaser.Scene {
     // Set up core for the player to protect
     let whichCore = Player.unlocked['hardened-core'] ? 1 : 0;
     this.core = new Core(this, this.levelData[Player.level - 1].core_x * TILE, this.levelData[Player.level - 1].core_y * TILE, this.coreData[whichCore]);
+    this.deathCountdown = 120;
     Player.coreHP = this.core.hp;
     this.targetX = Math.floor(this.levelData[Player.level - 1].core_x);
     this.targetY = Math.floor(this.levelData[Player.level - 1].core_y);
@@ -229,6 +232,22 @@ export class Level extends Phaser.Scene {
       repeat: -1
     });
 
+    // Core animations
+    this.anims.create({
+      key: 'core-anim',
+      frameRate: 15,
+      frames: this.anims.generateFrameNumbers('core', { start: 0, end: 7 }),
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: 'hardened-core-anim',
+      frameRate: 15,
+      frames: this.anims.generateFrameNumbers('hcore', { start: 0, end: 7 }),
+      repeat: -1
+    });
+    this.core.play(`${this.coreData[whichCore].name}-anim`);
+
     // making bullet and enemy groups
     this.gBullets = this.physics.add.group();
     this.gEnemies = this.physics.add.group();
@@ -239,6 +258,7 @@ export class Level extends Phaser.Scene {
       enemy.hp -= bullet.damage;
       enemy.showAttacked();
       let explosion = new Explosion({scene: this, x: bullet.x, y: bullet.y, animKey: 'explosion-frames-2', framesCount: 13});
+      explosion.setVelocity(bullet.body.velocity.x / 4, bullet.body.velocity.y / 4);
       bullet.destroy();
       explosion.explode('explosion-anim-2');
     });
@@ -278,7 +298,7 @@ export class Level extends Phaser.Scene {
         this.levelEnemies.push(this.rootkits[0]);
       });
     }
-
+    this.cameras.main.fadeIn(250, 0, 0, 0);
   }
 
   wave(waveCount) {
@@ -421,6 +441,7 @@ export class Level extends Phaser.Scene {
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
+              if (this.core.hp < 0) this.core.hp = 0;
               this.core.showAttacked();
               critter.destroy();
               this.explosion.play();
@@ -448,10 +469,17 @@ export class Level extends Phaser.Scene {
 
     // GAME OVER, YOU LOSE
     if (this.core.hp <= 0) {
-      this.scene.start(CONST.SCENES.DEATH);
-      bgm.stop();
-      this.scene.stop(CONST.SCENES.LEVEL);
-      this.scene.stop(CONST.SCENES.BUILD_MENU);
+      if (this.deathCountdown == 100) {
+        this.cameras.main.fadeOut(3000, 255, 100, 50);
+      }
+      // Death countdown so we can watch the core explode and the scene fade to red
+      this.deathCountdown--;
+      if (this.deathCountdown < 0) {
+        this.scene.start(CONST.SCENES.DEATH);
+        bgm.stop();
+        this.scene.stop(CONST.SCENES.LEVEL);
+        this.scene.stop(CONST.SCENES.BUILD_MENU);
+      }
     } else if (this.core.hp > 0 && this.waveCount === 11) { // YOU WIN
       if (Player.level === 3) {
         this.scene.start(CONST.SCENES.VIC);
@@ -513,6 +541,9 @@ export class Level extends Phaser.Scene {
       this.scene.stop(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.BUILD_MENU);
       bgm.stop();
+    }
+    if (this.keyX.isDown) {
+      this.core.hp -= 4;
     }
   }
 }
