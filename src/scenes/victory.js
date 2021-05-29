@@ -44,7 +44,7 @@ export class Victory extends Phaser.Scene {
       Player.reset();
       this.scene.start(CONST.SCENES.MENU);
     })
-
+    this.cameras.main.fadeIn(250, 0, 0, 0);
   }
   //the rotation of the rectangle
   update(){
