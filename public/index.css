@@ -21,9 +21,12 @@
    
 #game {
   height: 600px;
-  width: 800px;
-  border: none;
+  width: 810px;
+  border-color: black;
+  border-style: solid;
+  border-width: medium;
 }
+
 
 body{
   background-color: #0F111A;
