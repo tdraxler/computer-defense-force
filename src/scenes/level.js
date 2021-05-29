@@ -227,6 +227,7 @@ export class Level extends Phaser.Scene {
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {
       enemy.hp -= bullet.damage;
+      enemy.showAttacked();
       let explosion = new Explosion({scene: this, x: bullet.x, y: bullet.y, animKey: 'explosion-frames-2', framesCount: 13});
       bullet.destroy();
       explosion.explode('explosion-anim-2');
@@ -386,6 +387,7 @@ export class Level extends Phaser.Scene {
     // Test critter logic
     if (this.pathmap) {
       for (let [index, critter] of this.levelEnemies.entries()) {
+        critter.update();
         if(critter.hp <= 0){
           Player.score += critter.points;
           Player.viruscoins += critter.points;
@@ -409,6 +411,7 @@ export class Level extends Phaser.Scene {
             if (Math.floor(critter.x / TILE) == this.targetX && Math.floor(critter.y / TILE) == this.targetY) {
               // cause damage and disappear
               this.core.hp -= critter.damage;
+              this.core.showAttacked();
               critter.destroy();
               this.explosion.play();
               this.levelEnemies.splice(index, 1);
@@ -467,6 +470,9 @@ export class Level extends Phaser.Scene {
         turret.update(passArray);
       }
     });
+
+    // Check on the core
+    this.core.update();
 
     // Keyboard camera controls
     if (this.keyDown.isDown || this.keyAltDown.isDown) {

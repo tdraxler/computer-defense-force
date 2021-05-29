@@ -10,7 +10,7 @@ class Player {
   reset() {
     this.score = 0;
     this.energy = 1000;
-    this.action = CURRENT_ACTION.NONE;
+    this.action = CURRENT_ACTION.BUILD;
     this.level = 1;
     this.chosenTurret = 'firewall';
     this.unlocked = {

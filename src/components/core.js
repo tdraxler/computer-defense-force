@@ -17,10 +17,32 @@ export class Core extends Phaser.GameObjects.Sprite {
     this.getBody().setAllowGravity(false);
 
     this.hp = coreConfig.hp;
-    console.log(this.hp);
+
+    this.frameCounter = 0;
+    this.showDamage = 0;
+  }
+
+  showAttacked() {
+    this.showDamage = 30;
+    this.frameCounter = 0;
   }
 
   update() {
+    // increment and reset to zero if it gets too big
+    this.frameCounter = (this.frameCounter + 1) & 0xff;
 
+    if (this.showDamage > 0) {
+      this.showDamage--;
+      if (Math.floor(this.frameCounter / 4) % 2 == 0) {
+        this.setTintFill(0xffffff);
+      }
+      else {
+        this.clearTint();
+      }
+
+      if (this.showDamage <= 0) {
+        this.clearTint();
+      }
+    }
   }
 }
