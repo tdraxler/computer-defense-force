@@ -4,6 +4,8 @@ import {Bullet} from './bullet';
 import { CONST } from '../constants';
 import Player from './player';
 
+const greenFlashLen = 16;
+
 // Since JavaScript doesn't have type checking, we need a way to make sure the
 // construction for the class below has a way to validate parameters
 function validTurretType(buildType) {
@@ -17,6 +19,11 @@ function validTurretType(buildType) {
 
 // Unfortunately, Phaser seems to struggle with child sprites, so for now we
 // a reference to the turret Head in the Turret class instance.
+// Sources for implementation:
+//https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
+//https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
+//https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
+//https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
 class Head extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y, headType, bodyDepth=0) {
     super(scene, x, y, headType, 1);
@@ -24,19 +31,11 @@ class Head extends Phaser.GameObjects.Sprite {
     this.delay = 0;
 
     this.turretType = headType;
-  }
-
-  preload(){
-  }
-  //https://www.udemy.com/course/making-html5-games-with-phaser-3/learn/lecture/12610782#overview
-  //https://steemit.com/utopian-io/@onepice/move-objects-according-to-the-mouse-position-with-phaser-3
-
-  create(){
+    this.greenFlash = greenFlashLen; // Shown for new turret head
   }
 
   update(toTrack, projectileStats, turretStats) {
-    //https://gamedevacademy.org/how-to-make-tower-defense-game-with-phaser-3/
-    //https://blog.ourcade.co/posts/2020/how-to-make-enemy-sprite-rotation-track-player-phaser-3/
+
     //determine projectile type based on turret value.
     let theProjectile = projectileStats
     let enemyUnits = toTrack;
@@ -88,6 +87,18 @@ class Head extends Phaser.GameObjects.Sprite {
         let nextFrame = this.frame.name + 1;
         if (nextFrame > 5) nextFrame = 1;
         this.setFrame(nextFrame);
+      }
+    }
+
+    // Green flash for new turret head
+    if (this.greenFlash > 0) {
+      let tintVal = Math.floor(0xff * (this.greenFlash + greenFlashLen) / (greenFlashLen * 2));
+      tintVal = (tintVal << 8) + Math.floor(tintVal / 2); // This is how we get it to look green
+      this.setTintFill(tintVal);
+      
+      this.greenFlash--;
+      if (this.greenFlash <= 0) {
+        this.clearTint();
       }
     }
   }
@@ -143,8 +154,9 @@ export class Turret extends Phaser.GameObjects.Sprite {
     if (config.ep) {
       this.ep = config.ep;
     }
-  }
-  preload(){
+
+    // Green flash variable (for newly constructed turret)
+    this.greenFlash = greenFlashLen;
   }
 
   update(toTrack) {
@@ -155,6 +167,18 @@ export class Turret extends Phaser.GameObjects.Sprite {
     if (this.frameCounter >= CONST.RECHARGE_DELAY) {
       this.frameCounter = 0;
       Player.energy += this.ep;
+    }
+
+    // Green flash for new turret
+    if (this.greenFlash > 0) {
+      let tintVal = Math.floor(0xff * (this.greenFlash + greenFlashLen) / (greenFlashLen * 2));
+      tintVal = (tintVal << 8) + Math.floor(tintVal / 2); // This is how we get it to look green
+      this.setTintFill(tintVal);
+      
+      this.greenFlash--;
+      if (this.greenFlash <= 0) {
+        this.clearTint();
+      }
     }
   }
 

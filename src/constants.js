@@ -55,3 +55,15 @@ export const FONT_CONFIG_MOUSEOVER = {
     offsetY: 1
   }
 }
+
+export const FONT_CONFIG_ALERT = {
+  fontFamily: ['m5x7'],
+  fontSize: 16, 
+  color: '#ffffff',
+  shadow: {
+    color: '#aa1111',
+    fill: true,
+    offsetX: 1,
+    offsetY: 1
+  }
+}
