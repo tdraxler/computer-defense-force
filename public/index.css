@@ -7,8 +7,6 @@
   src: url('fonts/PressStart2P-Regular.ttf');
   font-weight: 400;
   font-weight: normal;
-  color: white;
-
 }
 
 @font-face {
@@ -16,7 +14,6 @@
   src: url('fonts/m5x7.ttf');
   font-weight: 400;
   font-weight: normal;
-  color: white;
 }
    
 #game {
