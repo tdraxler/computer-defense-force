@@ -5,6 +5,7 @@ import { Core } from '../components/core';
 import { Explosion } from '../components/explosion';
 import { generatePathMap, nextDir } from '../components/pathfinding';
 import Player from '../components/player';
+import { setUpTextPopups, handleTextPopups } from '../components/textPopup';
 import { Virus } from '../components/virus';
 import { walk, onCompleteHandler } from '../components/walk';
 import updateHpScore from '../components/hpscoreevent';
@@ -128,6 +129,8 @@ export class Level extends Phaser.Scene {
     // Explosion
     this.load.spritesheet('explosion-frames', 'images/effects/explosion1.png', { frameWidth: 32, frameHeight: 32, endFrame: 27 });
     this.load.spritesheet('explosion-frames-2', 'images/effects/explosion2.png', { frameWidth: 8, frameHeight: 8, endFrame: 13 });
+    this.load.spritesheet('explosion-demolish', 'images/effects/demolish.png', { frameWidth: 16, frameHeight: 24, endFrame: 11 });
+
 
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
@@ -185,6 +188,7 @@ export class Level extends Phaser.Scene {
     this.turretMap = new Array(this.tilemap.width * this.tilemap.height).fill(null);
 
     setUpBuildSystem(this);
+    setUpTextPopups(this);
 
     // Enemy stuff
     this.waveCount = 0;
@@ -201,6 +205,12 @@ export class Level extends Phaser.Scene {
       key: 'explosion-anim-2',
       frameRate: 60,
       frames: this.anims.generateFrameNumbers('explosion-frames-2', { start: 0, end: 13 }),
+      repeat: 0
+    });
+    this.anims.create({
+      key: 'explosion-anim-demolish',
+      frameRate: 60,
+      frames: this.anims.generateFrameNumbers('explosion-demolish', { start: 0, end: 11 }),
       repeat: 0
     });
 
@@ -384,7 +394,7 @@ export class Level extends Phaser.Scene {
       }
     }
 
-    // Test critter logic
+    // Enemy logic
     if (this.pathmap) {
       for (let [index, critter] of this.levelEnemies.entries()) {
         critter.update();
@@ -473,6 +483,9 @@ export class Level extends Phaser.Scene {
 
     // Check on the core
     this.core.update();
+
+    // Text popup handling
+    handleTextPopups(this);
 
     // Keyboard camera controls
     if (this.keyDown.isDown || this.keyAltDown.isDown) {
