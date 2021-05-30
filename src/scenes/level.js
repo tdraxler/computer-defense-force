@@ -316,7 +316,7 @@ export class Level extends Phaser.Scene {
         if (waveCount >= 4 && max === min + 2 && Player.level !== 3) {
           max++;
         } else if (Player.level === 3 && waveCount <= 3) {
-          max = min; // Only trojans until Wave 4
+          max = min; // Only trojans until Wave 4 of Level 3
         }
         enemyIndex = Math.floor(Math.random() * (max - min) + min);
         // choose any of the 5 possible enemies

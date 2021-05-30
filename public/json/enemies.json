@@ -49,7 +49,7 @@
     "height": 50,
     "hitX": 20,
     "hitY": 20,
-    "travelRate": 0.4
+    "travelRate": 0.5
   },
   {
     "name": "rootkit",
