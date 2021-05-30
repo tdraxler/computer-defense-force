@@ -400,6 +400,7 @@ export class Level extends Phaser.Scene {
     buildPreview(this);
 
     if (this.rootkits.length > 0) {
+      this.rootkits[0].update();
       if(this.rootkits[0].hp <= 0) {
         Player.score += this.rootkits[0].points;
         Player.viruscoins += this.rootkits[0].points;
