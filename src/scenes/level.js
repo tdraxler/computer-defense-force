@@ -16,7 +16,7 @@ import updateHpScore from '../components/hpscoreevent';
 let bgm;
 const MIN_DELAY = 5;
 const MAX_DELAY = 10 * 60;
-let Differentials = [4, 8, 12, 0.65]
+let Differentials = [4, 10, 12, 0.65]
 
 const TILE = MAP_CONSTANTS.T_SIZE;
 
@@ -315,6 +315,8 @@ export class Level extends Phaser.Scene {
       } else {
         if (waveCount >= 4 && max === min + 2 && Player.level !== 3) {
           max++;
+        } else if (Player.level === 3 && waveCount <= 3) {
+          max = min; // Only trojans until Wave 4
         }
         enemyIndex = Math.floor(Math.random() * (max - min) + min);
         // choose any of the 5 possible enemies
