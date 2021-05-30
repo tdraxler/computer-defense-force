@@ -1,7 +1,7 @@
 const express = require('express');
 
 // Try to use port number from the command line arguments
-const PORT = process.argv[2] || 3010;
+const PORT = process.argv[2] || 3000;
 
 let app = express();
 
