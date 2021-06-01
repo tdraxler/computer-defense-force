@@ -130,7 +130,6 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('explosion-frames-2', 'images/effects/explosion2.png', { frameWidth: 8, frameHeight: 8, endFrame: 13 });
     this.load.spritesheet('explosion-demolish', 'images/effects/demolish.png', { frameWidth: 16, frameHeight: 24, endFrame: 11 });
 
-
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
     this.keyDown = this.input.keyboard.addKey('S');
@@ -140,11 +139,6 @@ export class Level extends Phaser.Scene {
     this.keyAltDown = this.input.keyboard.addKey('Down');
     this.keyAltLeft = this.input.keyboard.addKey('Left');
     this.keyAltRight = this.input.keyboard.addKey('Right');
-
-    // === Debug keys ===
-    // this.keyC = this.input.keyboard.addKey('M'); // For debug operations
-    // this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
-    // this.keyX = this.input.keyboard.addKey('X'); // Debug key. Use however you want!
   }
 
   create(){
@@ -532,21 +526,5 @@ export class Level extends Phaser.Scene {
       this.cameras.main.scrollX -= 5;
     }
 
-    // === Debug keys ===
-    // if (this.keyC.isDown) { // Debug - restarts the scene
-    //   bgm.stop();
-    //   Player.levelUp();
-    //   this.scene.restart();
-    // }
-    // if (this.keyU.isDown) {
-    //   this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
-    //   this.scene.start(CONST.SCENES.SHOP, { descData: this.descData });
-    //   this.scene.stop(CONST.SCENES.LEVEL);
-    //   this.scene.stop(CONST.SCENES.BUILD_MENU);
-    //   bgm.stop();
-    // }
-    // if (this.keyX.isDown) {
-    //   this.core.hp -= 4;
-    // }
   }
 }
