@@ -130,7 +130,6 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('explosion-frames-2', 'images/effects/explosion2.png', { frameWidth: 8, frameHeight: 8, endFrame: 13 });
     this.load.spritesheet('explosion-demolish', 'images/effects/demolish.png', { frameWidth: 16, frameHeight: 24, endFrame: 11 });
 
-
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
     this.keyDown = this.input.keyboard.addKey('S');
