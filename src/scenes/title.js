@@ -32,6 +32,8 @@ export class TitleScene extends Phaser.Scene {
     this.load.image('tutorial-text', 'images/tutorial/tutorial-text.png');
     this.load.image('tutorial-text2', 'images/tutorial/tutorial-text2.png');
     this.load.image('tutorial-text3', 'images/tutorial/tutorial-text3.png');
+    this.load.image('go_continue', 'images/start-victory-gameover/continue_GO.png');
+    this.load.image('go_start-over', 'images/start-victory-gameover/start-over_GO.png');
     
     // TESTING LOADING GAME INFO IN TITLE NOT LEVEL
     // Load config data from JSON

@@ -130,7 +130,6 @@ export class Level extends Phaser.Scene {
     this.load.spritesheet('explosion-frames-2', 'images/effects/explosion2.png', { frameWidth: 8, frameHeight: 8, endFrame: 13 });
     this.load.spritesheet('explosion-demolish', 'images/effects/demolish.png', { frameWidth: 16, frameHeight: 24, endFrame: 11 });
 
-
     // Set up keyboard handler
     this.keyUp = this.input.keyboard.addKey('W');
     this.keyDown = this.input.keyboard.addKey('S');
@@ -140,6 +139,7 @@ export class Level extends Phaser.Scene {
     this.keyAltDown = this.input.keyboard.addKey('Down');
     this.keyAltLeft = this.input.keyboard.addKey('Left');
     this.keyAltRight = this.input.keyboard.addKey('Right');
+
 
     // === Debug keys ===
     // this.keyC = this.input.keyboard.addKey('M'); // For debug operations
@@ -248,10 +248,9 @@ export class Level extends Phaser.Scene {
     });
     this.core.play(`${this.coreData[whichCore].name}-anim`);
 
-    // making bullet and enemy groups
+    // making bullet and enemy physics groups
     this.gBullets = this.physics.add.group();
     this.gEnemies = this.physics.add.group();
-
 
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {

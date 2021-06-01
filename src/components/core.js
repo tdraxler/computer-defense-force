@@ -12,7 +12,6 @@ export class Core extends Phaser.GameObjects.Sprite {
     // So for now, we load the texture 'core'
     super(scene, x, y, 'core', 0);
 
-    console.log(coreConfig);
     // Add object to the scene
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
