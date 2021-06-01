@@ -248,10 +248,9 @@ export class Level extends Phaser.Scene {
     });
     this.core.play(`${this.coreData[whichCore].name}-anim`);
 
-    // making bullet and enemy groups
+    // making bullet and enemy physics groups
     this.gBullets = this.physics.add.group();
     this.gEnemies = this.physics.add.group();
-
 
     //add collider between groups
     this.physics.add.overlap(this.gEnemies, this.gBullets, (enemy, bullet) => {

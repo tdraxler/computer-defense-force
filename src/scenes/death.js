@@ -29,7 +29,7 @@ export class Death extends Phaser.Scene {
     this.add.image(55,25,'game-over').setOrigin(0).setDepth(3);
     this.add.image(30,15,'over-back').setOrigin(0).setDepth(2);
 
-    let playAgainButton = this.add.image(150,250,'play-again_death').setOrigin(0).setDepth(1)
+    let playAgainButton = this.add.image(200,200,'go_start-over').setOrigin(0).setDepth(1)
     playAgainButton.setInteractive();
     playAgainButton.on('pointerover',()=>{
       playAgainButton.alpha=.7;
@@ -42,6 +42,20 @@ export class Death extends Phaser.Scene {
       dBgm.stop();
       Player.restartLevel();
       this.scene.start(CONST.SCENES.MENU);
+    })
+    let continueButton = this.add.image(100,200,'go_continue').setOrigin(0).setDepth(1)
+    continueButton.setInteractive();
+    continueButton.on('pointerover',()=>{
+      continueButton.alpha=.7;
+    })
+    continueButton.on('pointerout', ()=>{
+      continueButton.alpha=1;
+    })
+    continueButton.on('pointerup', ()=>{
+      continueButton.alpha=1;
+      dBgm.stop();
+      Player.restartLevel();
+      this.scene.start(CONST.SCENES.LEVEL);
     })
     this.cameras.main.fadeIn(250, 0, 0, 0);
   }
