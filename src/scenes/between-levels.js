@@ -187,7 +187,6 @@ export class Shop extends Phaser.Scene {
 
     this.coins.setText(`${Player.viruscoins}`, FONT_CONFIG_SMALL);
     if (this.keyC.isDown) { // Debug - restarts the scene
-      console.log('Restart level!');
       this.otherBgm.stop();
       this.scene.start(CONST.SCENES.LEVEL);
       this.scene.stop(CONST.SCENES.SHOP);

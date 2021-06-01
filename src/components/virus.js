@@ -1,4 +1,5 @@
-import Phaser from 'phaser'
+import Phaser from 'phaser';
+import { CONST } from '../constants';
 
 // Handles enemies that try to attack the core.
 export class Virus extends Phaser.Physics.Arcade.Sprite {
@@ -16,6 +17,7 @@ export class Virus extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.add.existing(this);
     this.setBodySize(config.hitX, config.hitY, true);
     this.body.setOffset(config.width / 2 - config.hitX / 2, config.height * 3 / 4 - config.hitY / 2);
+    this.setDepth(250); // Just to make sure it's above any turrets.
 
     this.showDamage = 0;
   }
@@ -32,5 +34,8 @@ export class Virus extends Phaser.Physics.Arcade.Sprite {
         this.clearTint();
       }
     }
+
+    // Set depth (z-index) based on current y position
+    this.setDepth(2 * Math.floor(this.y / CONST.T_SIZE));
   }
 }

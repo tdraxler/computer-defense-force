@@ -56,7 +56,7 @@ export function setUpBuildSystem(scene) {
         }
       }
       else {
-        console.log('occupied - can\'t build');
+        scene.popups.push(new TextPopup(scene, pointer.worldX, pointer.worldY, 'Can\'t build here!'));
       }
     }
     else if (Player.action == CURRENT_ACTION.DEMOLISH) {

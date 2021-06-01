@@ -140,7 +140,7 @@ export class Turret extends Phaser.GameObjects.Sprite {
     }
     this.hp = 5;
 
-    // TODO - clean up animation code
+    // Animates charger units
     if (name == 'psu' || name == 'charger') {
       this.play(`${name}-anim`);
     }

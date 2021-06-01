@@ -82,8 +82,6 @@ export class Level extends Phaser.Scene {
     });
 
     let lev = Player.level - 1; // Current level index
-    console.log(lev);
-
 
     // Music: "A Bit of Hope", from FesliyanStudios.com
     // Background music via https://www.FesliyanStudios.com
@@ -142,9 +140,11 @@ export class Level extends Phaser.Scene {
     this.keyAltDown = this.input.keyboard.addKey('Down');
     this.keyAltLeft = this.input.keyboard.addKey('Left');
     this.keyAltRight = this.input.keyboard.addKey('Right');
-    this.keyC = this.input.keyboard.addKey('M'); // For debug operations
-    this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
-    this.keyX = this.input.keyboard.addKey('X'); // Debug key. Use however you want!
+
+    // === Debug keys ===
+    // this.keyC = this.input.keyboard.addKey('M'); // For debug operations
+    // this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
+    // this.keyX = this.input.keyboard.addKey('X'); // Debug key. Use however you want!
   }
 
   create(){
@@ -271,7 +271,8 @@ export class Level extends Phaser.Scene {
     // end of enemy stuff
 
     // After enemies are set up, create second layer that will render above everything else
-    this.tilemap.createLayer('above2', tileset);
+    this.tilemap.createLayer('above2', tileset).setDepth(900);
+    
     this.collidemap = this.tilemap.createLayer('collide', tileset);
     this.collidemap.setVisible(false);
 
@@ -531,22 +532,22 @@ export class Level extends Phaser.Scene {
     if (this.keyLeft.isDown || this.keyAltLeft.isDown) {
       this.cameras.main.scrollX -= 5;
     }
-    if (this.keyC.isDown) { // Debug - restarts the scene
-      console.log('Restart!');
-      bgm.stop();
-      Player.levelUp();
-      this.scene.restart();
-    }
-    if (this.keyU.isDown) {
-      console.log('Switching to upgrade menu');
-      this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
-      this.scene.start(CONST.SCENES.SHOP, { descData: this.descData });
-      this.scene.stop(CONST.SCENES.LEVEL);
-      this.scene.stop(CONST.SCENES.BUILD_MENU);
-      bgm.stop();
-    }
-    if (this.keyX.isDown) {
-      this.core.hp -= 4;
-    }
+
+    // === Debug keys ===
+    // if (this.keyC.isDown) { // Debug - restarts the scene
+    //   bgm.stop();
+    //   Player.levelUp();
+    //   this.scene.restart();
+    // }
+    // if (this.keyU.isDown) {
+    //   this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
+    //   this.scene.start(CONST.SCENES.SHOP, { descData: this.descData });
+    //   this.scene.stop(CONST.SCENES.LEVEL);
+    //   this.scene.stop(CONST.SCENES.BUILD_MENU);
+    //   bgm.stop();
+    // }
+    // if (this.keyX.isDown) {
+    //   this.core.hp -= 4;
+    // }
   }
 }

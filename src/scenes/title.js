@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import Phaser from 'phaser';
-import {CONST, FONT_CONFIG_MOUSEOVER, FONT_CONFIG_SMALL} from '../constants';
+import {CONST} from '../constants';
 
 //loading bar is direct adaptation of https://www.youtube.com/watch?v=OS7neDUUhPE
 export class TitleScene extends Phaser.Scene {
@@ -32,7 +32,6 @@ export class TitleScene extends Phaser.Scene {
     this.load.image('tutorial-text', 'images/tutorial/tutorial-text.png');
     this.load.image('tutorial-text2', 'images/tutorial/tutorial-text2.png');
     this.load.image('tutorial-text3', 'images/tutorial/tutorial-text3.png');
-    this.load.image('wasd', 'images/tutorial/wasd.png')
     
     // TESTING LOADING GAME INFO IN TITLE NOT LEVEL
     // Load config data from JSON

@@ -10,8 +10,6 @@ import {Death} from './scenes/death';
 import {Victory} from './scenes/victory';
 import {Shop} from './scenes/between-levels';
 
-console.log('Game script loaded successfully!');
-
 let config = {
   type: Phaser.AUTO,
   width: 400,
