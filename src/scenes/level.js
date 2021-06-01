@@ -82,8 +82,6 @@ export class Level extends Phaser.Scene {
     });
 
     let lev = Player.level - 1; // Current level index
-    console.log(lev);
-
 
     // Music: "A Bit of Hope", from FesliyanStudios.com
     // Background music via https://www.FesliyanStudios.com
@@ -533,13 +531,11 @@ export class Level extends Phaser.Scene {
       this.cameras.main.scrollX -= 5;
     }
     if (this.keyC.isDown) { // Debug - restarts the scene
-      console.log('Restart!');
       bgm.stop();
       Player.levelUp();
       this.scene.restart();
     }
     if (this.keyU.isDown) {
-      console.log('Switching to upgrade menu');
       this.input.setDefaultCursor('url(images/ui/cursors/default.png), pointer');
       this.scene.start(CONST.SCENES.SHOP, { descData: this.descData });
       this.scene.stop(CONST.SCENES.LEVEL);

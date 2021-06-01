@@ -49,14 +49,13 @@ class Player {
     this.action = newAction;
   }
 
-  setVal(newVal) {
+  setVal(newVal) { // Used with pushing buttons
     if (newVal) {
       // Change turret type
       if (newVal.turretChoice) {
         this.chosenTurret = newVal.turretChoice;
       }
 
-      // TODO - other actions
       if (newVal.upgrade) {
         this.unlocked[newVal.upgrade] = true;
         this.viruscoins -= this.unlockCosts[newVal.upgrade];

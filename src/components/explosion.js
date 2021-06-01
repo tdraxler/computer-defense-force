@@ -1,9 +1,7 @@
 import Phaser from 'phaser'
 
-
+// Handles explosions that appear when things are damaged or destroyed.
 export class Explosion extends Phaser.Physics.Arcade.Sprite {
-  // TODO - Make this useful
-
   constructor(config) {
     super(config.scene, config.x, config.y, config.animKey);
     config.scene.add.existing(this);

@@ -2,8 +2,6 @@ import Phaser from 'phaser'
 import { FONT_CONFIG_ALERT } from '../constants';
 
 export class TextPopup extends Phaser.GameObjects.Text {
-  // TODO - Make this useful
-
   constructor(scene, x, y, message) {
     super(scene, x, y, message, FONT_CONFIG_ALERT);
     scene.add.existing(this);
