@@ -43,7 +43,7 @@ export class Death extends Phaser.Scene {
       Player.restartLevel();
       this.scene.start(CONST.SCENES.MENU);
     })
-
+    this.cameras.main.fadeIn(250, 0, 0, 0);
   }
   update(){
   }

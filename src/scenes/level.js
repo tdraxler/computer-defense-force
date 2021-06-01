@@ -271,7 +271,8 @@ export class Level extends Phaser.Scene {
     // end of enemy stuff
 
     // After enemies are set up, create second layer that will render above everything else
-    this.tilemap.createLayer('above2', tileset);
+    this.tilemap.createLayer('above2', tileset).setDepth(900);
+    
     this.collidemap = this.tilemap.createLayer('collide', tileset);
     this.collidemap.setVisible(false);
 

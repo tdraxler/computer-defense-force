@@ -16,6 +16,7 @@ export class Virus extends Phaser.Physics.Arcade.Sprite {
     this.scene.physics.add.existing(this);
     this.setBodySize(config.hitX, config.hitY, true);
     this.body.setOffset(config.width / 2 - config.hitX / 2, config.height * 3 / 4 - config.hitY / 2);
+    this.setDepth(250); // Just to make sure it's above any turrets.
 
     this.showDamage = 0;
   }

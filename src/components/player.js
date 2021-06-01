@@ -66,10 +66,10 @@ class Player {
 
   levelUp() {
     this.level++;
-    this.energy = this.level * 1000 - 500;
     if (this.level > LIMITS.LEVELS) {
       this.level = 1;
     }
+    this.energy = this.level * 1000 - 500;
   }
 }
 
