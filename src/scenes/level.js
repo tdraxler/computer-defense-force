@@ -141,6 +141,7 @@ export class Level extends Phaser.Scene {
     this.keyAltLeft = this.input.keyboard.addKey('Left');
     this.keyAltRight = this.input.keyboard.addKey('Right');
 
+
     // === Debug keys ===
     // this.keyC = this.input.keyboard.addKey('M'); // For debug operations
     // this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
