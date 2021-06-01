@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { CONST } from '../constants';
+import Player from '../components/player';
 //import {start} from '../';
 
 
@@ -43,6 +44,7 @@ export class Menu extends Phaser.Scene {
     startButton.on('pointerup', ()=>{
       startButton.alpha=1;
       mBgm.stop();
+      Player.reset();
       this.scene.start(CONST.SCENES.LEVEL);
     })
     tutorialButton.setInteractive();
