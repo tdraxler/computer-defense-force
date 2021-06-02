@@ -10,6 +10,9 @@ import {Death} from './scenes/death';
 import {Victory} from './scenes/victory';
 import {Shop} from './scenes/between-levels';
 
+// Script is loaded. Remove loading message
+document.getElementById('loading-header').remove();
+
 let config = {
   type: Phaser.AUTO,
   width: 400,

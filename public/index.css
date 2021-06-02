@@ -22,6 +22,10 @@
   border: none;
 }
 
+#loading-header {
+  font-style: italic;
+}
+
 
 body{
   background-color: #090B10;
