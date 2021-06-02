@@ -145,6 +145,16 @@ export class Level extends Phaser.Scene {
     // this.keyC = this.input.keyboard.addKey('M'); // For debug operations
     // this.keyU = this.input.keyboard.addKey('U'); // To test the upgrade menu
     // this.keyX = this.input.keyboard.addKey('X'); // Debug key. Use however you want!
+    let loadBar = this.add.graphics({
+      fillStyle: {
+        color: 0x89DDFF
+      }
+    })
+    //create a loading bar https://www.youtube.com/watch?v=OS7neDUUhPE
+    this.add.text(150, 200, 'LOADING').setFontFamily('m5x7').setFontSize(32);
+    this.load.on('progress', (percent)=>{
+      loadBar.fillRect(0, 250, this.game.renderer.width * percent , 15)
+    })
   }
 
   create(){
